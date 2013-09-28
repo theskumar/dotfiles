@@ -43,6 +43,11 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 #   .functions
 ################################################################################
 
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+  cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+}
+
 # Set the title of the tab in iterm
 function tabname(){
   echo -ne "\033]0;"$@"\007"
