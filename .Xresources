@@ -1,0 +1,65 @@
+! ---[ URxvt config ]--------------------------------------------------
+
+!URxvt*font: xft:Inconsolata:pixelsize=12:antialias=true
+URxvt*font: xft:Monospace:pixelsize=12
+URxvt*boldFont: xft:Monospace:bold:pixelsize=12
+URxvt*letterSpace: -1
+URxvt*borderLess: false
+URxvt*externalBorder: 0
+URxvt*internalBorder: 2
+URxvt*scrollBar: false
+URxvt*depth: 32
+URxvt*cursorBlink: false
+URxvt*inheritPixmap: true
+URxvt*termName: rxvt-unicode-256color
+URxvt*saveLines: 5000
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyKeypress: true
+URxvt*mouseWheelScrollPage: false
+URxvt*cutchars: `'",;@&*=|/?()<>[]{}'
+URxvt*perl-ext: default,matcher
+URxvt*keysym.C-Delete: perl:matcher:last
+URxvt*keysym.A-Delete: perl:matcher:list
+URxvt*matcher.button: 1
+URxvt*urlLauncher: x-www-browser
+URxvt*underlineURLs: true
+URxvt*urgentOnBell: true
+URxvt*visualBell: false
+
+!!Looks and Colors
+URxvt*transparent: true
+URxvt*shading: 20
+URxvt*background: #000000
+URxvt*foreground: #ffffff
+URxvt*cursorColor: #ffffff
+URxvt*cursorColor2: #000000
+
+URxvt*color0: black
+URxvt*color1: red3
+URxvt*color2: green3
+URxvt*color3: yellow3
+URxvt*color4: blue2
+URxvt*color5: magenta3
+URxvt*color6: cyan3
+URxvt*color7: gray90
+URxvt*color8: gray50
+URxvt*color9: red
+URxvt*color10: green
+URxvt*color11: yellow
+URxvt*color12: rgb:5c/5c/ff
+URxvt*color13: magenta
+URxvt*color14: cyan
+URxvt*color15: white
+
+! ---[ Fonts config ]--------------------------------------------------
+Xft.dpi: 96
+Xft.antialias: true
+Xft.rgba: rgba
+Xft.hinting: true
+Xft.autohint: true
+Xft.render: true
+Xft.hintstyle: hintslight
+
+
+Emacs.fullscreen: maximized
+

@@ -1,0 +1,30 @@
+-- -*-Haskell-*-
+
+Config { font = "xft:Monospace:size=10"
+       , bgColor = "black"
+       , fgColor = "white"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run Weather "VIJP" ["-t","<tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 600
+                    -- , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red", "-t", "E:<rx>/<tx>"] 10
+                    -- , Run Wireless "wlan1" ["-L","0","-H","32","--normal","green","--high","red", "-t", "<essid>"] 10
+                    , Run MultiCpu ["-L","3","-H","50","--normal","green","--high","red", "-t", "P:<total>%"] 10
+                    , Run Uptime ["-t", "<days>d <hours>h"] 6000
+                    , Run Memory ["-t","M:<usedratio>%"] 10
+                    , Run Swap ["-t","S:<usedratio>%"] 10
+		    , Run BatteryP ["BAT1"]
+                      ["-t", "<acstatus><left>%",
+                      "-L", "10", "-H", "80", "-p", "3",
+                      "--", "-O", "", "-o", "<fc=red>B</fc>",
+                      "-l", "red", "-m", "blue", "-h", "green", "-f", "ACAD/online"]
+                      100
+                    , Run Date "%d %a %I:%M" "date" 10
+                    , Run StdinReader
+                    -- , Run ThermalZone 0 ["-t", "T:<temp>C"] 30
+		    -- , Run MPD ["-t", "<title> (<statei>) <remaining>"] 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %uptime% %multicpu% %memory% %acpi% | <fc=#ee9a00>%date%</fc>"
+       }
+

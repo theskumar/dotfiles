@@ -1,0 +1,6 @@
+* text=auto
+*.html  diff=html
+*.php   diff=php
+*.py    diff=python
+*.java  diff=java
+*.tex   diff=tex

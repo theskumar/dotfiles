@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/Web3/Dropbox/Personal/appdata/sublime/Packages/requirements.txt'
+let g:netrw_dirhist_2='/Applications/MAMP/htdocs/clients/discovery/requirements'
+let g:netrw_dirhist_3='/Users/Web3/Dropbox/Personal/appdata/dotfiles/zshfiles/iterm'
+let g:netrw_dirhist_4='/home/theskumar/.pip'
+let g:netrw_dirhist_5='/home/theskumar/Dropbox/Personal/appdata/dotfiles/zshfiles/.zprompt'

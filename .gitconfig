@@ -1,0 +1,149 @@
+[user]
+	name = Saurabh Kumar
+	email = shk@fueled.co
+[push]
+	default = current
+[alias]
+	c = commit -am
+	ci = commit -v
+	cia = commit --amend -va
+	cp = cherry-pick
+	cpc = cherry-pick --continue
+	cpa = cherry-pick --abort
+	cpq = cherry-pick --quit
+	r = reset
+	rh = reset --hard
+	rt = remote -v
+	rad = remote add
+	rrm = remote rm
+	rpr = remote prune
+	rre = remote rename
+	rsu = remote set-url
+	br = branch -v
+	bD = branch -D
+	bM = branch -M
+	bra = branch -va
+	bru = branch -u
+	up = pull
+	p = push
+	g = grep -p
+	b = blame -M -CC
+	h = help
+	cl = clone
+	s = status -sb
+	co = checkout
+	cob = checkout -b
+	re = rebase
+	df = diff --color --color-words --abbrev
+	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	lg = log -p
+	sl = log --stat --format=oneline --abbrev-commit
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	ri = rebase --interactive --autosquash
+	who = !echo \"== Commits by Author:\\n`git shortlog -s -n`\\n\"
+	up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+	f = fetch
+	fo = fetch origin
+	fa = fetch --all
+	# Display the number of commits per author in numerical order
+	who = shortlog -sne --no-merges
+
+	# Short format diffstat logsf
+	me = config user.email \"thes.kumar@gmail.com\"
+	office = config user.email \"shk@fueled.co\"
+
+	# File level ignoring
+	assume   = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
+
+	# snapshot stashes
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+
+	# merging
+	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+
+	reauthor = !sh -c 'eval `git log --reverse --topo-order --pretty=format:\"git cherry-pick -m 1 %H &&  git commit --amend -C %H --author=\\\"%aN <%aE>\\\" && \" $0 ` "echo success" '
+
+  # Initialize git in a better way
+  # Adds .gitattributes, .gitignore and Readme.md file
+	ini = "!f() { git init && echo \"* text=auto\" >> .gitattributes && touch .gitignore Readme.md && git status; }; f"
+	switch = !legit switch \"$@\"
+	branches = !legit branches
+	sprout = !legit sprout \"$@\"
+	unpublish = !legit unpublish \"$@\"
+	harvest = !legit harvest \"$@\"
+	sync = !legit sync \"$@\"
+	publish = !legit publish \"$@\"
+	graft = !legit graft \"$@\"
+
+[color]
+	ui = auto
+[core]
+	excludesfile = /Users/Web3/.gitignore
+	attributesfile = ~/.gitattributes
+	filemode = false
+	autocrlf = false
+	ui = auto
+#	editor = subl -w
+[diff]
+	tool = vimdiff
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[merge]
+	log = true
+	tool = vimdiff
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+[rebase]
+	autosquash = true
+	autostash = true
+[giggle]
+	main-window-maximized = true
+	main-window-geometry = 1366x674+0+31
+	main-window-view = FileView
+[remote "origin"]
+	receivepack = git receive-pack
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[status]
+	short = true
+	branch = true
+[log]
+	date = relative
+	mailmap = true
+[grep]
+	lineNumber = true
+[blame]
+	date = relative
+	blankboundary = true
+	showroot = true
+[pull]
+	rebase = true
