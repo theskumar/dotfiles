@@ -96,7 +96,6 @@ export GREP_OPTIONS='--color'
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
-alias -g ack='ack-grep'
 alias -g G='| grep'
 alias -g L='| less'
 alias -g H='| head'
