@@ -1,5 +1,6 @@
 #make vim the default editor
 export EDITOR="vim"
+
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 
@@ -39,3 +40,7 @@ export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 
 export EC2_HOME=$HOME/bin/ec2
 export JAVA_HOME=/Library/JAVA/Home
+
+export TZ='Asia/Kolkata'
+
+export PATH=~/bin:$PATH
