@@ -13,7 +13,6 @@ autoload -U ~/.zsh/functions/*(:t)
 #zstyle ':predict' toggle true
 ##zstyle ':predict' verbose true
 
-# for config_file ($ZSH/lib/*.zsh) source $config_file
 
 # Hooks
 typeset -ga precmd_functions
@@ -90,7 +89,7 @@ zstyle ':completion:*' prompt ''\''%e'\'''
 zstyle ':completion:*:manuals' separate-sections true
 
 # Load plugins
-plugins=(git greetings git-flow gibo)
+plugins=(git greetings gibo)
 #plugins=(git)
 
 is_plugin() {
