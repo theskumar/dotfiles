@@ -1,0 +1,112 @@
+# Helper for extracting archives
+function x () {
+  case "$1" in
+  *.tar*)
+    tar xvf "$1"
+    ;;
+  *.zip)
+    unzip "$1"
+    ;;
+  esac
+}
+
+# tiny helpers
+function l () {
+  case "$1" in
+  recent)
+    shift
+    ls --color -vtl "$@" | head -n 10
+    ;;
+  size)
+    shift
+    ls --color -vSl "$@"
+    ;;
+  *) ls --color -vl "$@"
+    ;;
+  esac
+}
+
+# Syntax-highlight JSON strings or files
+# Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
+function json() {
+	if [ -t 0 ]; then # argument
+		python -mjson.tool <<< "$*" | pygmentize -l javascript
+	else # pipe
+		python -mjson.tool | pygmentize -l javascript
+	fi
+}
+
+
+# Display http headers of a request
+function headers(){
+	curl -sv "$@" 2>&1 >/dev/null | grep -v "^\*" | grep -v "^}" | cut -c3-
+}
+
+# Recursively convert CRLF to LF in non-binary files under the current directory
+# Assumes perl installed
+function fixcrlf(){
+	find . -type f -exec grep -qIP '\r\n' {} ';' -exec perl -pi -e 's/\r\n/\n/g' {} '+'
+}
+
+# Create a new directory and enter it
+function md() {
+  mkdir -p "$@" && cd "$@"
+}
+
+# A better way to do git clone
+# http://saurabhworld.in/go/gitclone
+function clone() {
+    url=$1;
+    reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
+    git clone $url $reponame;
+    cd $reponame;
+    subl .
+}
+
+
+# Copy w/ progress
+cp_p () {
+  rsync -WavP --human-readable --progress $1 $2
+}
+
+
+# Test if HTTP compression (RFC 2616 + SDCH) is enabled for a given URL.
+# Send a fake UA string for sites that sniff it instead of using the Accept-Encoding header. (Looking at you, ajax.googleapis.com!)
+function httpcompression() {
+  encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
+}
+
+# take this repo and copy it to somewhere else minus the .git stuff.
+function gitexport(){
+  mkdir -p "$1"
+  git archive master | tar -x -C "$1"
+}
+
+# Start an HTTP server from a directory, optionally specifying the port
+function server() {
+  local port="${1:-8000}"
+  sleep 1 && open "http://localhost:${port}/" &
+  # Set the default Content-Type to `text/plain` instead of `application/octet-stream`
+  # And serve everything as UTF-8 (although not technically correct, this doesn’t break anything for binary files)
+  python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+# Start a PHP server from a directory, optionally specifying the port
+# (Requires PHP 5.4.0+.)
+function phpserver() {
+  local port="${1:-4000}"
+  local ip=$(ipconfig getifaddr en1)
+  sleep 1 && open "http://${ip}:${port}/" &
+  php -S "${ip}:${port}"
+}
+
+# function to normalize a crupt git repo
+function git_normalize_eol(){
+  echo "* text=auto" >>.gitattributes
+  rm .git/index     # Remove the index to force git to
+  git reset         # re-scan the working directory
+  git status        # Show files that will be normalized
+  git add -u
+  git add .gitattributes
+  git commit -m "Introduce end-of-line normalization"
+}

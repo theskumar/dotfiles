@@ -1,0 +1,111 @@
+# Easier navigation: .., ..., ~ and -
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+
+# be nice
+alias please=sudo
+
+alias incognito='export HISTFILE=/dev/null'
+
+#alias todo="vi ~/.todo"
+
+# programs
+alias scour="python ~/bin/scour/scour.py"
+alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
+alias sshconfig="vi ~/.ssh/config"
+
+# Shortcuts
+alias d="cd ~/Dropbox"
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias w="cd ~/workspace"
+alias g="git"
+alias e="vim"
+alias py="ipython || python"
+alias rf='rm -rf'
+
+# Virtualenv
+alias sv="source venv/bin/activate"
+
+alias ls="command ls --color"
+
+# List all files colorized in long format, including dot files
+alias la="ls -la"
+
+# List only directories
+alias lsd='ls -l | grep "^d"'
+
+
+# Undo a `git push`
+alias undopush="git push -f origin HEAD^:master"
+
+# git root
+alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gp='git push origin HEAD'
+alias gd='git diff'
+alias gc='git commit'
+alias gca='git commit -a'
+alias gco='git checkout'
+alias gb='git branch'
+alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gaa='git add .; git status'
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+
+#clear does not take you to top anymore
+alias clear='echo -e "\e[2J"'
+
+# `cat` with beautiful colors. requires Pygments installed.
+#     sudo easy_install Pygments
+alias c='pygmentize -O style=monokai -f console256 -g'
+alias catn='cat -n'
+
+# Enhanced WHOIS lookups
+alias whois="whois -h whois-servers.net"
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en1"
+
+# Copy my public key to my clipboard
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+# View HTTP traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+# Gzip-enabled `curl`
+alias gurl="curl --compressed"
+
+# Recursively delete `.DS_Store` files
+alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+
+alias df='df -h'
+alias du='du -hs'
+
+#grep stuff
+export GREP_OPTIONS='--color'
+
+alias halt='sudo shutdown -h now'
+alias reboot='sudo reboot'
+
+alias -g ack='ack-grep'
+alias -g G='| grep'
+alias -g L='| less'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g Y='| xclip && xclip -o | xclip -se c'
+alias -g R='$(git rev-parse --show-toplevel 2> /dev/null)'
+
+alias sz='source ~/.zshrc'
+alias ez='e ~/.zshrc'
+
+alias entertain='mplayer "$(find "." -type f -regextype posix-egrep -regex ".*\.(avi|mkv|flv|mpg|mpeg|mp4|wmv|3gp|mov|divx)" | shuf -n1)"'
+alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
