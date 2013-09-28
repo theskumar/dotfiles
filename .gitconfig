@@ -1,6 +1,5 @@
-[user]
-	name = Saurabh Kumar
-	email = shk@fueled.co
+[include]
+	path = ~/.private/.gitconfig
 [push]
 	default = current
 [alias]
@@ -48,10 +47,6 @@
 	fa = fetch --all
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
-
-	# Short format diffstat logsf
-	me = config user.email \"thes.kumar@gmail.com\"
-	office = config user.email \"shk@fueled.co\"
 
 	# File level ignoring
 	assume   = update-index --assume-unchanged
@@ -106,18 +101,6 @@
 [merge]
 	log = true
 	tool = vimdiff
-[url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-[url "git://github.com/"]
-	insteadOf = "github:"
-[url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
 [rebase]
 	autosquash = true
 	autostash = true
@@ -147,3 +130,21 @@
 	showroot = true
 [pull]
 	rebase = true
+
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
+
+# Any GitHub repo with my username should be checked out r/w by default
+# http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
+[url "git@github.com:paulirish/"]
+  insteadOf = "git://github.com/paulirish/"
