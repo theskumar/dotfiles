@@ -1,0 +1,6 @@
+# set terminal's title
+case $TERM in
+    xterm*|rxvt*|screen*)
+        print -Pn "\e]2;$@\a"
+        ;;
+esac

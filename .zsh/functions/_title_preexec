@@ -1,0 +1,2 @@
+# set terminal's title to the command that is going to be run
+_title ${1%%% *}

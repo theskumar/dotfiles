@@ -1,0 +1,88 @@
+################################################################################
+#   .exports
+################################################################################
+
+# Install GNU core utilities (those that come with OS X are outdated)
+# brew install coreutils
+# All commands have been installed with the prefix 'g'.
+
+# If you really need to use these commands with their normal names, you
+# can add a "gnubin" directory to your PATH from your bashrc like:
+
+#     PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+# So here is it!
+# http://www.gnu.org/software/coreutils/manual/html_node/index.html
+export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+export PATH=/usr/local/tranquil/bin:$PATH
+
+# source ~/.rvm/scripts/rvm
+
+# soft link MAMP mysql.sock (find a way so that this is not required)
+ln -s /Applications/MAMP/tmp/mysql/mysql.sock /tmp/ 2>/dev/null
+
+
+################################################################################
+#   .alias
+################################################################################
+
+alias o="open"
+alias oo="open ."
+alias s="subl ."
+
+# Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; npm update -g; sudo gem update'
+
+# Empty the Trash on all mounted volumes and the main HDD
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
+
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+################################################################################
+#   .functions
+################################################################################
+
+# Set the title of the tab in iterm
+function tabname(){
+  echo -ne "\033]0;"$@"\007"
+}
+
+# Add note to Notes.app (OS X 10.8)
+# Usage: `note 'foo'` or `echo 'foo' | note`
+function note() {
+  local text
+  if [ -t 0 ]; then # argument
+    text="$1"
+  else # pipe
+    text=$(cat)
+  fi
+  body=$(echo "$text" | sed -E 's|$|<br>|g')
+  osascript >/dev/null <<EOF
+tell application "Notes"
+      tell account "iCloud"
+            tell folder "Notes"
+                  make new note with properties {name:"$text", body:"$body"}
+            end tell
+      end tell
+end tell
+EOF
+}
+
+# Add reminder to Reminders.app (OS X 10.8)
+# Usage: `remind 'foo'` or `echo 'foo' | remind`
+function remind() {
+  local text
+  if [ -t 0 ]; then
+    text="$1" # argument
+  else
+    text=$(cat) # pipe
+  fi
+  osascript >/dev/null <<EOF
+tell application "Reminders"
+        tell the default list
+                make new reminder with properties {name:"$text"}
+        end tell
+end tell
+EOF
+}

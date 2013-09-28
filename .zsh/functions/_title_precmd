@@ -1,0 +1,3 @@
+# set terminal's title to the current working directory
+_title ${PWD}
+

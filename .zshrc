@@ -132,10 +132,6 @@ ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
 ZSH_THEME_GIT_PROMPT_MODIFIED="*"
 ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}-%{$fg[green]%}"
 
-
-### Exports
-export _JAVA_AWT_WM_NONREPARENTING=1
-
 precmd() {
     # send a visual bell to awesome
     echo -ne '\a'

@@ -1,0 +1,7 @@
+if [[ $LBUFFER = *... ]]; then
+  LBUFFER="${LBUFFER%.}/../"
+elif [[ $LBUFFER = */. ]]; then
+  LBUFFER="$LBUFFER./"
+else
+  LBUFFER="$LBUFFER."
+fi
