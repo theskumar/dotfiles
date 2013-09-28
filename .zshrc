@@ -1,4 +1,7 @@
 ZSH=~/.zsh
+
+source ~/.profile
+
 fpath=(~/.zsh/functions $fpath)
 fpath=(~/.zsh/zsh-completions/src $fpath)
 autoload -U ~/.zsh/functions/*(:t)
@@ -10,7 +13,7 @@ autoload -U ~/.zsh/functions/*(:t)
 #zstyle ':predict' toggle true
 ##zstyle ':predict' verbose true
 
-for config_file ($ZSH/lib/*.zsh) source $config_file
+# for config_file ($ZSH/lib/*.zsh) source $config_file
 
 # Hooks
 typeset -ga precmd_functions
@@ -112,12 +115,11 @@ for plugin ($plugins); do
 done
 
 
-
 # Initialize prompt
 
 #PROMPT=$'%{$fg_bold[green]%}%n@%m %{$fg[blue]%}%D{[%I:%M:%S]} %{$reset_color%}%{$fg[green]%}[%~]%{$reset_color%} $(git_prompt_info)\
 #    %{$fg[blue]%}->%{$fg_bold[blue]%} %#%{$reset_color%} '
-PROMPT=$'%{$fg_bold[green]%}%n@%m %{$reset_color%}%{$fg[green]%}[%~]%{$reset_color%} $(git_prompt_info)\
+PROMPT=$'%{$fg_bold[blue]%}%n@%m %{$reset_color%}%{$fg[green]%}[%~]%{$reset_color%} $(git_prompt_info)\
     %{$fg[blue]%}->%{$fg_bold[blue]%} %#%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}["
@@ -125,6 +127,10 @@ ZSH_THEME_GIT_PROMPT_SUFFIX="]%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY=" %{$fg[red]%}*%{$fg[green]%}"
 ZSH_THEME_GIT_PROMPT_CLEAN=""
 ZSH_THEME_GIT_PROMPT_AHEAD="^"
+ZSH_THEME_GIT_PROMPT_ADDED="+"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="?"
+ZSH_THEME_GIT_PROMPT_MODIFIED="*"
+ZSH_THEME_GIT_PROMPT_DELETED="%{$fg[red]%}-%{$fg[green]%}"
 
 
 ### Exports
@@ -148,10 +154,6 @@ setopt prompt_subst
 
 precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
 
-
-source ~/.functions
-source ~/.exports
-source ~/.aliases
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
