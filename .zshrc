@@ -89,7 +89,7 @@ zstyle ':completion:*' prompt ''\''%e'\'''
 zstyle ':completion:*:manuals' separate-sections true
 
 # Load plugins
-plugins=(git greetings gibo)
+plugins=(git gibo)
 #plugins=(git)
 
 is_plugin() {

@@ -25,10 +25,10 @@ brew tap josegonzalez/homebrew-php
 # Install everything else
 brew install ack
 brew install git
-brew install rename
-brew install tree
+brew install rename htop-osx tree
 brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
+brew install fortune cowsay
 
 # Remove outdated versions from the cellar
 brew cleanup
