@@ -17,6 +17,8 @@ export PATH=/usr/local/tranquil/bin:$PATH
 
 # source ~/.rvm/scripts/rvm
 
+export PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
+
 # soft link MAMP mysql.sock (find a way so that this is not required)
 ln -s /Applications/MAMP/tmp/mysql/mysql.sock /tmp/ 2>/dev/null
 
