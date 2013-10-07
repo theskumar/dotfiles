@@ -168,5 +168,3 @@ fi
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 
 
-# added by travis gem
-source /Users/Web3/.travis/travis.sh
