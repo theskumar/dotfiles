@@ -36,6 +36,7 @@
 	co = checkout
 	cob = checkout -b
 	re = rebase
+	sad = submodule add
 	df = diff --color --color-words --abbrev
 	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 	lg = log -p
@@ -89,6 +90,7 @@
 	whitespace = trailing-space,space-before-tab
 [diff]
 	tool = vimdiff
+	submodule = log
 [color "branch"]
 	current = yellow reverse
 	local = yellow
