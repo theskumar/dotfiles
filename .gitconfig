@@ -2,6 +2,9 @@
 	path = ~/.private/.gitconfig
 [push]
 	default = current
+[format]
+	signoff = true
+	coverLetter = auto
 [alias]
 	c = commit -am
 	ci = commit -v
@@ -45,6 +48,7 @@
 	f = fetch
 	fo = fetch origin
 	fa = fetch --all
+	conf = config --list
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
 
@@ -77,12 +81,12 @@
 [color]
 	ui = auto
 [core]
-	excludesfile = /Users/Web3/.gitignore
+	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 	filemode = false
 	autocrlf = false
 	ui = auto
-#	editor = subl -w
+	whitespace = trailing-space,space-before-tab
 [diff]
 	tool = vimdiff
 [color "branch"]
