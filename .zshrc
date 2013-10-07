@@ -3,7 +3,7 @@ ZSH=~/.zsh
 source ~/.profile
 
 fpath=(~/.zsh/functions $fpath)
-fpath=(~/.zsh/zsh-completions/src $fpath)
+fpath=(~/.zsh/modules/zsh-completions/src $fpath)
 autoload -U ~/.zsh/functions/*(:t)
 
 # predictive typing (`man zshcontrib`)
@@ -88,9 +88,9 @@ zstyle ':completion:*' insert-tab false
 zstyle ':completion:*' prompt ''\''%e'\'''
 zstyle ':completion:*:manuals' separate-sections true
 
-# Load plugins
+# ---[ Plugins ]---------------------------------------------------------
+
 plugins=(git gibo)
-#plugins=(git)
 
 is_plugin() {
   local base_dir=$1
@@ -107,14 +107,13 @@ done
 autoload -Uz compinit
 compinit
 
-
 # Load all of the plugins that were defined in ~/.zshrc
 for plugin ($plugins); do
     source $ZSH/plugins/$plugin/$plugin.plugin.zsh
 done
 
 
-# Initialize prompt
+# ---[ Prompt ]---------------------------------------------------------
 
 #PROMPT=$'%{$fg_bold[green]%}%n@%m %{$fg[blue]%}%D{[%I:%M:%S]} %{$reset_color%}%{$fg[green]%}[%~]%{$reset_color%} $(git_prompt_info)\
 #    %{$fg[blue]%}->%{$fg_bold[blue]%} %#%{$reset_color%} '
@@ -140,17 +139,18 @@ precmd() {
 precmd_functions=( "${precmd_functions[@]:#_title_precmd}" _title_precmd )
 preexec_functions=( "${preexec_functions[@]:#_title_preexec}" _title_preexec )
 
-# Auto jump; https://github.com/sjl/z-zsh
-. $HOME/.zsh/z/z.sh
+
+# ---[ Modules ]--------------------------------------------------------
+
+. $HOME/.zsh/modules/z/z.sh
+source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 autoload -U colors
 colors
 setopt prompt_subst
 
 precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
-
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 # Detect and load OS specific settigs
 platform='unknown'
@@ -162,7 +162,6 @@ elif [[ "$unamestr" == 'FreeBSD' ]]; then
 elif [[ "$unamestr" == 'Darwin' ]]; then
    source ~/.zsh/.osx
 fi
-
 
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
