@@ -33,6 +33,7 @@ export LC_ALL=
 
 # let pip install the dependencies from local cache
 export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
+export PYTHONSTARTUP=$HOME/.pythonrc
 
 # todotxt.com
 export TODOTXT_DEFAULT_ACTION=ls
