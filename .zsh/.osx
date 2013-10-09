@@ -29,7 +29,6 @@ ln -s /Applications/MAMP/tmp/mysql/mysql.sock /tmp/ 2>/dev/null
 
 alias o="open"
 alias oo="open ."
-alias s="subl ."
 
 # requires github.com/dronir/SpotifyControl
 alias spotify="osascript ~/bin/SpotifyControl/SpotifyControl.scpt"
