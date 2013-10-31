@@ -57,7 +57,7 @@ alias gco='git checkout'
 alias gb='git branch -va'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
-alias gaa='git add -A; git status'
+alias gaa='git add -A; git status -sb'
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
