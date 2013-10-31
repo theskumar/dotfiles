@@ -2,6 +2,9 @@
 #   .exports
 ################################################################################
 
+# http://kassiopeia.juls.savba.sk/~garabik/software/grc/README.txt
+source "`brew --prefix grc`/etc/grc.bashrc"
+
 # Install GNU core utilities (those that come with OS X are outdated)
 # brew install coreutils
 # All commands have been installed with the prefix 'g'.
