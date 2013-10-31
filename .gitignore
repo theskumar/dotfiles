@@ -10,8 +10,13 @@ Thumbs.db
 .Spotlight-V100
 .Trashesvenv
 
-# Virtualenv
+# Local Virtualenv
 venv/
 
-# Temporary
-static_v4/
+# Packages ignore
+node_modules
+dist
+.tmp
+.sass-cache
+app/bower_components
+
