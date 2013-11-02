@@ -9,10 +9,10 @@ Config { font = "xft:Monospace:size=10"
                     -- , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red", "-t", "E:<rx>/<tx>"] 10
                     -- , Run Wireless "wlan1" ["-L","0","-H","32","--normal","green","--high","red", "-t", "<essid>"] 10
                     , Run MultiCpu ["-L","3","-H","50","--normal","green","--high","red", "-t", "P:<total>%"] 10
-                    , Run Uptime ["-t", "<days>d <hours>h"] 6000
+                    , Run Uptime ["-t", "<days>:<hours>"] 6000
                     , Run Memory ["-t","M:<usedratio>%"] 10
                     , Run Swap ["-t","S:<usedratio>%"] 10
-		    , Run BatteryP ["BAT1"]
+        , Run BatteryP ["BAT1"]
                       ["-t", "<acstatus><left>%",
                       "-L", "10", "-H", "80", "-p", "3",
                       "--", "-O", "", "-o", "<fc=red>B</fc>",
@@ -21,7 +21,7 @@ Config { font = "xft:Monospace:size=10"
                     , Run Date "%d %a %I:%M" "date" 10
                     , Run StdinReader
                     -- , Run ThermalZone 0 ["-t", "T:<temp>C"] 30
-		    -- , Run MPD ["-t", "<title> (<statei>) <remaining>"] 10
+      -- , Run MPD ["-t", "<title> (<statei>) <remaining>"] 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
