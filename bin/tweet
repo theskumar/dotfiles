@@ -1,0 +1,26 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import tweepy
+
+try:
+	CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
+	CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
+	ACCESS_KEY = os.environ['TWITTER_ACCESS_KEY']
+	ACCESS_SECRET = os.environ['TWITTER_ACCESS_SECRET']
+except KeyError:
+	print "Environment Variables couldn't be read."
+	exit
+
+
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+print "connecting..."
+api = tweepy.API(auth)
+
+result = api.update_status(sys.argv[1])
+print "https://twitter.com/{screen_name}/status/{status_id}".format(
+		screen_name=result.user.screen_name,
+		status_id=result.id
+		)
