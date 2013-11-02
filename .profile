@@ -5,4 +5,9 @@ for file in ~/.{extra,exports,aliases,functions}; do
 done
 unset file
 
-SPLASH
+# Check for startup SPLASH script
+if test $(which SPLASH)
+then
+    SPLASH
+fi
+

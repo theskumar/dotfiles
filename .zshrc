@@ -146,6 +146,10 @@ preexec_functions=( "${preexec_functions[@]:#_title_preexec}" _title_preexec )
 source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+
 autoload -U colors
 colors
 setopt prompt_subst
