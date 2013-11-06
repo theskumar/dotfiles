@@ -10,4 +10,3 @@ alias ai='sudo apt-fast install'
 alias o='thunar || nautilus'
 alias oo='thunar . || nautilus . &'
 
-alias -g ack='ack-grep'
