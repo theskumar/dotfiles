@@ -1,18 +1,30 @@
 #!/bin/bash
-#
-# Usage: push
-#
-# Send your local branch changes to the remote branch,
-# and copy the relevant GitHub 'compare' URL to your clipboard (!)
-# This is Mac-only for the time being
-#
-# Any extra args to this command will be passed through to 'git push',
-# e.g. for doing "push -f"
-#
+
+function _push(){
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+push 
+
+Usage: push
+
+Send your local branch changes to the remote branch,
+and copy the relevant GitHub 'compare' URL to your clipboard (!)
+
+Dependencies:
+
+  git, pbcopy/xclip 
+
+Any extra args to this command will be passed through to 'git push',
+e.g. for doing "push -f"
+
+Copyright (c) 2013 "theskumar" Saurabh Kumar
+Licensed under the MIT license.
+HELP
+return; fi
 
 # Colors
-color_error="$(tput sgr 0 1)$(tput setaf 1)"
-color_reset="$(tput sgr0)"
+local color_error="$(tput sgr 0 1)$(tput setaf 1)"
+local color_reset="$(tput sgr0)"
 
 # TODO DRY this b/w pull and push
 branch=$(git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/') || exit $?
@@ -64,5 +76,11 @@ if [[ "$remote_url" =~ "github.com" ]]; then
   echo $github_url
   echo
 fi
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_push "$@"
 
 exit 0
