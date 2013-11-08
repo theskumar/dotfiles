@@ -1,13 +1,22 @@
 # Load ~/.extra, ~/.exports, ~/.aliases and ~/.functions
 # ~/.extra can be used for settings you don’t want to commit
-for file in ~/.{extra,exports,aliases,functions}; do
+for file in ~/.{exports,aliases,functions,extra}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
 
-# Check for startup SPLASH script
-if test $(which SPLASH)
-then
-    SPLASH
+# Detect and load OS specific settigs
+platform='unknown'
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+   source ./.linux
+elif [[ "$unamestr" == 'FreeBSD' ]]; then
+   source ./.freebsd
+elif [[ "$unamestr" == 'Darwin' ]]; then
+   source ./.osx
 fi
 
+# Check for startup SPLASH script
+if hash SPLASH 2>/dev/null; then
+    SPLASH
+fi

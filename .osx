@@ -1,6 +1,9 @@
-################################################################################
-#   .exports
-################################################################################
+#
+# Contains scripts applicable to Mac OSX
+#
+
+
+# ---[ exports ]---------------------------------------------------------
 
 # http://kassiopeia.juls.savba.sk/~garabik/software/grc/README.txt
 source "`brew --prefix grc`/etc/grc.bashrc"
@@ -26,9 +29,7 @@ export PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 ln -s /Applications/MAMP/tmp/mysql/mysql.sock /tmp/ 2>/dev/null
 
 
-################################################################################
-#   .alias
-################################################################################
+# ---[ aliases ]---------------------------------------------------------
 
 alias o="open"
 alias oo="open ."
@@ -46,9 +47,7 @@ alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; rm -rfv ~/.Trash"
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
-################################################################################
-#   .functions
-################################################################################
+# ---[ functions ]---------------------------------------------------------
 
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`

@@ -156,17 +156,6 @@ setopt prompt_subst
 
 precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
 
-# Detect and load OS specific settigs
-platform='unknown'
-unamestr=`uname`
-if [[ "$unamestr" == 'Linux' ]]; then
-   source ~/.zsh/.linux
-elif [[ "$unamestr" == 'FreeBSD' ]]; then
-   source ~/.zsh/.freebsd
-elif [[ "$unamestr" == 'Darwin' ]]; then
-   source ~/.zsh/.osx
-fi
-
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 

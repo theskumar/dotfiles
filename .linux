@@ -1,3 +1,9 @@
+#
+# Contains scripts applicable to Mac OSX
+#
+
+# ---[ aliases ]---------------------------------------------------------
+
 # Simulate pbcopy and pbpaste for copying to and from the pasteboard/clipboard
 #
 #   from: http://whereswalden.com/2009/10/23/pbcopy-and-pbpaste-for-linux/
@@ -17,6 +23,4 @@ if hash grc 2>/dev/null; then
     for c in ${_supported[@]}; do
         alias $c='grc '$c
     done
-else
-    date "$@"
 fi
