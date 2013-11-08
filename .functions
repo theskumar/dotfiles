@@ -11,30 +11,6 @@ supertouch() {
     done
 }
 
-# Create a git.io short URL
-function gitio() {
-  if [ -z "$1" ]; then
-    echo "GitHub URL Shortener."
-    echo "Shorten and copies the url to clipboard."
-    echo "Usage: \`gitio <url> [slug]\`"
-    return 1
-  fi
-
-  if [ -z "$2" ] ; then
-    t=$(curl -s -i http://git.io/ -F "url=${1}" 2> /dev/null)
-  else
-    t=$(curl -s -i http://git.io/ -F "url=${1}" -F "code=${2}" 2> /dev/null)
-  fi
-  echo $t | grep 'Status'
-  status_code=$(echo $t | grep 'Status' | cut -d' ' -f 2)
-  if [ "$status_code" = "201" ] ; then
-    url=$(echo $t | grep 'Location' | cut -d' ' -f 2)
-    echo $url | pbcopy
-    echo $url
-    echo "Copied to clipboard!"
-  fi
-}
-
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
   local tmpFile="${@%/}.tar"

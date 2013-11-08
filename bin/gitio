@@ -1,0 +1,54 @@
+#!/bin/bash
+
+function _gitio() {
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+gitio 
+http://git.io
+
+Usage: gitio <url> [slug]
+
+Shorten github url and copies it to clipboard.
+
+  url  (Required) Any github url
+
+  slug (Optional) The shortname that you want to use. If not provided randomly generated shortname is returned.
+
+Dependencies
+
+  curl, pbcopy/xclip
+
+Copyright (c) 2013 "theskumar" Saurabh Kumar
+Licensed under the MIT license.
+HELP
+return; fi
+
+if [ ! "$1" ]; then
+  echo 'You must specify one or more parameter to run.'
+  return 1
+fi
+
+if [ -z "$2" ] ; then
+  t=$(curl -s -i http://git.io/ -F "url=${1}" 2> /dev/null)
+else
+  t=$(curl -s -i http://git.io/ -F "url=${1}" -F "code=${2}" 2> /dev/null)
+fi
+
+echo $t | grep 'Status'
+local status_code=$(echo $t | grep 'Status' | cut -d' ' -f 2)
+if [ "$status_code" = "201" ] ; then
+  short_url=$(echo $t | grep 'Location' | cut -d' ' -f 2)
+  echo $short_url
+
+  copied="Short URL copied to clipboard!"
+  which pbcopy >& /dev/null && echo $short_url | pbcopy && echo $copied
+  which xclip >& /dev/null && echo $short_url | xclip -selection clipboard && echo $copied
+fi
+
+exit 0
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+_gitio "$@"
