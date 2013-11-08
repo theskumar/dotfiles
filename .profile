@@ -17,6 +17,6 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
 fi
 
 # Check for startup SPLASH script
-if hash SPLASH 2>/dev/null; then
-    SPLASH
+if hash splash 2>/dev/null; then
+    splash
 fi
