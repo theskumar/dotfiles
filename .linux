@@ -24,3 +24,9 @@ if hash grc 2>/dev/null; then
         alias $c='grc '$c
     done
 fi
+
+if hash giggle 2>/dev/null; then
+	alias gitx='giggle 2>/dev/null &'
+else
+	alias gitx='gitk 2>/dev/null &'
+fi
