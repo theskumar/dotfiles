@@ -17,6 +17,11 @@ alias incognito='export HISTFILE=/dev/null'
 #alias todo="vi ~/.todo"
 
 # programs
+if hash ipython 2>/dev/null; then
+  alias py=ipython
+else
+  alias py=python
+fi
 alias scour="python ~/bin/scour/scour.py"
 alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
 alias sshconfig="vi ~/.ssh/config"
@@ -28,7 +33,6 @@ alias dt="cd ~/Desktop"
 alias w="cd ~/workspace"
 alias g="git"
 alias e="vim"
-alias py="ipython || python"
 alias rf='rm -rf'
 
 # Virtualenv
@@ -48,7 +52,9 @@ alias undopush="git push -f origin HEAD^:master"
 
 # Use `hub` as our git wrapper:
 #   http://defunkt.github.com/hub/
-alias git=hub
+if hash hub 2>/dev/null; then
+  alias git=hub
+fi
 
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
