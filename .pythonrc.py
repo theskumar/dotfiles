@@ -61,24 +61,24 @@ _c = TermColors()
 # Enable a History
 ##################
 
-history_file = os.path.expanduser('~/.python_history')
+# history_file = os.path.expanduser('~/.python_history')
 
 # Read the existing history if there is one
-if os.path.exists(history_file):
-    readline.read_history_file(history_file)
+#if os.path.exists(history_file):
+#    readline.read_history_file(history_file)
 
 # Set maximum number of items that will be written to the history file
-readline.set_history_length(300)
+# readline.set_history_length(300)
 
-readline.parse_and_bind('tab: complete')
-atexit.register(readline.write_history_file, history_file)
+#readline.parse_and_bind('tab: complete')
+#atexit.register(readline.write_history_file, history_file)
 
 
 # Enable Color Prompts
 ######################
 
-sys.ps1 = '%s>>> %s' % (_c['Green'], _c['Normal'])
-sys.ps2 = '%s... %s' % (_c['Red'], _c['Normal'])
+#sys.ps1 = '%s>>> %s' % (_c['Green'], _c['Normal'])
+#sys.ps2 = '%s... %s' % (_c['Red'], _c['Normal'])
 
 
 # Welcome message
