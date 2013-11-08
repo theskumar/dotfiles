@@ -44,8 +44,6 @@ if [ "$status_code" = "201" ] ; then
   which pbcopy >& /dev/null && echo $short_url | pbcopy && echo $copied
   which xclip >& /dev/null && echo $short_url | xclip -selection clipboard && echo $copied
 fi
-
-exit 0
 }
 
 # By putting the above code inside a function, if this file is sourced (which
