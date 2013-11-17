@@ -25,6 +25,7 @@ fi
 alias scour="python ~/bin/scour/scour.py"
 alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
 alias sshconfig="vi ~/.ssh/config"
+alias ports='sudo netstat -vatnp'
 
 # Shortcuts
 alias d="cd ~/Dropbox"
