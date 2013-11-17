@@ -52,6 +52,7 @@
 	conf = config --list
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
+	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 
 	# File level ignoring
 	assume   = update-index --assume-unchanged
@@ -112,8 +113,10 @@
 	autostash = true
 [giggle]
 	main-window-maximized = true
-	main-window-geometry = 1366x674+0+31
+	main-window-geometry = 0x0+0+0
 	main-window-view = FileView
+	history-view-vpane-position = 547
+	file-view-vpane-position = 649
 [remote "origin"]
 	receivepack = git receive-pack
 [difftool "sourcetree"]
