@@ -90,9 +90,9 @@ function fixcrlf(){
 	find . -type f -exec grep -qIP '\r\n' {} ';' -exec perl -pi -e 's/\r\n/\n/g' {} '+'
 }
 
-# Create a new directory and enter it
+# Create new directories and enter the first one
 function md() {
-  mkdir -p "$@" && cd "$@"
+  mkdir -pv "$@" && cd "$1"
 }
 
 # A better way to do git clone
