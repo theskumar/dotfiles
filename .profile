@@ -9,11 +9,11 @@ unset file
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
-   source ./.linux
+   source ~/.linux
 elif [[ "$unamestr" == 'FreeBSD' ]]; then
-   source ./.freebsd
+   source ~/.freebsd
 elif [[ "$unamestr" == 'Darwin' ]]; then
-   source ./.osx
+   source ~/.osx
 fi
 
 # Check for startup SPLASH script
