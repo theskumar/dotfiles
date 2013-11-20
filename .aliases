@@ -39,8 +39,6 @@ alias rf='rm -rf'
 # Virtualenv
 alias sv="source venv/bin/activate"
 
-alias ls="command ls --color"
-
 # List all files colorized in long format, including dot files
 alias la="ls -la"
 

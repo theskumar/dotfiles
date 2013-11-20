@@ -57,13 +57,13 @@ function l () {
   case "$1" in
   recent)
     shift
-    ls --color -vtl "$@" | head -n 10
+    ls -vtl "$@" | head -n 10
     ;;
   size)
     shift
-    ls --color -vSl "$@"
+    ls -vSl "$@"
     ;;
-  *) ls --color -vl "$@"
+  *) ls -vl "$@"
     ;;
   esac
 }
