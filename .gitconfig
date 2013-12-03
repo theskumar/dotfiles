@@ -36,6 +36,15 @@
 	co = checkout
 	cob = checkout -b
 	re = rebase
+	ri = rebase -i
+	rim = rebase -i master
+	rc = rebase --continue
+	ra = rebase --abort
+	rs = rebase --skip
+	ss = stash save
+	sp = stash pop
+	sd = stash drop
+	sc = stash clear
 	sad = submodule add
 	df = diff --color --color-words --abbrev
 	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
