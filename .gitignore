@@ -20,3 +20,5 @@ dist
 .sass-cache
 app/bower_components
 
+.netwhist
+
