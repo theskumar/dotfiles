@@ -1,6 +1,6 @@
 export TZ='Asia/Kolkata'
 
-#make vim the default editor
+# Make vim the default editor
 export EDITOR="vim"
 
 # Don’t clear the screen after quitting a manual page
@@ -19,7 +19,7 @@ export HISTTIMEFORMAT
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 
-# some sane color fixes
+# Some sane color fixes
 export CLICOLOR=1
 export LSCOLORS=DxGxcxdxCxegedabagacad
 
@@ -33,7 +33,7 @@ export LC_TIME="en_US.UTF-8"
 export LC_ALL=
 
 
-# let pip install the dependencies from local cache
+# Let pip install the dependencies from local cache
 export PIP_DOWNLOAD_CACHE=$HOME/Library/Caches/pip-downloads
 export PYTHONSTARTUP=$HOME/.pythonrc.py
 export PYTHONHASHSEED=random
@@ -44,8 +44,11 @@ export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 
 export EC2_HOME=$HOME/bin/ec2
 export JAVA_HOME=/Library/JAVA/Home
-export PATH=~/bin:~/dotfiles/bin:$PATH
 
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export PATH=~/bin:~/dotfiles/bin:$PATH
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+# grep stuff
+export GREP_OPTIONS='--color'
 

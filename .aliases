@@ -1,20 +1,10 @@
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
-# Easier navigation: .., ..., ~ and -
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+# Easier navigation: ~ and -
 alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
-
-# be nice
-alias please=sudo
 
 alias incognito='export HISTFILE=/dev/null'
-
-#alias todo="vi ~/.todo"
 
 # programs
 if hash ipython 2>/dev/null; then
@@ -31,7 +21,7 @@ alias ports='sudo netstat -vatnp'
 alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias w="cd ~/workspace"
+alias w="cd ~/work"
 alias g="git"
 alias e="vim"
 alias rf='rm -rf'
@@ -44,7 +34,6 @@ alias la="ls -la"
 
 # List only directories
 alias lsd='ls -l | grep "^d"'
-
 
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
@@ -67,8 +56,6 @@ alias gb='git branch -va'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gaa='git add -A; git status -sb'
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 
 #clear does not take you to top anymore
 alias clear='echo -e "\e[2J"'
@@ -101,9 +88,6 @@ alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
 alias df='df -h'
 alias du='du -hs'
 
-#grep stuff
-export GREP_OPTIONS='--color'
-
 alias halt='sudo shutdown -h now'
 alias reboot='sudo reboot'
 
@@ -117,5 +101,4 @@ alias -g R='$(git rev-parse --show-toplevel 2> /dev/null)'
 alias sz='source ~/.zshrc'
 alias ez='e ~/.zshrc'
 
-alias entertain='mplayer "$(find "." -type f -regextype posix-egrep -regex ".*\.(avi|mkv|flv|mpg|mpeg|mp4|wmv|3gp|mov|divx)" | shuf -n1)"'
 alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
