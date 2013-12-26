@@ -52,8 +52,6 @@ unsetopt beep
 
 ### Key bindings ###
 bindkey -e
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
 bindkey '^[[Z' reverse-menu-complete
 bindkey '^[/' undo
 
@@ -147,16 +145,13 @@ source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
 
 autoload -U colors
 colors
 setopt prompt_subst
 
 precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
-
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 
 

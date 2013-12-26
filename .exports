@@ -45,3 +45,7 @@ export TODOTXT_SORT_COMMAND='env LC_COLLATE=C sort -k 2,2 -k 1,1n'
 export EC2_HOME=$HOME/bin/ec2
 export JAVA_HOME=/Library/JAVA/Home
 export PATH=~/bin:~/dotfiles/bin:$PATH
+
+# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
+
