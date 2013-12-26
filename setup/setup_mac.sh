@@ -24,11 +24,17 @@ brew install grc coreutils
 echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
 brew install findutils
+
 # Install Bash 4
 brew install bash
+brew install zsh
 
 # Install wget with IRI support
 brew install wget --enable-iri
+
+# Install homebrew Cask (https://github.com/phinze/homebrew-cask)
+brew tap phinze/homebrew-cask
+brew install brew-cask
 
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
@@ -43,6 +49,11 @@ brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
 
+# Install Google Chrome
+brew cask install google-chrome
+
+# Install Dropbox
+brew cask install dropbox
 
 # SpotifyControl
 git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
