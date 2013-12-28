@@ -25,6 +25,7 @@ alias w="cd ~/work"
 alias g="git"
 alias e="vim"
 alias rf='rm -rf'
+alias pi='pip install'
 
 # Virtualenv
 alias sv="source venv/bin/activate"
