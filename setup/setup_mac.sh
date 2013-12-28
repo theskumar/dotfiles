@@ -62,6 +62,11 @@ installcask dropbox
 installcask iterm2
 installcask vlc
 
+# Fonts
+brew tap caskroom/fonts
+
+brew cask install font-source-code-pro
+
 # SpotifyControl
 git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
 
