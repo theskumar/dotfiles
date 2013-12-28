@@ -6,7 +6,7 @@
 function _setup() {
 
     local setup_dir='~/dotfiles/'
-    declare -a symoblic_links=(.ackrc .aliases .bashrc .curlrc .exports .exports .freebsd .functions .gitattributes .gitconfig .inputrc .linux .osx .profile .pythonrc.py .vimrc .wgetrc .xmobarrc .Xresources .zshrc .vim .xmonad)
+    declare -a symoblic_links=(.cookiecutterrc .ackrc .aliases .bashrc .curlrc .exports .exports .freebsd .functions .gitattributes .gitconfig .inputrc .linux .osx .profile .pythonrc.py .vimrc .wgetrc .xmobarrc .Xresources .zshrc .vim .xmonad)
 
     for file in ${symoblic_links[@]}
     do
