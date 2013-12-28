@@ -32,10 +32,6 @@ brew install zsh
 # Install wget with IRI support
 brew install wget --enable-iri
 
-# Install homebrew Cask (https://github.com/phinze/homebrew-cask)
-brew tap phinze/homebrew-cask
-brew install brew-cask
-
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
 brew install homebrew/dupes/grep
@@ -49,11 +45,22 @@ brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
 
-# Install Google Chrome
-brew cask install google-chrome
 
-# Install Dropbox
-brew cask install dropbox
+# Native apps
+brew tap phinze/homebrew-cask
+brew install brew-cask
+function installcask() {
+    if brew cask info "${@}" | grep "Not installed" > /dev/null; then
+        brew cask install "${@}"
+    else
+        echo "${@} is already installed."
+    fi
+}
+
+installcask google-chrome
+installcask dropbox
+installcask iterm2
+installcask vlc
 
 # SpotifyControl
 git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
