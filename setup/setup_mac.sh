@@ -44,6 +44,7 @@ brew install rename htop-osx tree
 brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
+brew install heroku-toolbelt
 
 # Native apps
 brew tap phinze/homebrew-cask
