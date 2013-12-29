@@ -39,12 +39,11 @@ brew tap josegonzalez/homebrew-php
 
 # Install everything else
 brew install ack
-brew install git git-extras
+brew install git git-extras hub
 brew install rename htop-osx tree
 brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
-
 
 # Native apps
 brew tap phinze/homebrew-cask
@@ -61,6 +60,14 @@ installcask google-chrome
 installcask dropbox
 installcask iterm2
 installcask vlc
+
+# Postgres 9 Database
+brew install postgres
+installcask pgadmin3
+ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+psql postgres -c 'CREATE EXTENSION "adminpack";'
+sudo gem install pg
 
 # Fonts
 brew tap caskroom/fonts
