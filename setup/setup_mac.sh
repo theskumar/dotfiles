@@ -60,6 +60,7 @@ installcask google-chrome
 installcask dropbox
 installcask iterm2
 installcask vlc
+installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package && qlmanage -r
 
 # Postgres 9 Database
 brew install postgres
