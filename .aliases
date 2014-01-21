@@ -53,6 +53,7 @@ alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup 
 alias gp='git push'
 alias gap='git add -p; git commit -v; git status -sb'
 alias gd='git diff'
+alias gdc='git diff --cached'
 alias gc='git commit -m'
 alias gca='git commit -a'
 alias gco='git checkout'
