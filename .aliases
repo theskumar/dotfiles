@@ -51,6 +51,7 @@ fi
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 
 alias gp='git push'
+alias gap='git add -p'
 alias gd='git diff'
 alias gc='git commit -am'
 alias gca='git commit -a'
