@@ -29,6 +29,8 @@ alias pi='pip install'
 
 # Virtualenv
 alias sv="source venv/bin/activate"
+alias isv="virtualenv venv; source venv/bin/activate"
+
 
 # List all files colorized in long format, including dot files
 alias la="ls -la"
