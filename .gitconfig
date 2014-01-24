@@ -59,6 +59,8 @@
 	fo = fetch origin
 	fa = fetch --all
 	conf = config --list
+	t = tag
+	td = tag -d
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
