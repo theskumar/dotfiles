@@ -19,6 +19,7 @@ source "`brew --prefix grc`/etc/grc.bashrc"
 # So here is it!
 # http://www.gnu.org/software/coreutils/manual/html_node/index.html
 export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+export PATH=/Applications/MAMP/Library/bin/:$PATH
 export PATH=/usr/local/tranquil/bin:$PATH
 
 # source ~/.rvm/scripts/rvm
