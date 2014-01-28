@@ -2,4 +2,5 @@ default_context:
     full_name: "Saurabh Kumar"
     email: "thes.kumar@gmail.com"
     github_username: "theskumar"
+    year: "2014"
 cookiecutters_dir: "~/.cookiecutters/"
