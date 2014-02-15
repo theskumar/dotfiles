@@ -9,6 +9,7 @@ OS related setup scripts can be found in `setup` folder.
 
 * Zsh
 * For Mac and debian/ubuntu
+* `<hr />` for your terminal.
 
 ## Setup
 
