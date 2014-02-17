@@ -26,6 +26,8 @@ alias g="git"
 alias e="vim"
 alias rf='rm -rf'
 alias pi='pip install'
+alias pipfix='piprot --verbatim --latest'
+alias pipgrep='pip freeze | grep '
 
 # Virtualenv
 alias sv="source venv/bin/activate"
