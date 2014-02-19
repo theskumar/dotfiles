@@ -33,12 +33,12 @@ alias pipgrep='pip freeze | grep '
 alias sv="source venv/bin/activate"
 alias isv="virtualenv venv; source venv/bin/activate"
 
-
-# List all files colorized in long format, including dot files
-alias la="ls -la"
-
-# List only directories
-alias lsd='ls -l | grep "^d"'
+# List direcory contents
+alias lsa='ls -lah'
+alias l='ls -la'
+alias ll='ls -l'
+alias la='ls -lA'
+alias lsd='ls -l | grep "^d"' # list only directories
 
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
