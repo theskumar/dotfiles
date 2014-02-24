@@ -120,5 +120,3 @@ source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.
 zmodload zsh/terminfo
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-
-precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
