@@ -67,7 +67,7 @@ unsetopt beep
 
 # ---[ Plugins ]---------------------------------------------------------
 
-plugins=(git gibo)
+plugins=(git gibo autojump)
 
 is_plugin() {
   local base_dir=$1

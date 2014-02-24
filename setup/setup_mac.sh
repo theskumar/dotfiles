@@ -41,6 +41,7 @@ brew tap josegonzalez/homebrew-php
 brew install ack
 brew install git git-extras hub
 brew install rename htop-osx tree
+brew install autojump
 brew install legit # http://www.git-legit.org/
 brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
