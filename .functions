@@ -1,3 +1,6 @@
+# copy the work directory to clipboard
+function pwdc {pwd | tr -d "\r\n" | pbcopy }
+
 # touch a file while creating directories
 supertouch() {
     if [ $# -lt 1 ]; then
