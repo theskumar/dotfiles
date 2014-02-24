@@ -18,9 +18,8 @@ for config_file ($ZSH/lib/*.zsh); do
   source $config_file
 done
 
-fpath=(~/.zsh/functions $fpath)
-fpath=(~/.zsh/modules/zsh-completions/src $fpath)
-autoload -U ~/.zsh/functions/*(:t)
+fpath=($ZSH/functions $ZSH/modules/zsh-users/zsh-completions/src $fpath)
+autoload -U $ZSH/functions/*(:t)
 
 # predictive typing (`man zshcontrib`)
 #autoload -U predict-on
@@ -78,17 +77,30 @@ is_plugin() {
 # Add all defined plugins to fpath. This must be done
 # before running compinit.
 for plugin ($plugins); do
-    fpath=($ZSH/plugins/$plugin $fpath)
+    if is_plugin $ZSH $plugin; then
+      fpath=($ZSH/plugins/$plugin $fpath)
+    fi
 done
 
-autoload -Uz compinit
-compinit
+# Figure out the SHORT hostname
+if [ -n "$commands[scutil]" ]; then
+  # OS X
+  SHORT_HOST=$(scutil --get ComputerName)
+else
+  SHORT_HOST=${HOST/.*/}
+fi
+
+# Save the location of the current completion dump file.
+ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${SHORT_HOST}-${ZSH_VERSION}"
+
+# Load and run compinit
+autoload -U compinit
+compinit -i -d "${ZSH_COMPDUMP}"
 
 # Load all of the plugins that were defined in ~/.zshrc
 for plugin ($plugins); do
     source $ZSH/plugins/$plugin/$plugin.plugin.zsh
 done
-
 
 precmd() {
     # send a visual bell to awesome
@@ -102,7 +114,6 @@ preexec_functions=( "${preexec_functions[@]:#_title_preexec}" _title_preexec )
 
 # ---[ Modules ]--------------------------------------------------------
 
-. $HOME/.zsh/modules/z/z.sh
 source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
