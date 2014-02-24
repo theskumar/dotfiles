@@ -6,6 +6,9 @@ alias ~="cd ~" # `cd` is probably faster to type though
 
 alias incognito='export HISTFILE=/dev/null'
 
+# Super user
+alias _='sudo'
+
 # programs
 if hash ipython 2>/dev/null; then
   alias py=ipython
