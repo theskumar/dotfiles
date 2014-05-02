@@ -73,6 +73,9 @@ launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 psql postgres -c 'CREATE EXTENSION "adminpack";'
 sudo gem install pg
 
+# memcache dev
+brew install libmemcached
+
 # Fonts
 brew tap caskroom/fonts
 
