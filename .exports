@@ -1,4 +1,5 @@
 export TZ='Asia/Kolkata'
+export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
 # Make vim the default editor
 export EDITOR="vim"
