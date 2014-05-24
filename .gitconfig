@@ -64,6 +64,7 @@
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
+	yesterday = !git log --since=\"2 day ago\" --until=midnight --author=\"$(git config user.name)\" --oneline
 
 	# File level ignoring
 	assume   = update-index --assume-unchanged
@@ -168,3 +169,6 @@
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 [url "git@github.com:theskumar/"]
   insteadOf = "git://github.com/theskumar/"
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
