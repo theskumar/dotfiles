@@ -31,6 +31,7 @@ brew install zsh
 
 # Install wget with IRI support
 brew install wget --enable-iri
+brew install curl --with-ssl --with-ssh
 
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
@@ -39,7 +40,7 @@ brew tap josegonzalez/homebrew-php
 
 # Install everything else
 brew install ack
-brew install git git-extras hub
+brew install git git-extras hub git-ftp
 brew install rename htop-osx tree
 brew install autojump
 brew install legit # http://www.git-legit.org/
