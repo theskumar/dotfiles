@@ -48,6 +48,7 @@ brew install Zopfli # https://code.google.com/p/zopfli/
 brew install fortune cowsay
 brew install heroku-toolbelt
 brew install node
+brew install ngrok # https://ngrok.com/
 
 # Native apps
 brew tap phinze/homebrew-cask
