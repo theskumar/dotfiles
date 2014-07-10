@@ -39,8 +39,7 @@ alias pipfix='piprot --verbatim --latest'
 alias pipgrep='pip freeze | grep '
 
 # Virtualenv
-alias sv="source venv/bin/activate"
-alias isv="virtualenv venv; source venv/bin/activate"
+alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv venv; touch requirements.txt; fi; source venv/bin/activate'
 
 # List direcory contents
 alias lsa='ls -lah'
