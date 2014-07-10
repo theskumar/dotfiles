@@ -10,8 +10,6 @@ Thumbs.db
 .Spotlight-V100
 .Trashesvenv
 
-# Local Virtualenv
-venv/
 
 # Packages ignore
 node_modules
@@ -23,3 +21,9 @@ app/bower_components
 .netwhist
 
 _design_assets
+
+# Local Virtualenv
+venv/
+
+# Editor's Ignore
+.ropeproject
