@@ -53,3 +53,6 @@ PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 # grep stuff
 export GREP_OPTIONS='--color'
 
+# unicode stuff for terminal
+export MUG=$'\360\237\215\272'
+export CHEERS=$'\360\237\215\273'
