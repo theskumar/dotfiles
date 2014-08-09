@@ -47,6 +47,7 @@ export EC2_HOME=$HOME/bin/ec2
 export JAVA_HOME=/Library/JAVA/Home
 
 export PATH=~/bin:~/dotfiles/bin:$PATH
+export PATH=/usr/local/mysql/bin/:$PATH
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
