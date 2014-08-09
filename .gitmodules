@@ -7,3 +7,6 @@
 [submodule ".zsh/modules/zsh-users/zsh-completions"]
 	path = .zsh/modules/zsh-users/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
+[submodule ".zsh/plugins/pure"]
+	path = .zsh/plugins/pure
+	url = https://github.com/sindresorhus/pure.git

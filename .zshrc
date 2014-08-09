@@ -66,7 +66,7 @@ unsetopt beep
 
 # ---[ Plugins ]---------------------------------------------------------
 
-plugins=(git gibo autojump django)
+plugins=(git gibo autojump django pure)
 
 is_plugin() {
   local base_dir=$1
