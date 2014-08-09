@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+''' Put your docstring here
+'''
+from __future__ import unicode_literals, absolute_import
+import sys
+import urllib
+import json
+
+
+def get_tags(imageurl):
+    data = urllib.urlencode({"img": imageurl})
+    results = urllib.urlopen("https://sender.blockspring.com/api_v1/blocks/d54a2e2c28aebab4fe079ff547cea495?api_key=aa0e6aa807840546c7e5d1bddfd0f465", data).read()
+    return json.loads(json.loads(results)['results'])
+
+
+def main(imageurl):
+    print ", ".join(get_tags(imageurl))
+
+
+if __name__ == "__main__":
+    imageurl = sys.argv[1]
+    main(imageurl)
