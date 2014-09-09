@@ -6,6 +6,8 @@
 	signoff = true
 	coverLetter = auto
 [alias]
+	bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+	bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
 	c = commit -am
 	ci = commit -v
 	cia = commit --amend -va
@@ -13,6 +15,7 @@
 	cpc = cherry-pick --continue
 	cpa = cherry-pick --abort
 	cpq = cherry-pick --quit
+	ec = config --global -e
 	r = reset
 	rh = reset --hard
 	rt = remote -v
@@ -26,7 +29,6 @@
 	bM = branch -M
 	bra = branch -va
 	bru = branch -u
-	up = pull
 	p = push
 	g = grep -p
 	b = blame -M -CC
@@ -54,7 +56,7 @@
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	ri = rebase --interactive --autosquash
 	who = !echo \"== Commits by Author:\\n`git shortlog -s -n`\\n\"
-	up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
 	f = fetch
 	fo = fetch origin
 	fa = fetch --all
