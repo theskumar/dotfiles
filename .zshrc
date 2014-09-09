@@ -126,3 +126,6 @@ precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
 ## smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
+
+# added by travis gem
+[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
