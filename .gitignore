@@ -26,4 +26,5 @@ _design_assets
 venv/
 
 # Editor's Ignore
-.ropeproject
+*.ropeproject
+*.glue
