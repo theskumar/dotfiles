@@ -1,0 +1,3 @@
+echo "#!/bin/sh" > .git/hooks/pre-commit
+echo "flake8 ." >> .git/hooks/pre-commit
+chmod a+x .git/hooks/pre-commit
