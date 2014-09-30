@@ -49,6 +49,7 @@ brew install fortune cowsay
 brew install heroku-toolbelt
 brew install node
 brew install ngrok # https://ngrok.com/
+brew install sshrc # https://github.com/Russell91/sshrc
 
 # Native apps
 brew tap phinze/homebrew-cask
