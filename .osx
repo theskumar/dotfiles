@@ -32,6 +32,15 @@ export PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 alias o="open"
 alias oo="open ."
 
+# Lock screen
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# add a poor facsimile for Linux's `free` if we're on Mac OS
+if ! type free > /dev/null 2>&1 && [[ "$(uname -s)" == 'Darwin' ]]
+then
+  alias free="top -s 0 -l 1 -pid 0 -stats pid | grep '^PhysMem: ' | cut -d : -f 2- | tr ',' '\n'"
+fi
+
 # requires github.com/dronir/SpotifyControl
 alias spotify="osascript ~/bin/SpotifyControl/SpotifyControl.scpt"
 
@@ -46,12 +55,6 @@ alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && 
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 
 # ---[ functions ]---------------------------------------------------------
-
-# add a poor facsimile for Linux's `free` if we're on Mac OS
-if ! type free > /dev/null 2>&1 && [[ "$(uname -s)" == 'Darwin' ]]
-then
-  alias free="top -s 0 -l 1 -pid 0 -stats pid | grep '^PhysMem: ' | cut -d : -f 2- | tr ',' '\n'"
-fi
 
 # Change working directory to the top-most Finder window location
 function cdf() { # short for `cdfinder`
