@@ -30,3 +30,7 @@ if hash giggle 2>/dev/null; then
 else
 	alias gitx='gitk 2>/dev/null &'
 fi
+
+# Hide/Show desktop icons
+alias hidedesktopicons="gsettings set org.gnome.desktop.background show-desktop-icons false"
+alias showdesktopicons="gsettings set org.gnome.desktop.background show-desktop-icons true"
