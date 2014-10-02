@@ -20,5 +20,3 @@ fi
 if hash splash 2>/dev/null; then
     splash
 fi
-
-alias starwars="telnet towel.blinkenlights.nl"

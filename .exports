@@ -47,13 +47,9 @@ export EC2_HOME=$HOME/bin/ec2
 export JAVA_HOME=/Library/JAVA/Home
 
 export PATH=~/bin:~/dotfiles/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=/usr/local/mysql/bin/:$PATH
 PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 # grep stuff
 export GREP_OPTIONS='--color'
-
-# unicode stuff for terminal
-export MUG=$'\360\237\215\272'
-export CHEERS=$'\360\237\215\273'

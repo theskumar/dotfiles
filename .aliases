@@ -21,22 +21,36 @@ if hash ipython 2>/dev/null; then
 else
   alias py=python
 fi
+
+# `cat` with beautiful colors. requires Pygments installed.
+#     sudo easy_install Pygments
+alias catn='cat -n'
+
+
+# clear does not take you to top anymore
+alias clear='echo -e "\e[2J"'
+
 alias scour="python ~/bin/scour/scour.py"
 alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
 alias sshconfig="vi ~/.ssh/config"
 alias ports='sudo netstat -vatnp'
 
-# Shortcuts
+# ------------------------------------------------------------------------------
+# | Shorter Commands                                                           |
+# ------------------------------------------------------------------------------
 alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias w="cd ~/work"
 alias g="git"
+alias c='clear'
 alias e="vim"
 alias rf='rm -rf'
 alias pi='pip install'
 alias pipfix='piprot --verbatim --latest'
 alias pipgrep='pip freeze | grep '
+alias q="exit"
+alias :q="exit"
 
 # Virtualenv
 alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv venv; touch requirements.txt; fi; source venv/bin/activate'
@@ -48,6 +62,10 @@ alias ll='ls -l'
 alias la='ls -lA'
 alias lsd='ls -l | grep "^d"' # list only directories
 
+
+# ------------------------------------------------------------------------------
+# | Git Commands                                                               |
+# ------------------------------------------------------------------------------
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
 
@@ -72,13 +90,10 @@ alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gaa='git add :/; git status -sb'
 
-#clear does not take you to top anymore
-alias clear='echo -e "\e[2J"'
 
-# `cat` with beautiful colors. requires Pygments installed.
-#     sudo easy_install Pygments
-alias c='clear'
-alias catn='cat -n'
+# ------------------------------------------------------------------------------
+# | Network                                                                    |
+# ------------------------------------------------------------------------------
 
 # Enhanced WHOIS lookups
 alias whois="whois -h whois-servers.net"
@@ -117,3 +132,9 @@ alias sz='source ~/.zshrc'
 alias ez='e ~/.zshrc'
 
 alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
+
+# ------------------------------------------------------------------------------
+# | Other                                                                      |
+# ------------------------------------------------------------------------------
+
+alias starwars="telnet towel.blinkenlights.nl"

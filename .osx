@@ -29,6 +29,17 @@ export PATH="$(brew --prefix josegonzalez/php/php54)/bin:$PATH"
 
 # ---[ aliases ]---------------------------------------------------------
 
+# Homebrew
+if [ -x "$(command -v brew)" ]; then
+    alias brewd="brew doctor"
+    alias brewi="brew install"
+    alias brewr="brew uninstall"
+    alias brews="brew search"
+    alias brewu="brew update &&  \
+                 brew upgrade && \
+                 brew cleanup"
+fi
+
 alias o="open"
 alias oo="open ."
 
