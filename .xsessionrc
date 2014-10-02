@@ -37,4 +37,3 @@ pkill nm-applet; nm-applet &
 
 pkill trayer; trayer --edge top --widthtype request --width 100 --height 14 --padding 5 --transparent true &
 xset -b
-

@@ -1,7 +1,1 @@
-default_context:
-    email: "saurabh@saurabh-kumar.com"
-    github_username: "theskumar"
-    year: "2014"
-    author_name: "Saurabh Kumar"
-    domain_name: "saurabh-kumar.com"
 cookiecutters_dir: "~/.cookiecutters/"

@@ -1,10 +1,13 @@
+#
 # Monitor IO in real-time (open files etc).
 function openfiles() {
   sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
 }
 
 # copy the work directory to clipboard
-function pwdc {pwd | tr -d "\r\n" | pbcopy }
+function pwdc() {
+  pwd | tr -d "\r\n" | pbcopy
+}
 
 # touch a file while creating directories
 supertouch() {
@@ -103,6 +106,7 @@ function md() {
   mkdir -pv "$@" && cd "$1"
 }
 
+
 # A better way to do git clone
 # http://saurabhworld.in/go/gitclone
 function clone() {
@@ -110,7 +114,7 @@ function clone() {
     reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
     git clone $url $reponame;
     cd $reponame;
-    subl .
+    s .
 }
 
 
@@ -126,11 +130,13 @@ function httpcompression() {
   encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
 }
 
+
 # take this repo and copy it to somewhere else minus the .git stuff.
 function gitexport(){
   mkdir -p "$1"
   git archive master | tar -x -C "$1"
 }
+
 
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
@@ -141,6 +147,7 @@ function server() {
   python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
+
 # Start a PHP server from a directory, optionally specifying the port
 # (Requires PHP 5.4.0+.)
 function phpserver() {
@@ -150,6 +157,7 @@ function phpserver() {
   php -S "${ip}:${port}"
 }
 
+
 # function to normalize a crupt git repo
 function git_normalize_eol(){
   echo "* text=auto" >>.gitattributes
@@ -158,5 +166,5 @@ function git_normalize_eol(){
   git status        # Show files that will be normalized
   git add -u
   git add .gitattributes
-  git commit -m "Introduce end-of-line normalization"
+  git commit -m "fix(git): introduce end-of-line normalization"
 }

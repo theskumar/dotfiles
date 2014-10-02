@@ -27,7 +27,7 @@ autoload -U $ZSH/functions/*(:t)
 #zle -N zle-line-init
 #zstyle ':predict' toggle true
 ##zstyle ':predict' verbose true
-
+# zstyle ':completion:*:*:git:*' script $ZSH/.git-completion.sh
 
 # Hooks
 typeset -ga precmd_functions
@@ -126,6 +126,3 @@ precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
 ## smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
-
-# added by travis gem
-[ -f ~/.travis/travis.sh ] && source ~/.travis/travis.sh
