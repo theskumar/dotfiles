@@ -53,3 +53,6 @@ PATH=$PATH:$HOME/bin/ec2/bin # Add PATH to ec2 commandline tools.
 
 # grep stuff
 export GREP_OPTIONS='--color'
+
+export GOPATH=$HOME/gocode
+export PATH=$PATH:$GOPATH/bin
