@@ -105,6 +105,7 @@
 	autocrlf = false
 	ui = auto
 	whitespace = trailing-space,space-before-tab
+	editor = subl -n -w
 [diff]
 	tool = vimdiff
 	submodule = log
