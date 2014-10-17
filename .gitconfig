@@ -69,6 +69,7 @@
 	who = shortlog -sne --no-merges
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 	yesterday = !git log --since=\"2 day ago\" --until=midnight --author=\"$(git config user.name)\" --oneline
+	ls = ls-files
 
 	# File level ignoring
 	assume   = update-index --assume-unchanged
