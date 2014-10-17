@@ -7,29 +7,30 @@ OS related setup scripts can be found in `setup` folder.
 
 ## Features
 
+* Sane defaults for Mac and debian/ubuntu
 * Zsh
-* For Mac and debian/ubuntu
-* `<hr />` for your terminal.
+* Git
+* vim
 
 ## Setup
 
-### Basic tools depending on platform
+If you are using Mac OSX, this repo includes a script to install dependecies in this [script](setup/setup_mac.sh). 
 
-On depending on the platform you should install basic dependencies.
+    curl -L http://git.io/3hD1Kw | sh
 
-For Mac: `curl -L http://git.io/3hD1Kw | sh`
+This [script](setup/osx_defaults.sh) will help you add some defaults to your mac.
 
-Also, checkout `setup` folder
+For other linux, checkout `apt_init.sh` file in [`setup`](setup/) folder, i have tried to keep this updated, but you'll the full list of packages in `setup_mac.sh` which you can install manually.
 
 ### Installing dotfiles
 
-Clone into `~/dotfiles` and symlink the files to `~`
+Once you have installed basics software and libraries, you can install the dotfililes bu, clone this repo into `~/dotfiles` and symlinking the files inside it to your home directory `~`. Symlinking helps keep all your dotfiles maintainable inside a git repo, while being functional at the same time.
 
 ```shell
-cd ~ && git clone --recursive git@github.com:theskumar/dotfiles.git
+cd ~ && git clone --recursive git@github.com:theskumar/dotfiles.git && cd ~/dotfiles
 # To create symbolic links in your home
-cd ~/dotfiles
-sh bootstrap.sh
+sh bootstrap.sh  ## this will create the required symlinks
+pip install -r requirements.pip
 ```
 
 ## Not Exactly What You Want?
@@ -43,3 +44,4 @@ If you have differences in your preferred setup, I encourage you to fork this to
 ### Or Submit a Pull Request
 
 I also accept pull requests on this, if they're small, atomic, and if they make my own project development experience better.
+
