@@ -1,5 +1,26 @@
-function gitignore() {
-    curl https://www.gitignore.io/api/$@;
+# ------------------------------------------------------------------------------
+# | File System                                                                |
+# ------------------------------------------------------------------------------
+
+# Create a data URI from a file
+datauri() {
+
+    local mimeType=""
+
+    if [ -f "$1" ]; then
+        mimeType=$(file -b --mime-type "$1")
+        #                └─ do not prepend the filename to the output
+
+        if [[ $mimeType == text/* ]]; then
+            mimeType="$mimeType;charset=utf-8"
+        fi
+
+        printf "data:%s;base64,%s" \
+                    "$mimeType" \
+                    "$(openssl base64 -in "$1" | tr -d "\n")"
+    else
+        print_error "'$1' is not a file."
+    fi
 }
 
 # Monitor IO in real-time (open files etc).
@@ -93,11 +114,6 @@ function json() {
 }
 
 
-# Display http headers of a request
-function headers(){
-	curl -sv "$@" 2>&1 >/dev/null | grep -v "^\*" | grep -v "^}" | cut -c3-
-}
-
 # Recursively convert CRLF to LF in non-binary files under the current directory
 # Assumes perl installed
 function fixcrlf(){
@@ -109,21 +125,18 @@ function md() {
   mkdir -pv "$@" && cd "$1"
 }
 
-
-# A better way to do git clone
-# http://saurabhworld.in/go/gitclone
-function clone() {
-    url=$1;
-    reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
-    git clone $url $reponame;
-    cd $reponame;
-    s .
-}
-
-
 # Copy w/ progress
 cp_p () {
   rsync -WavP --human-readable --progress $1 $2
+}
+
+# ------------------------------------------------------------------------------
+# | Web                                                                        |
+# ------------------------------------------------------------------------------
+
+# Display http headers of a request
+function headers(){
+  curl -sv "$@" 2>&1 >/dev/null | grep -v "^\*" | grep -v "^}" | cut -c3-
 }
 
 
@@ -132,14 +145,6 @@ cp_p () {
 function httpcompression() {
   encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
 }
-
-
-# take this repo and copy it to somewhere else minus the .git stuff.
-function gitexport(){
-  mkdir -p "$1"
-  git archive master | tar -x -C "$1"
-}
-
 
 # Start an HTTP server from a directory, optionally specifying the port
 function server() {
@@ -160,6 +165,9 @@ function phpserver() {
   php -S "${ip}:${port}"
 }
 
+# ------------------------------------------------------------------------------
+# | Git                                                                        |
+# ------------------------------------------------------------------------------
 
 # function to normalize a crupt git repo
 function git_normalize_eol(){
@@ -170,4 +178,25 @@ function git_normalize_eol(){
   git add -u
   git add .gitattributes
   git commit -m "fix(git): introduce end-of-line normalization"
+}
+
+function gitignore() {
+    curl https://www.gitignore.io/api/$@;
+}
+
+
+# take this repo and copy it to somewhere else minus the .git stuff.
+function gitexport(){
+  mkdir -p "$1"
+  git archive master | tar -x -C "$1"
+}
+
+# A better way to do git clone
+# http://saurabhworld.in/go/gitclone
+function clone() {
+    url=$1;
+    reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
+    git clone $url $reponame;
+    cd $reponame;
+    s .
 }
