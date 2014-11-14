@@ -85,6 +85,9 @@
 	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
 	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
 
+	# GitHub Pull Request Management
+	pr = "!f() { git fetch -fu origin refs/pull/$1/head:pr/$1; } ; f"
+
 	reauthor = !sh -c 'eval `git log --reverse --topo-order --pretty=format:\"git cherry-pick -m 1 %H &&  git commit --amend -C %H --author=\\\"%aN <%aE>\\\" && \" $0 ` "echo success" '
 
   # Initialize git in a better way
