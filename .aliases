@@ -114,6 +114,7 @@ alias gurl="curl --compressed"
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
+alias pycclean='find . -name \*.pyc -type f -ls -delete'
 
 alias df='df -h'
 alias du='du -hs'
