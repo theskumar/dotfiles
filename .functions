@@ -1,4 +1,7 @@
-#
+function gitignore() {
+    curl https://www.gitignore.io/api/$@;
+}
+
 # Monitor IO in real-time (open files etc).
 function openfiles() {
   sudo dtrace -n 'syscall::open*:entry { printf("%s %s",execname,copyinstr(arg0)); }'
