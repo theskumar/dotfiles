@@ -71,6 +71,8 @@
 	yesterday = !git log --since=\"2 day ago\" --until=midnight --author=\"$(git config user.name)\" --oneline
 	ls = ls-files
 
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
+
 	# File level ignoring
 	assume   = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
