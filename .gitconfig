@@ -1,13 +1,9 @@
 [include]
+
 	path = ~/.private/.gitconfig
-[push]
-	default = current
-[format]
-	signoff = true
-	coverLetter = auto
-[commit]
-  template = ~/.gitmessage
+
 [alias]
+
 	bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
 	bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
 	c = commit -am
@@ -88,6 +84,18 @@
 	# GitHub Pull Request Management
 	pr = "!f() { git fetch -fu origin refs/pull/$1/head:pr/$1; } ; f"
 
+	# Merge GitHub pull request on top of the `master` branch
+	mpr = "!f() { \
+		if [ $(printf \"%s\" \"$1\" | grep '^[0-9]\\+$' > /dev/null; printf $?) -eq 0 ]; then \
+			git fetch origin refs/pull/$1/head:pr/$1 && \
+			git rebase master pr/$1 && \
+			git checkout master && \
+			git merge pr/$1 && \
+			git branch -D pr/$1 && \
+			git commit --amend -m \"$(git log -1 --pretty=%B)\n\nCloses #$1.\"; \
+		fi \
+	}; f"
+
 	reauthor = !sh -c 'eval `git log --reverse --topo-order --pretty=format:\"git cherry-pick -m 1 %H &&  git commit --amend -C %H --author=\\\"%aN <%aE>\\\" && \" $0 ` "echo success" '
 
   # Initialize git in a better way
@@ -162,6 +170,14 @@
 	showroot = true
 [pull]
 	rebase = true
+[push]
+	default = current
+[format]
+	signoff = true
+	coverLetter = auto
+[commit]
+	template = ~/.gitmessage
+
 
 [url "git@github.com:"]
 	insteadOf = "gh:"
