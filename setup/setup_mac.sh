@@ -32,6 +32,8 @@ brew install zsh
 # Install wget with IRI support
 brew install wget --enable-iri
 brew install curl --with-ssl --with-ssh
+# Install GNU `sed`, overwriting the built-in `sed`.
+brew install gnu-sed --with-default-names
 
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
