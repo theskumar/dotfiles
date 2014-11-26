@@ -61,11 +61,15 @@
 	conf = config --list
 	t = tag
 	td = tag -d
+
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 	yesterday = !git log --since=\"2 day ago\" --until=midnight --author=\"$(git config user.name)\" --oneline
 	ls = ls-files
+
+	# Switch to a branch, creating it if necessary
+	go = "!f() { git checkout -b \"$1\" 2> /dev/null || git checkout \"$1\"; }; f"
 
 	# File level ignoring
 	assume   = update-index --assume-unchanged
