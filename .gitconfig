@@ -67,8 +67,6 @@
 	yesterday = !git log --since=\"2 day ago\" --until=midnight --author=\"$(git config user.name)\" --oneline
 	ls = ls-files
 
-	tree = log --graph --decorate --pretty=oneline --abbrev-commit
-
 	# File level ignoring
 	assume   = update-index --assume-unchanged
 	unassume = update-index --no-assume-unchanged
@@ -111,84 +109,127 @@
 	graft = !legit graft \"$@\"
 
 [color]
+
 	ui = auto
+
 [core]
+
 	excludesfile = ~/.gitignore
 	attributesfile = ~/.gitattributes
+
 	filemode = false
 	autocrlf = false
 	ui = auto
-	whitespace = trailing-space,space-before-tab
+
+	# Treat spaces before tabs and all kinds of trailing whitespace as an error
+	# [default] trailing-space: looks for spaces at the end of a line
+	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
+	whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+	# Make `git rebase` safer on OS X
+	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+	trustctime = false
+
+	# Editor used for writing git commits
 	editor = subl -n -w
+
 [diff]
+
 	tool = vimdiff
 	submodule = log
+
 [color "branch"]
+
 	current = yellow reverse
 	local = yellow
 	remote = green
+
 [color "diff"]
+
 	meta = yellow bold
 	frag = magenta bold
 	old = red bold
 	new = green bold
+
 [color "status"]
+
 	added = yellow
 	changed = green
 	untracked = cyan
+
 [merge]
+
 	log = true
 	tool = vimdiff
+
 [rebase]
+
 	autosquash = true
 	autostash = true
+
 [giggle]
 	main-window-maximized = true
 	main-window-geometry = 0x0+0+0
 	main-window-view = FileView
 	history-view-vpane-position = 547
 	file-view-vpane-position = 649
+
 [remote "origin"]
+
 	receivepack = git receive-pack
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+
 [status]
+
 	short = true
 	branch = true
+
 [log]
+
 	date = relative
 	mailmap = true
+
 [grep]
+
 	lineNumber = true
+
 [blame]
+
 	date = relative
 	blankboundary = true
 	showroot = true
+
 [pull]
 	rebase = true
+
 [push]
+
 	default = current
+
 [format]
+
 	signoff = true
 	coverLetter = auto
+
 [commit]
+
 	template = ~/.gitmessage
 
-
 [url "git@github.com:"]
+
 	insteadOf = "gh:"
 	pushInsteadOf = "github:"
 	pushInsteadOf = "git://github.com/"
+
 [url "git://github.com/"]
+
 	insteadOf = "github:"
+
 [url "git@gist.github.com:"]
+
 	insteadOf = "gst:"
 	pushInsteadOf = "gist:"
 	pushInsteadOf = "git://gist.github.com/"
+
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
 
@@ -196,6 +237,7 @@
 # http://rentzsch.tumblr.com/post/564806957/public-but-hackable-git-submodules
 [url "git@github.com:theskumar/"]
   insteadOf = "git://github.com/theskumar/"
+
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
