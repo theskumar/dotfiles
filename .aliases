@@ -25,6 +25,7 @@ fi
 # `cat` with beautiful colors. requires Pygments installed.
 #     sudo easy_install Pygments
 alias catn='cat -n'
+alias s='subl'
 
 
 # clear does not take you to top anymore
