@@ -28,3 +28,4 @@ venv/
 # Editor's Ignore
 *.ropeproject
 *.glue
+.vim/.netrwhist
