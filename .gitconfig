@@ -35,6 +35,7 @@
 	s = status -sb
 	co = checkout
 	cob = checkout -b
+	cm = checkout master
 	re = rebase
 	ri = rebase -i
 	rim = rebase -i master
