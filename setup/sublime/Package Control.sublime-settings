@@ -1,0 +1,29 @@
+{
+	"in_process_packages":
+	[
+	],
+	"installed_dependencies":
+	[
+		"0_package_control_loader",
+		"bz2"
+	],
+	"installed_packages":
+	[
+		"Anaconda",
+		"Djaneiro",
+		"EditorConfig",
+		"Emmet",
+		"Git",
+		"GitGutter",
+		"isort",
+		"LESS",
+		"Markdown Preview",
+		"MarkdownEditing",
+		"MarkdownTOC",
+		"nginx",
+		"Package Control",
+		"SideBarEnhancements",
+		"Theme - Spacegray",
+		"Varnish VCL"
+	]
+}
