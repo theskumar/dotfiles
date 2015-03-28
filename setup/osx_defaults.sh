@@ -741,6 +741,9 @@ defaults write com.twitter.twitter-mac ShowFullNames -bool true
 # Hide the app in the background if it’s not the front-most window
 defaults write com.twitter.twitter-mac HideInBackground -bool true
 
+# disable local time machine backups http://classicyuppie.com/what-crap-is-this-os-xs-mobilebackups/
+tmutil disablelocal
+
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
