@@ -1,49 +1,51 @@
 {
-    "caret_style": "solid",
-    "color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
-    "drag_text": false,
-    "draw_white_space": "all",
-    "ensure_newline_at_eof_on_save": true,
-    "folder_exclude_patterns":
-    [
-        ".svn",
-        ".git",
-        ".hg",
-        "CVS",
-        ".sass-cache",
-        "node_modules",
-        ".tmp"
-    ],
-    "font_face": "Source Code Pro",
-    "font_options":
-    [
-        "subpixel_antialias"
-    ],
-    "font_size": 16,
-    "highlight_line": true,
-    "ignored_packages":
-    [
-        "Markdown",
-        "Vintage"
-    ],
-    "index_exclude_patterns":
-    [
-        "*.log"
-    ],
-    "line_padding_bottom": 1,
-    "line_padding_top": 1,
-    "pep8_ignore":
-    [
-        "E501"
-    ],
-    "rulers":
-    [
-        80
-    ],
-    "scroll_past_end": false,
-    "shift_tab_unindent": true,
-    "show_line_endings": true,
-    "theme": "Spacegray.sublime-theme",
-    "translate_tabs_to_spaces": true,
-    "trim_trailing_white_space_on_save": true
+	"caret_style": "solid",
+	"color_scheme": "Packages/Theme - Spacegray/base16-ocean.dark.tmTheme",
+	"drag_text": false,
+	"draw_white_space": "all",
+	"ensure_newline_at_eof_on_save": true,
+	"folder_exclude_patterns":
+	[
+		".svn",
+		".git",
+		".hg",
+		"CVS",
+		".sass-cache",
+		"node_modules",
+		".tmp"
+	],
+	"font_face": "Source Code Pro",
+	"font_options":
+	[
+		"subpixel_antialias"
+	],
+	"font_size": 21,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"GoSublime",
+		"Vintage",
+		"Markdown"
+	],
+	"index_exclude_patterns":
+	[
+		"/Users/theskumar/work/pr/blog/output*",
+		"*.log"
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"pep8_ignore":
+	[
+		"E501"
+	],
+	"rulers":
+	[
+		80
+	],
+	"scroll_past_end": false,
+	"shift_tab_unindent": true,
+	"show_line_endings": true,
+	"theme": "Spacegray.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"trim_trailing_white_space_on_save": true
 }
