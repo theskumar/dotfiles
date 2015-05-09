@@ -88,7 +88,9 @@ brew tap caskroom/fonts
 brew cask install font-source-code-pro
 
 # SpotifyControl
-git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
+# git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
+
+sudo easy_install pip
 
 # Remove outdated versions from the cellar
 brew cleanup && brew cask cleanup
