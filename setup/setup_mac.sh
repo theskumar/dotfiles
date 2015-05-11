@@ -52,6 +52,7 @@ brew install heroku-toolbelt
 brew install node
 brew install ngrok # https://ngrok.com/
 brew install sshrc # https://github.com/Russell91/sshrc
+brew install pup  # https://github.com/EricChiang/pup
 
 # Native apps
 brew tap phinze/homebrew-cask
