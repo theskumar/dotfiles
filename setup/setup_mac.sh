@@ -53,6 +53,7 @@ brew install node
 brew install ngrok # https://ngrok.com/
 brew install sshrc # https://github.com/Russell91/sshrc
 brew install pup  # https://github.com/EricChiang/pup
+brew install httpie  # https://github.com/jakubroztocil/httpie
 
 # Native apps
 brew tap phinze/homebrew-cask
