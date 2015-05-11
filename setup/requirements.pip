@@ -6,3 +6,4 @@ cookiecutter
 virtualenv
 ghp-import
 piprot
+html2text
