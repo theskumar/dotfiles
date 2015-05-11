@@ -66,6 +66,7 @@ function installcask() {
 }
 
 installcask google-chrome
+installcask adium
 installcask dropbox
 installcask iterm2
 installcask vlc
