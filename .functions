@@ -136,7 +136,7 @@ cp_p () {
 
 # Display http headers of a request
 function headers(){
-  curl -sv "$@" 2>&1 >/dev/null | grep -v "^\*" | grep -v "^}" | cut -c3-
+  curl -sI "$@"
 }
 
 
