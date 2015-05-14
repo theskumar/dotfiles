@@ -1,4 +1,5 @@
 ipython
+ipdb
 dnsyo
 xerox
 fabric
@@ -7,3 +8,4 @@ virtualenv
 ghp-import
 piprot
 html2text
+requests[security]
