@@ -54,7 +54,7 @@ alias q="exit"
 alias :q="exit"
 
 # Virtualenv
-alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv venv; touch requirements.txt; fi; source venv/bin/activate; export PS1="(${PWD##*/}-venv)$_OLD_VIRTUAL_PS1"'
+alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv venv; touch requirements.txt; fi; source venv/bin/activate; export PS1="(${${PWD##*/}:0:5}…/venv)$_OLD_VIRTUAL_PS1"'
 
 # List direcory contents
 alias lsa='ls -lah'
