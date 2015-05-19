@@ -142,3 +142,4 @@ alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock 
 alias starwars="telnet towel.blinkenlights.nl"
 alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
+alias week='date +%V'
