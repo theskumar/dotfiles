@@ -1,6 +1,9 @@
 export TZ='Asia/Kolkata'
 export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 
+# silent ansible cowsay
+export ANSIBLE_NOCOWS=1
+
 # Make vim the default editor
 export EDITOR="vim"
 
