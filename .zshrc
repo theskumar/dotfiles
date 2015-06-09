@@ -118,6 +118,12 @@ source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 zmodload zsh/terminfo
+
+# Use Alt-Arrows to skip words
+bindkey -e
+bindkey '^[^[[C' forward-word
+bindkey '^[^[[D' backward-word
+
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
