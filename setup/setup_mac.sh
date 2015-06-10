@@ -68,7 +68,8 @@ function installcask() {
 }
 
 installcask google-chrome
-installcask adium
+installcask utorrent
+installcask limechat
 installcask dropbox
 installcask iterm2
 installcask vlc
