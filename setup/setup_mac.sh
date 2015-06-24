@@ -55,6 +55,7 @@ brew install sshrc # https://github.com/Russell91/sshrc
 brew install pup  # https://github.com/EricChiang/pup
 brew install httpie  # https://github.com/jakubroztocil/httpie
 brew install jq  # https://stedolan.github.io/jq/
+brew install python3
 
 # Native apps
 brew tap phinze/homebrew-cask
