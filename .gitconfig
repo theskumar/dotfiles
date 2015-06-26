@@ -103,7 +103,7 @@
 
   # Initialize git in a better way
   # Adds .gitattributes, .gitignore and Readme.md file
-	ini = "!f() { git init && echo \"* text=auto\" >> .gitattributes && touch .gitignore Readme.md && git status; }; f"
+	ini = "!f() { git init && echo \"* text=auto\" >> .gitattributes && touch .gitignore README.md && git status; }; f"
 	switch = !legit switch \"$@\"
 	branches = !legit branches
 	sprout = !legit sprout \"$@\"
