@@ -73,6 +73,7 @@ installcask utorrent
 installcask limechat
 installcask dropbox
 installcask iterm2
+installcask skitch  # https://evernote.com/skitch/
 installcask vlc
 installcask nvalt  # for notes
 installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package && qlmanage -r
