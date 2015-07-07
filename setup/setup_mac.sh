@@ -71,6 +71,7 @@ function installcask() {
 installcask google-chrome
 installcask utorrent
 installcask limechat
+installcask tunnelbear
 installcask dropbox
 installcask iterm2
 installcask skitch  # https://evernote.com/skitch/
