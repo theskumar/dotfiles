@@ -68,6 +68,7 @@ function installcask() {
     fi
 }
 
+installcask android-file-transfer
 installcask google-chrome
 installcask utorrent
 installcask limechat
