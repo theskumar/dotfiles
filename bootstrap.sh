@@ -43,7 +43,7 @@ function createSymlinks() {
     for F in ${FILES[@]}; do
         # Delete files if --force was used
         if [ $FORCE == true ]; then
-            $TIME = `date +%s`
+            TIME= `date +%s`
             echoR "--> [BACKUP]: $HOME/${F}"
             mv $HOME/$F $HOME/$F.$TIME.bak
         fi
