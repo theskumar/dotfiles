@@ -1,3 +1,7 @@
+# Django Stuff
+
+alias djrun='python manage.py runserver'
+
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
@@ -55,6 +59,7 @@ alias :q="exit"
 
 # Virtualenv
 alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv venv; touch requirements.txt; fi; source venv/bin/activate; export PS1="(${${PWD##*/}:0:5}…/venv)$_OLD_VIRTUAL_PS1"'
+alias sv3='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv -p $(which python3) venv; touch requirements.txt; fi; source venv/bin/activate; export PS1="(${${PWD##*/}:0:5}…/venv)$_OLD_VIRTUAL_PS1"'
 
 # List direcory contents
 alias lsa='ls -lah'
