@@ -18,6 +18,7 @@
 	rh = reset --hard
 	rt = remote -v
 	rad = remote add
+	rem = rebase origin/master
 	rrm = remote rm
 	rpr = remote prune
 	rre = remote rename
