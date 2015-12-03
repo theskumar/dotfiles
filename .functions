@@ -181,7 +181,7 @@ function git_normalize_eol(){
 }
 
 function gitignore() {
-    curl https://www.gitignore.io/api/$@;
+    curl -s https://www.gitignore.io/api/$@;
 }
 
 
