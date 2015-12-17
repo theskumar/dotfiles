@@ -78,7 +78,7 @@
 	unassume = update-index --no-assume-unchanged
 	assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
 
-	apply-gitignore = "!git ls-files -ci --exclude-standard -z | xargs -0r git rm --cached"
+	apply-gitignore = "!git ls-files -ci --exclude-standard -z | xargs -0 git rm --cached"
 
 	# snapshot stashes
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
