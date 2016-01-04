@@ -1,6 +1,6 @@
 # Django Stuff
 
-alias djrun='python manage.py runserver'
+alias djrun='find . -maxdepth 2 -name 'manage.py' -exec python "{}" runserver \;'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
