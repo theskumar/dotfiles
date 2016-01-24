@@ -658,6 +658,13 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false
 
 ###############################################################################
+# Photos                                                                      #
+###############################################################################
+
+ # Prevent Photos from opening automatically when devices are plugged in
+ defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
+
+###############################################################################
 # Google Chrome & Google Chrome Canary                                        #
 ###############################################################################
 
@@ -749,7 +756,7 @@ tmutil disablelocal
 ###############################################################################
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
-    "Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
+    "Dock" "Finder" "Mail" "Messages" "Photos" "Safari" "SizeUp" "SystemUIServer" \
     "Terminal" "Transmission" "Twitter" "iCal"; do
     killall "${app}" > /dev/null 2>&1
 done
