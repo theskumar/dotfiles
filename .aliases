@@ -63,7 +63,7 @@ alias sv3='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv -p $(which pyt
 
 # List direcory contents
 alias lsa='ls -lah'
-alias l='ls -la'
+alias l='ls -lahF'
 alias ll='ls -l'
 alias la='ls -lA'
 alias lsd='ls -l | grep "^d"' # list only directories
