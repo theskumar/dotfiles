@@ -140,6 +140,11 @@ alias ez='e ~/.zshrc'
 
 alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 
+# TODOS
+# This uses NValt (NotationalVelocity alt fork) - http://brettterpstra.com/project/nvalt/
+# to find the note called 'todo'
+alias todo='open nvalt://find/todo'
+
 # ------------------------------------------------------------------------------
 # | Other                                                                      |
 # ------------------------------------------------------------------------------
