@@ -61,7 +61,7 @@
 	fo = fetch origin
 	fa = fetch --all
 	conf = config --list
-	t = tag
+	t = tag -n
 	td = tag -d
 
 	# Display the number of commits per author in numerical order
