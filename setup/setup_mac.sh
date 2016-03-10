@@ -42,7 +42,7 @@ brew tap josegonzalez/homebrew-php
 
 # Install everything else
 brew install ack
-brew install git git-extras hub git-ftp
+brew install git git-extras hub git-ftp git-crypt
 brew install rename htop-osx tree ngrep mtr nmap
 brew install autojump
 brew install legit # http://www.git-legit.org/
