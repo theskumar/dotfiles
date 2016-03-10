@@ -181,13 +181,6 @@
 	autosquash = true
 	autostash = true
 
-[giggle]
-	main-window-maximized = true
-	main-window-geometry = 0x0+0+0
-	main-window-view = FileView
-	history-view-vpane-position = 547
-	file-view-vpane-position = 649
-
 [remote "origin"]
 
 	receivepack = git receive-pack
@@ -255,5 +248,3 @@
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
-[user]
-	email = theskumar@users.noreply.github.com
