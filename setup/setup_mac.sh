@@ -55,6 +55,7 @@ brew install sshrc # https://github.com/Russell91/sshrc
 brew install pup  # https://github.com/EricChiang/pup
 brew install httpie  # https://github.com/jakubroztocil/httpie
 brew install jq  # https://stedolan.github.io/jq/
+brew install storm      # https://github.com/emre/storm
 brew install python3
 brew install editorconfig
 brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
