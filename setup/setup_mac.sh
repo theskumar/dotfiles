@@ -86,8 +86,8 @@ installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quickl
 # Postgres 9 Database
 brew install postgres
 installcask pgadmin3
-ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+# ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+# launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
 psql postgres -c 'CREATE EXTENSION "adminpack";'
 sudo gem install pg
 
