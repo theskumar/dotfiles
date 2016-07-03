@@ -74,7 +74,7 @@ function installcask() {
 installcask android-file-transfer
 installcask google-chrome
 installcask utorrent
-installcask limechat
+# installcask limechat
 installcask tunnelbear
 installcask dropbox
 installcask iterm2
@@ -92,7 +92,7 @@ psql postgres -c 'CREATE EXTENSION "adminpack";'
 sudo gem install pg
 
 # memcache dev
-brew install libmemcached
+# brew install libmemcached
 
 # Fonts
 brew tap caskroom/fonts
