@@ -1,3 +1,10 @@
+function dj() { 
+    # finds manage.py in sub-directories and passes the arguments to it for running via it.
+    # e.g. dj migrate
+    #      dj runserver
+    #      dj collectstatic --noinput
+    find . -maxdepth 2 -name 'manage.py' -exec python "{}" "$@" \;
+}
 
 function chpwd() {
     emulate -L zsh
