@@ -1,6 +1,7 @@
 # Django Stuff
-
 alias djrun='find . -maxdepth 2 -name 'manage.py' -exec python "{}" runserver \;'
+
+alias etchost='sudo subl /etc/hosts'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
@@ -37,7 +38,8 @@ alias clear='echo -e "\e[2J"'
 
 alias scour="python ~/bin/scour/scour.py"
 alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
-alias sshconfig="vi ~/.ssh/config"
+alias sshconfig="s ~/.ssh/config"
+alias gitconfig="s ~/.gitconfig"
 alias ports='sudo netstat -vatnp'
 
 # ------------------------------------------------------------------------------
