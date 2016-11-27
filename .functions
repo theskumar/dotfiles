@@ -1,4 +1,8 @@
-function dj() { 
+function svg-to-base64() {
+  echo "background: transparent url('data:image/svg+xml;base64,"$(openssl base64 < $@)"') no-repeat center center;"
+}
+
+function dj() {
     # finds manage.py in sub-directories and passes the arguments to it for running via it.
     # e.g. dj migrate
     #      dj runserver
