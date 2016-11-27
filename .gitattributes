@@ -1,4 +1,4 @@
-* text=auto
+# * text=auto
 *.html  diff=html
 *.php   diff=php
 *.py    diff=python
