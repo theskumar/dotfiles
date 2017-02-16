@@ -41,6 +41,7 @@ brew install homebrew/dupes/grep
 brew tap josegonzalez/homebrew-php
 
 # Install everything else
+brew install openssl
 brew install ack
 brew install git git-extras hub git-ftp git-crypt
 brew install rename htop-osx tree ngrep mtr nmap
