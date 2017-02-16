@@ -16,15 +16,6 @@ alias ai='sudo apt-fast install'
 alias o='thunar || nautilus'
 alias oo='thunar . || nautilus . &'
 
-# grc aliases for supported commands
-if hash grc 2>/dev/null; then
-    _supported=( netstat ping tail ps traceroute gcc diff)
-
-    for c in ${_supported[@]}; do
-        alias $c='grc '$c
-    done
-fi
-
 if hash giggle 2>/dev/null; then
 	alias gitx='giggle 2>/dev/null &'
 else

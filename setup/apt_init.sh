@@ -1,7 +1,7 @@
 #! /bin/bash
 
 install="apt-get install -y"
-declare -a packages=(fortune cowsay git git-extras grc xclip autojump)
+declare -a packages=(fortune cowsay git git-extras xclip autojump)
 
 # http://github.com/ilikenwf/apt-fast
 if hash apt-fast 2>/dev/null; then
