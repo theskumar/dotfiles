@@ -92,16 +92,10 @@ installcask pgadmin3
 psql postgres -c 'CREATE EXTENSION "adminpack";'
 sudo gem install pg
 
-# memcache dev
-# brew install libmemcached
-
 # Fonts
 brew tap caskroom/fonts
 
 brew cask install font-source-code-pro
-
-# SpotifyControl
-# git clone git://github.com/dronir/SpotifyControl.git ~/bin/SpotifyControl
 
 sudo easy_install pip
 sudo pip install -r requirements.pip
