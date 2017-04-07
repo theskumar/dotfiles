@@ -80,6 +80,7 @@ installcask tunnelbear
 installcask flux
 installcask dropbox
 installcask iterm2
+installcask numi  # http://numi.io/
 installcask skitch  # https://evernote.com/skitch/
 installcask vlc
 installcask nvalt  # for notes
