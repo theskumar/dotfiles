@@ -1,3 +1,13 @@
+# list/describe ec2 instances in all the regions
+function ec2-list-all(){
+  for region in `aws ec2 describe-regions --output text | cut -f3`
+  do
+       echo -e "\nListing Instances in region:'$region'..."
+       echo -e "https://console.aws.amazon.com/ec2/v2/home?region=$region"
+       aws ec2 describe-instances --region $region | jq '.Reservations[] | ( .Instances[] | {state: .State.Name, name: .KeyName, type: .InstanceType, key: .KeyName})'
+  done
+}
+
 function svg-to-base64() {
   echo "background: transparent url('data:image/svg+xml;base64,"$(openssl base64 < $@)"') no-repeat center center;"
 }
