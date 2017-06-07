@@ -1,3 +1,6 @@
+# Youtube downloader
+alias youtube-mp3='youtube-dl -x --audio-format mp3 --audio-quality 0'
+
 # Django Stuff
 alias djrun='find . -maxdepth 2 -name 'manage.py' -exec python "{}" runserver \;'
 
