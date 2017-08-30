@@ -3,17 +3,19 @@
 import subprocess
 import webbrowser
 
-remote_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url'])
-
+remote_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url']).strip()
+branch = subprocess.check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip()
 url = None
+
 
 def ssh_to_web_url(remote_url):
     repo = remote_url.split(":")[1].split('.git')[0]
     if 'gogs@git.essentiasoftserv.com:' in remote_url:
-        url = 'https://git.essentiasoftserv.com/' + repo
+        url = 'https://git.essentiasoftserv.com/%s/src/%s/' % (repo, branch)
     if 'github.com:' in remote_url:
-        url = 'https://github.com/' + repo
+        url = 'https://github.com/%s/tree/%s' % (repo, branch)
     return url
+
 
 if '@' in remote_url:
     url = ssh_to_web_url(remote_url)
