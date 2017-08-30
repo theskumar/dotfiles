@@ -1,0 +1,27 @@
+#!/usr/bin/python
+
+import subprocess
+import webbrowser
+
+remote_url = subprocess.check_output(['git', 'config', '--get', 'remote.origin.url'])
+
+url = None
+
+def ssh_to_web_url(remote_url):
+    repo = remote_url.split(":")[1].split('.git')[0]
+    if 'gogs@git.essentiasoftserv.com:' in remote_url:
+        url = 'https://git.essentiasoftserv.com/' + repo
+    if 'github.com:' in remote_url:
+        url = 'https://github.com/' + repo
+    return url
+
+if '@' in remote_url:
+    url = ssh_to_web_url(remote_url)
+
+if remote_url.startswith('http') and remote_url.endswith('.git'):
+    url = remote_url.split('.git')[0]
+
+if url:
+    webbrowser.open_new_tab(url)
+else:
+    print("Not recognised: " + remote_url)
