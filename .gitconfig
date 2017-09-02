@@ -182,10 +182,6 @@
 	autosquash = true
 	autostash = true
 
-[remote "origin"]
-
-	receivepack = git receive-pack
-
 [status]
 
 	short = true
