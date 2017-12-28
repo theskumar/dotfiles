@@ -140,6 +140,21 @@ function l () {
   esac
 }
 
+# Determine size of a file or total size of a directory
+fs() {
+  if du -b /dev/null > /dev/null 2>&1; then
+    local arg=-sbh
+  else
+    local arg=-sh
+  fi
+  # shellcheck disable=SC2199
+  if [[ -n "$@" ]]; then
+    du $arg -- "$@"
+  else
+    du $arg -- .[^.]* *
+  fi
+}
+
 # Syntax-highlight JSON strings or files
 # Usage: `json '{"foo":42}'` or `echo '{"foo":42}' | json`
 function json() {
