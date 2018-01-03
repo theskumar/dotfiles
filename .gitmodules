@@ -8,5 +8,8 @@
 	path = .zsh/modules/zsh-users/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule ".zsh/plugins/pure"]
-	path = .zsh/plugins/pure
-	url = https://github.com/sindresorhus/pure.git
+    path = .zsh/plugins/pure
+    url = https://github.com/sindresorhus/pure.git
+[submodule ".zsh/plugins/gpg-crypt"]
+	path = .zsh/plugins/gpg-crypt
+	url = https://github.com/Czocher/gpg-crypt.git
