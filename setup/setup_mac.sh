@@ -30,8 +30,8 @@ brew install bash
 brew install zsh
 
 # Install wget with IRI support
-brew install wget --with-iri
-brew install curl --with-ssl --with-ssh
+brew install wget 
+brew install curl
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew install gnu-sed --with-default-names
 
