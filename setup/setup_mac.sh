@@ -38,7 +38,6 @@ brew install gnu-sed --with-default-names
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
 brew install homebrew/dupes/grep
-brew tap josegonzalez/homebrew-php
 
 # Install everything else
 brew install openssl
