@@ -41,14 +41,14 @@ brew install homebrew/dupes/grep
 
 # Install everything else
 brew install openssl
-brew install ack
-brew install git git-extras hub git-ftp git-crypt
-brew install rename htop-osx tree ngrep mtr nmap
+# brew install ack
+# brew install git git-extras hub git-ftp git-crypt
+# brew install rename htop-osx tree ngrep mtr nmap
 brew install autojump
-brew install legit      # http://www.git-legit.org/
-brew install Zopfli     # https://code.google.com/p/zopfli/
+# brew install legit      # http://www.git-legit.org/
+# brew install Zopfli     # https://code.google.com/p/zopfli/
 brew install fortune cowsay
-brew install heroku-toolbelt
+brew tap heroku/brew && brew install heroku
 brew install node
 brew install ngrok      # https://ngrok.com/
 brew install sshrc      # https://github.com/Russell91/sshrc
@@ -71,27 +71,12 @@ function installcask() {
     fi
 }
 
-installcask android-file-transfer
-installcask google-chrome
 installcask utorrent
-# installcask limechat
-installcask tunnelbear
-installcask flux
-installcask dropbox
 installcask iterm2
-installcask numi  # http://numi.io/
-installcask skitch  # https://evernote.com/skitch/
-installcask vlc
-installcask nvalt  # for notes
 installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package && qlmanage -r
 
-# Postgres 9 Database
-brew install postgres
-installcask pgadmin3
-# ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
-# launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
-psql postgres -c 'CREATE EXTENSION "adminpack";'
-sudo gem install pg
+# Postgres Database
+brew install postgres postgis
 
 # Fonts
 brew tap caskroom/fonts
