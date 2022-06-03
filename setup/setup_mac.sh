@@ -32,7 +32,7 @@ brew install zsh
 brew install wget
 brew install curl
 # Install GNU `sed`, overwriting the built-in `sed`.
-brew install gnu-sed --with-default-names
+brew install gnu-sed
 
 # Install more recent versions of some OS X tools
 brew tap homebrew/dupes
