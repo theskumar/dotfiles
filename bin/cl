@@ -1,0 +1,15 @@
+url=$1
+meta=$(curl -s http://iframely.server.crestify.com/iframely?url=$url)
+title=$(echo $meta | jq -r ".meta.title")
+desc=$(echo $meta | jq -r ".meta.description")
+
+output=$url
+if [ "$desc" == "null" ]
+then
+      output=$(echo "[$title]($url)")
+else
+      output=$(echo "[$title]($url) - $desc")
+fi
+
+echo "$output"
+echo "$output" | pbcopy
