@@ -252,7 +252,6 @@ function gitexport(){
 }
 
 # A better way to do git clone
-# http://saurabhworld.in/go/gitclone
 function clone() {
     url=$1;
     reponame=$(echo $url | awk -F/ '{print $NF}' | sed -e 's/.git$//');
