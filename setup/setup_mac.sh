@@ -40,7 +40,7 @@ brew tap homebrew/dupes
 brew install homebrew/dupes/grep
 
 # Install everything else
-brew install openssl
+# brew install openssl
 # brew install ack
 # brew install git git-extras hub git-ftp git-crypt
 # brew install rename htop-osx tree ngrep mtr nmap
@@ -48,17 +48,17 @@ brew install autojump
 # brew install legit      # http://www.git-legit.org/
 # brew install Zopfli     # https://code.google.com/p/zopfli/
 brew install fortune cowsay
-brew tap heroku/brew && brew install heroku
-brew install node
-brew install ngrok      # https://ngrok.com/
+# brew tap heroku/brew && brew install heroku
+# brew install node
+# brew install ngrok      # https://ngrok.com/
 brew install sshrc      # https://github.com/Russell91/sshrc
 brew install storm      # https://github.com/emre/storm
 brew install pup        # https://github.com/EricChiang/pup
 brew install httpie     # https://github.com/jakubroztocil/httpie
 brew install jq         # https://stedolan.github.io/jq/
-brew install python3
+# brew install python3
 brew install editorconfig
-brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
+# brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
 
 # Native apps
 brew tap phinze/homebrew-cask
