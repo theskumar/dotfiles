@@ -33,10 +33,9 @@ brew install wget
 brew install curl
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew install gnu-sed
-
+brew install grep
 # Install more recent versions of some OS X tools
-brew tap homebrew/dupes
-brew install homebrew/dupes/grep
+
 
 # Install everything else
 # brew install openssl
