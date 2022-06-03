@@ -16,25 +16,10 @@
 # So here is it!
 # http://www.gnu.org/software/coreutils/manual/html_node/index.html
 export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
-export PATH=/Applications/MAMP/Library/bin/:$PATH
-export PATH=/usr/local/tranquil/bin:$PATH
-
-# source ~/.rvm/scripts/rvm
-
+export PATH=$(brew --prefix findutils)/libexec/gnubin:$PATH
+export PATH=$(brew --prefix curl)/bin:$PATH
 
 # ---[ aliases ]---------------------------------------------------------
-
-# Homebrew
-if [ -x "$(command -v brew)" ]; then
-    alias brewd="brew doctor"
-    alias brewi="brew install"
-    alias brewr="brew uninstall"
-    alias brews="brew search"
-    alias brewu="brew update &&  \
-                 brew upgrade && \
-                 brew cleanup"
-fi
-
 alias o="open"
 alias oo="open ."
 
@@ -109,7 +94,3 @@ tell application "Reminders"
 end tell
 EOF
 }
-
-# Replaces default mac utils with coreutils & findtutils
-PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"

@@ -21,7 +21,6 @@ brew upgrade
 
 # Install GNU core utilities (those that come with OS X are outdated)
 brew install coreutils
-echo "Don’t forget to add $(brew --prefix coreutils)/libexec/gnubin to \$PATH."
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
 brew install findutils
 
@@ -30,7 +29,7 @@ brew install bash
 brew install zsh
 
 # Install wget with IRI support
-brew install wget 
+brew install wget
 brew install curl
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew install gnu-sed --with-default-names
