@@ -145,9 +145,6 @@
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
 
-	# Editor used for writing git commits
-	editor = subl -n -w
-
 [diff]
 
 	tool = vimdiff
@@ -245,5 +242,6 @@
 [filter "media"]
 	clean = git-media-clean %f
 	smudge = git-media-smudge %f
+
 [init]
 	defaultBranch = main
