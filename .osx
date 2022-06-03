@@ -109,3 +109,7 @@ tell application "Reminders"
 end tell
 EOF
 }
+
+# Replaces default mac utils with coreutils & findtutils
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
