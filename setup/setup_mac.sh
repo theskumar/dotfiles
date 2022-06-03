@@ -49,9 +49,9 @@ brew install fortune cowsay
 # brew tap heroku/brew && brew install heroku
 # brew install node
 # brew install ngrok      # https://ngrok.com/
-brew install sshrc      # https://github.com/Russell91/sshrc
-brew install storm      # https://github.com/emre/storm
-brew install pup        # https://github.com/EricChiang/pup
+# brew install sshrc      # https://github.com/Russell91/sshrc
+# brew install storm      # https://github.com/emre/storm
+# brew install pup        # https://github.com/EricChiang/pup
 brew install httpie     # https://github.com/jakubroztocil/httpie
 brew install jq         # https://stedolan.github.io/jq/
 # brew install python3
