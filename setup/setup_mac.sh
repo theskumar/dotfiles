@@ -27,6 +27,7 @@ brew install findutils
 # Install Bash 4
 brew install bash
 brew install zsh
+brew install zplug
 
 # Install wget with IRI support
 brew install wget

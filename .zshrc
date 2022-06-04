@@ -1,6 +1,12 @@
-ZSH=~/.zsh
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/zshrc.pre.zsh"
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
 
 source ~/.profile
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -102,6 +108,22 @@ for plugin ($plugins); do
     source $ZSH/plugins/$plugin/$plugin.plugin.zsh
 done
 
+# Section: zplug
+zplug "supercrabtree/k", as:command
+
+# https://github.com/sindresorhus/pure
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+zplug "zsh-users/zsh-history-substring-search", from:github
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-completions"
+zplug "plugins/git",    from:oh-my-zsh
+zplug "plugins/gh",     from:oh-my-zsh
+zplug "plugins/fig",     from:oh-my-zsh
+
+zplug load
+
 precmd() {
     # send a visual bell to awesome
     echo -ne '\a'
@@ -113,9 +135,6 @@ preexec_functions=( "${preexec_functions[@]:#_title_preexec}" _title_preexec )
 
 
 # ---[ Modules ]--------------------------------------------------------
-
-source ~/.zsh/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/modules/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 zmodload zsh/terminfo
 
