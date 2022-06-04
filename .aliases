@@ -3,70 +3,62 @@ alias youtube-mp3='youtube-dl -x --audio-format mp3 --audio-quality 0'
 
 # Django Stuff
 alias djrun='find . -maxdepth 2 -name 'manage.py' -exec python "{}" runserver \;'
-alias pepfix='autopep8 --max-line-length=120 -i'
-
-alias etchost='sudo subl /etc/hosts'
 
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 
-# Easier navigation: ~ and -
-alias ~="cd ~" # `cd` is probably faster to type though
-
 alias incognito='export HISTFILE=/dev/null'
-
-# Super user
-alias _='sudo'
-
 
 alias rcopy="rsync -av --progress -h"
 alias rmove="rsync -av --progress -h --remove-source-files"
 alias rupdate="rsync -avu --progress -h"
 alias rsynchronize="rsync -avu --delete --progress -h"
 
-# programs
+# Python
 if hash ipython 2>/dev/null; then
   alias py=ipython
 else
   alias py=python
 fi
-
-# `cat` with beautiful colors. requires Pygments installed.
-#     sudo easy_install Pygments
-alias catn='cat -n'
-alias s='subl'
-
-
-# clear does not take you to top anymore
-alias clear='echo -e "\e[2J"'
-
-alias scour="python ~/bin/scour/scour.py"
-alias selenium="java -jar ~/bin/selenium-server-standalone-2.25.0.jar"
-alias sshconfig="s ~/.ssh/config"
-alias gitconfig="s ~/.gitconfig"
-alias ports='sudo netstat -vatnp'
-
-# ------------------------------------------------------------------------------
-# | Shorter Commands                                                           |
-# ------------------------------------------------------------------------------
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias w="cd ~/work"
-alias g="git"
-alias c='clear'
-alias e="vim"
-alias rf='rm -rf'
+alias pepfix='autopep8 --max-line-length=120 -i'
 alias pi='pip install'
 alias pipfix='piprot --verbatim --latest'
 alias pipgrep='pip freeze | grep '
-alias q="exit"
-alias :q="exit"
+alias pycclean='find . -name \*.pyc -type f -ls -delete'
 
 # Virtualenv
 alias sv='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv -p $(which python3) venv; fi; source venv/bin/activate; export PS1="(${${PWD##*/}:0:5}…/venv)$_OLD_VIRTUAL_PS1"'
 alias sv2='if [[ ! -d "venv" && ! -L "venv" ]] ; then; virtualenv -p $(which python2) venv; fi; source venv/bin/activate; export PS1="(${${PWD##*/}:0:5}…/venv)$_OLD_VIRTUAL_PS1"'
 alias sv3=sv
+
+# `cat` with beautiful colors. requires Pygments installed.
+#     sudo easy_install Pygments
+alias catn='cat -n'
+
+# clear does not take you to top anymore
+alias clear='echo -e "\e[2J"'
+
+alias etchost='sudo e /etc/hosts'
+alias sshconfig="s ~/.ssh/config"
+alias gitconfig="s ~/.gitconfig"
+alias ports='sudo netstat -vatnp'
+alias ez='e ~/.zshrc'
+alias sz='source ~/.zshrc'
+
+# ------------------------------------------------------------------------------
+# | Shorter Commands                                                           |
+# ------------------------------------------------------------------------------
+alias dl="cd ~/Downloads"
+alias dt="cd ~/Desktop"
+alias w="cd ~/work"
+alias g="git"
+alias s="subl"
+alias c="clear"
+alias e="vim"
+alias rf='rm -rf'
+alias q="exit"
+alias :q="exit"
+
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -86,7 +78,6 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
-
 
 # ------------------------------------------------------------------------------
 # | Git Commands                                                               |
@@ -125,7 +116,10 @@ alias whois="whois -h whois-servers.net"
 
 # IP addresses
 alias ip="curl ipinfo.io/ip"
-alias localip='python -c "import socket; print(socket.gethostbyname(socket.gethostname()));"'
+alias localip='ipconfig getifaddr en0'
+
+# Show active network interfaces
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
 
 # Copy my public key to my clipboard
 alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
@@ -139,7 +133,7 @@ alias gurl="curl --compressed"
 
 # Recursively delete `.DS_Store` files
 alias cleanup="find . -name '*.DS_Store' -type f -ls -delete"
-alias pycclean='find . -name \*.pyc -type f -ls -delete'
+
 
 alias df='df -h'
 alias du='du -hs'
@@ -154,21 +148,14 @@ alias -g T='| tail'
 alias -g Y='| xclip && xclip -o | xclip -se c'
 alias -g R='$(git rev-parse --show-toplevel 2> /dev/null)'
 
-alias sz='source ~/.zshrc'
-alias ez='e ~/.zshrc'
-
-alias rand='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
-
-# TODOS
-# This uses NValt (NotationalVelocity alt fork) - http://brettterpstra.com/project/nvalt/
-# to find the note called 'todo'
-alias todo='open nvalt://find/todo'
-
 # ------------------------------------------------------------------------------
 # | Other                                                                      |
 # ------------------------------------------------------------------------------
-
-alias starwars="telnet towel.blinkenlights.nl"
-alias path='echo -e ${PATH//:/\\n}'
 alias now='date +"%T"'
 alias week='date +%V'
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# Fun
+alias starwars="telnet towel.blinkenlights.nl"
