@@ -76,6 +76,10 @@ function installcask() {
 installcask iterm2
 installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package && qlmanage -r
 
+# https://github.com/ivandokov/phockup
+brew tap ivandokov/homebrew-contrib
+brew install phockup
+
 # Postgres Database
 brew install postgres postgis
 
@@ -89,5 +93,6 @@ sudo pip install -r requirements.pip
 
 # Remove outdated versions from the cellar
 brew cleanup && brew cask cleanup
+
 
 exit 0
