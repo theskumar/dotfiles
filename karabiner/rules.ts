@@ -25,27 +25,27 @@ const rules: KarabinerRules[] = [
         ],
         type: "basic",
       },
-      {
-        type: "basic",
-        description: "Disable CMD + Tab to force Hyper Key usage",
-        from: {
-          key_code: "tab",
-          modifiers: {
-            mandatory: ["left_command"],
-          },
-        },
-        to: [
-          {
-            key_code: "tab",
-          },
-        ],
-      },
+      // {
+      //   type: "basic",
+      //   description: "Disable CMD + Tab to force Hyper Key usage",
+      //   from: {
+      //     key_code: "tab",
+      //     modifiers: {
+      //       mandatory: ["left_command"],
+      //     },
+      //   },
+      //   to: [
+      //     {
+      //       key_code: "tab",
+      //     },
+      //   ],
+      // },
     ],
   },
   ...createHyperSubLayers({
     // o = "Open" applications
     o: {
-      a: app("Arc"),
+      a: app("Arc"),    
       c: app("Cron"),
       v: app("Visual Studio Code - Insiders"),
       // d: app("Discord"),
@@ -81,10 +81,10 @@ const rules: KarabinerRules[] = [
         ],
       },
       y: {
-        description: "Window: First Third",
+        description: "Window: Top Left",
         to: [
           {
-            key_code: "left_arrow",
+            key_code: "y",
             modifiers: ["right_option", "right_control"],
           },
         ],
@@ -171,7 +171,7 @@ const rules: KarabinerRules[] = [
         ],
       },
       b: {
-    description: "Window: Back",
+        description: "Window: Back",
         to: [
           {
             key_code: "open_bracket",
