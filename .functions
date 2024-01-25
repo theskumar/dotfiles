@@ -23,7 +23,7 @@ function dj() {
 function chpwd() {
     emulate -L zsh
     if [[ -e venv/bin/activate ]]; then
-      sv
+      source venv/bin/activate
     fi
 }
 
