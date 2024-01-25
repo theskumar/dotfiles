@@ -5,8 +5,7 @@
 [alias]
 
 	# Delete all locally merged branches, except master, dev, qa, prod
-	bclean = "!f() { git branch --merged ${1-master} | egrep -v 'master|dev|qa|prod' | xargs -n 1 git branch -d; }; f"
-	bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
+	bclean = "!f() { git branch --merged ${1-main} | egrep -v 'main|master|dev|qa|prod' | xargs -n 1 git branch -d; }; f"
 	c = commit -am
 	ci = commit -v
 	cia = commit --amend -va
