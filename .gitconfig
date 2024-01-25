@@ -149,6 +149,7 @@
 
 	tool = vimdiff
 	submodule = log
+	algorithm = histogram
 
 [color "branch"]
 
