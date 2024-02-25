@@ -237,3 +237,8 @@
 
 [init]
 	defaultBranch = main
+
+[rerere]
+	# Remember and auto apply conflict resolutions from previous merges
+	enabled = true
+	autoUpdate = true
