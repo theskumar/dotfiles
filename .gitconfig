@@ -110,17 +110,9 @@
 
 	reauthor = !sh -c 'eval `git log --reverse --topo-order --pretty=format:\"git cherry-pick -m 1 %H &&  git commit --amend -C %H --author=\\\"%aN <%aE>\\\" && \" $0 ` "echo success" '
 
-  # Initialize git in a better way
-  # Adds .gitattributes, .gitignore and Readme.md file
+	# Initialize git in a better way
+	# Adds .gitattributes, .gitignore and Readme.md file
 	ini = "!f() { git init && echo \"* text=auto\" >> .gitattributes && touch .gitignore README.md && git status; }; f"
-	switch = !legit switch \"$@\"
-	branches = !legit branches
-	sprout = !legit sprout \"$@\"
-	unpublish = !legit unpublish \"$@\"
-	harvest = !legit harvest \"$@\"
-	sync = !legit sync \"$@\"
-	publish = !legit publish \"$@\"
-	graft = !legit graft \"$@\"
 
 [color]
 
