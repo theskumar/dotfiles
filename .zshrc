@@ -24,7 +24,7 @@ for config_file ($ZSH/lib/*.zsh); do
   source $config_file
 done
 
-fpath=($ZSH/functions $ZSH/modules/zsh-users/zsh-completions/src $fpath)
+fpath=($ZSH/functions $fpath)
 autoload -U $ZSH/functions/*(:t)
 
 # predictive typing (`man zshcontrib`)
