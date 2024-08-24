@@ -56,7 +56,6 @@
 	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
 	ri = rebase --interactive --autosquash
-	who = !echo \"== Commits by Author:\\n`git shortlog -s -n`\\n\"
 	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
 	f = fetch
 	fo = fetch origin
