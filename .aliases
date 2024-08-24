@@ -68,10 +68,10 @@ else # OS X `ls`
 fi
 
 # List directory contents
-alias lsa='ls -lah ${colorflag}'
-alias l='ls -lahF ${colorflag}'
-alias ll='ls -l ${colorflag}'
-alias la='ls -lA ${colorflag}'
+alias l='eza'
+alias ll='eza -l'
+alias la='eza -lA'
+alias lst='eza -T'
 
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"

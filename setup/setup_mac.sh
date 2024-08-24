@@ -61,6 +61,7 @@ brew install git-town   # https://www.git-town.com/introduction
 # brew install python3
 # brew install editorconfig
 # brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
+brew install eza
 
 # Native apps
 brew tap phinze/homebrew-cask
