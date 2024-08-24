@@ -117,6 +117,8 @@
 	# Adds .gitattributes, .gitignore and Readme.md file
 	ini = "!f() { git init && echo \"* text=auto\" >> .gitattributes && touch .gitignore README.md && git status; }; f"
 
+	pf = push --force-with-lease
+
 [color]
 
 	ui = auto
