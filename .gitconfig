@@ -64,6 +64,9 @@
 	t = tag -n
 	td = tag -d
 
+	# search commit
+	se = !git rev-list --all | xargs git grep -F
+
 	# Display the number of commits per author in numerical order
 	who = shortlog -sne --no-merges
 	today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
