@@ -85,11 +85,6 @@ alias ls="command ls ${colorflag}"
 # Undo a `git push`
 alias undopush="git push -f origin HEAD^:master"
 
-# Use `hub` as our git wrapper:
-#   http://defunkt.github.com/hub/
-if hash hub 2>/dev/null; then
-  alias git=hub
-fi
 
 # git root
 alias gr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
