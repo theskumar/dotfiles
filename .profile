@@ -20,5 +20,6 @@ fi
 if hash splash 2>/dev/null; then
     splash
 fi
+. "$HOME/.cargo/env"
 
 source "$HOME/.rye/env"
