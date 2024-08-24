@@ -23,7 +23,7 @@
 	rpr = remote prune
 	rre = remote rename
 	rsu = remote set-url
-	br = branch -v
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	bD = branch -D
 	bM = branch -M
 	bra = branch -va
