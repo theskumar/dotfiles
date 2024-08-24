@@ -8,7 +8,7 @@ export ANSIBLE_NOCOWS=1
 export EDITOR="vim"
 
 # Don’t clear the screen after quitting a manual page
-export MANPAGER="less -X"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -60,3 +60,5 @@ export PURE_GIT_PULL=1
 
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export PATH="$HOME/.poetry/bin:$PATH"
+
+export BAT_THEME="TwoDark"
