@@ -20,3 +20,5 @@ fi
 if hash splash 2>/dev/null; then
     splash
 fi
+
+source "$HOME/.rye/env"
