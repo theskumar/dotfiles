@@ -63,19 +63,14 @@ brew install git-town   # https://www.git-town.com/introduction
 # brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
 brew install eza
 
-# Native apps
-brew tap phinze/homebrew-cask
-brew install brew-cask
 function installcask() {
-    if brew cask info "${@}" | grep "Not installed" > /dev/null; then
-        brew cask install "${@}"
-    else
-        echo "${@} is already installed."
-    fi
+    brew install "${@}" --cask
 }
 
 # installcask utorrent
 installcask iterm2
+installcask karabiner-elements
+
 installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql webp-quicklook suspicious-package && qlmanage -r
 
 # https://github.com/ivandokov/phockup
