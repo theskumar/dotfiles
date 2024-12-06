@@ -166,8 +166,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 alt-shift-slash = 'mode join'
 
-alt-enter = 'exec-and-forget open /Applications/iTerm.app'
-alt-f = 'fullscreen'
+alt-enter = 'fullscreen'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide.html#binding-modes
@@ -208,9 +207,25 @@ if.app-id = 'com.1password.1password'
 run = 'layout floating'
 
 [[on-window-detected]]
-if.app-id = 'com.microsoft.VSCodeInsiders'
-run = 'move-node-to-workspace I'           # mnemonics I - IDE
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 3'    # mnemonics I - IDE
+
+[[on-window-detected]]
+if.app-id = 'dev.zed.Zed'
+run = 'move-node-to-workspace C'
+
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = 'move-node-to-workspace 3'
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 3'        # Dell External
+
+[[on-window-detected]]
+if.app-id = 'org.whispersystems.signal-desktop'
+run = 'move-node-to-workspace 3'                # Dell External
+
+[[on-window-detected]]
+if.app-id = 'com.edisonmail.edisonmail'
 run = 'move-node-to-workspace 3'        # Dell External
