@@ -5,64 +5,65 @@
 [alias]
 
 	# Delete all locally merged branches, except master, dev, qa, prod
+	b = blame -M -CC
 	bclean = "!f() { git branch --merged ${1-main} | egrep -v 'main|master|dev|qa|prod' | xargs -n 1 git branch -d; }; f"
-	c = commit -am
-	ci = commit -v
-	cia = commit --amend -va
-	cp = cherry-pick
-	cpc = cherry-pick --continue
-	cpa = cherry-pick --abort
-	cpq = cherry-pick --quit
-	ec = config --global -e
-	r = reset
-	rh = reset --hard
-	rt = remote -v
-	rad = remote add
-	rem = rebase origin/master
-	rrm = remote rm
-	rpr = remote prune
-	rre = remote rename
-	rsu = remote set-url
-	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	bD = branch -D
 	bM = branch -M
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
 	bra = branch -va
 	bru = branch -u
-	p = push
-	g = grep -p
-	b = blame -M -CC
-	h = help
+	c = commit -am
+	cd = "!f() { git checkout develop 2> /dev/null || git checkout dev 2> /dev/null || echo 'Neither develop nor dev branch found'; }; f"
+	ci = commit -v
+	cia = commit --amend -va
 	cl = clone
-	s = status -sb
+	cm = "!f() { git checkout main 2> /dev/null || git checkout master 2> /dev/null || echo 'Neither master nor main branch found'; }; f"
 	co = checkout
 	cob = checkout -b
-	cm = checkout main
-	re = rebase
-	ri = rebase -i
-	rim = rebase -i master
-	rc = rebase --continue
-	ra = rebase --abort
-	rs = rebase --skip
-	ss = stash save
-	sp = stash pop
-	sd = stash drop
-	sc = stash clear
-	sad = submodule add
-	df = diff --color --color-words --abbrev
-	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
-	lg = log -p
-	sl = log --stat --format=oneline --abbrev-commit
-	simple = log --pretty=format:\" * %s\"
-	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
-	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
-	ri = rebase --interactive --autosquash
-	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
-	f = fetch
-	fo = fetch origin
-	fa = fetch --all
 	conf = config --list
+	cp = cherry-pick
+	cpa = cherry-pick --abort
+	cpc = cherry-pick --continue
+	cpq = cherry-pick --quit
+	df = diff --color --color-words --abbrev
+	ec = config --global -e
+	f = fetch
+	fa = fetch --all
+	fixup = !sh -c 'git commit -m \"fixup! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	fo = fetch origin
+	g = grep -p
+	h = help
+	l = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	lm = log --color --pretty=format:'%Cred%h%Creset - %s %Cgreen(%cr) %C(bold blue)<%<(8,trunc)%an>%Creset' --no-merges
+	lg = log -p
+	p = push
+	r = reset
+	ra = rebase --abort
+	rad = remote add
+	rc = rebase --continue
+	re = rebase
+	rem = rebase origin/master
+	rh = reset --hard
+	ri = rebase --interactive --autosquash
+	rim = rebase -i master
+	rpr = remote prune
+	rre = remote rename
+	rrm = remote rm
+	rs = rebase --skip
+	rsu = remote set-url
+	rt = remote -v
+	s = status -sb
+	sad = submodule add
+	sc = stash clear
+	sd = stash drop
+	simple = log --pretty=format:\" * %s\"
+	sl = log --format=oneline --abbrev-commit
+	sp = stash pop
+	squash = !sh -c 'git commit -m \"squash! $(git log -1 --format='\\''%s'\\'' $@)\"' -
+	ss = stash save
 	t = tag -n
 	td = tag -d
+	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
 
 	# search commit
 	se = !git rev-list --all | xargs git grep -F
@@ -119,6 +120,9 @@
 
 	pf = push --force-with-lease
 
+    # Taken from here: https://aaronbonner.io/post/80766268890/git-alias-to-simplify-setting-upstream-branch
+    sup = "!git branch --set-upstream-to=origin/`git symbolic-ref --short HEAD`"
+
 [color]
 
 	ui = auto
@@ -142,8 +146,8 @@
 	trustctime = false
 
 [diff]
-
-	tool = vimdiff
+	external = difft
+	# tool = vimdiff
 	submodule = log
 	algorithm = histogram
 
@@ -211,6 +215,7 @@
 [commit]
 
 	template = ~/.gitmessage
+	gpgsign = true
 
 [url "git@github.com:"]
 
@@ -243,7 +248,14 @@
 [init]
 	defaultBranch = main
 
+[user]
+	signingkey = 05B68DA30A7FFCE9
+
+
+
 [rerere]
 	# Remember and auto apply conflict resolutions from previous merges
 	enabled = true
 	autoUpdate = true
+[gitbutler]
+	gitbutlerCommitter = 0
