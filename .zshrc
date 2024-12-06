@@ -72,7 +72,7 @@ unsetopt beep
 
 # ---[ Plugins ]---------------------------------------------------------
 
-plugins=(git gibo autojump django pure web_search gpg-crypt)
+plugins=(git gibo django pure web_search gpg-crypt)
 
 is_plugin() {
   local base_dir=$1
@@ -151,3 +151,5 @@ precmd_functions=( "${precmd_functions[@]:#_z_precmd}" _z_precmd )
 ## smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic
+
+eval "$(zoxide init zsh --cmd j)"
