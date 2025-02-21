@@ -40,6 +40,12 @@ default-root-container-layout = 'tiles'
 #               tall monitor (anything higher than wide) gets vertical orientation
 default-root-container-orientation = 'auto'
 
+# Mouse follows focus when focused monitor changes
+# See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
+# See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
+# Fallback value (if you omit the key): on-focused-monitor-changed = []
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
 gaps.inner.horizontal = 2
 gaps.inner.vertical = 10
 gaps.outer.left = 10
@@ -82,11 +88,11 @@ non-empty-workspaces-root-containers-layout-on-startup = 'smart'
 
 # You can uncomment this line to open up terminal with alt + enter shortcut
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#exec-and-forget
-alt-q = 'exec-and-forget open -a /Applications/Arc.app'
-alt-w = 'exec-and-forget open -a /Applications/Zed.app'
-alt-e = 'exec-and-forget open -a /Applications/iTerm.app'
+alt-a = 'exec-and-forget open -a /Applications/Arc.app'
+alt-q = 'exec-and-forget open -a /Applications/Zed.app'
+alt-i = 'exec-and-forget open -a /Applications/iTerm.app'
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'
-alt-d = 'exec-and-forget open -a /Applications/Email.app'
+alt-e = 'exec-and-forget open -a /Applications/Email.app'
 alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
 
 
