@@ -12,7 +12,15 @@ after-login-command = []
 after-startup-command = [
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
+    'exec-and-forget sketchybar',
     'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+]
+
+# Notify Sketchybar about workspace change
+exec-on-workspace-change = [
+    '/bin/bash',
+    '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Start AeroSpace at login
@@ -46,11 +54,23 @@ default-root-container-orientation = 'auto'
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+gaps.outer.top =     [
+  # offset of 32 on internal display, because of notch (16" MPB)
+  { monitor.'built-in.*' = 10 },
+  48
+]
 gaps.inner.horizontal = 2
 gaps.inner.vertical = 10
 gaps.outer.left = 10
 gaps.outer.bottom = 10
-gaps.outer.top = 10
 gaps.outer.right = 10
 # gaps.inner.horizontal = 2
 # gaps.inner.vertical = 2
