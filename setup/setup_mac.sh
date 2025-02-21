@@ -67,6 +67,11 @@ function installcask() {
     brew install "${@}" --cask
 }
 
+# https://felixkratz.github.io/SketchyBar/setup
+brew tap FelixKratz/formulae
+brew install sketchybar
+brew install --cask font-hack-nerd-font
+
 # installcask utorrent
 installcask iterm2
 installcask karabiner-elements
