@@ -14,7 +14,7 @@ OS related setup scripts can be found in `setup` folder.
 
 ## Setup
 
-If you are using Mac OSX, this repo includes a script to install dependecies in this [script](setup/setup_mac.sh). 
+If you are using Mac OSX, this repo includes a script to install dependecies in this [script](setup/setup_mac.sh).
 
     curl -L http://git.io/3hD1Kw | sh
 
@@ -45,3 +45,6 @@ If you have differences in your preferred setup, I encourage you to fork this to
 
 I also accept pull requests on this, if they're small, atomic, and if they make my own project development experience better.
 
+### Thanks
+
+- https://github.com/hbthen3rd/dotfiles
