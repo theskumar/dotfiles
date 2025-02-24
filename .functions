@@ -1,3 +1,12 @@
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 # list/describe ec2 instances in all the regions
 function ec2-list-all(){
   for region in `aws ec2 describe-regions --output text | cut -f3`
