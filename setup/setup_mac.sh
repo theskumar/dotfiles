@@ -70,7 +70,9 @@ function installcask() {
 # https://felixkratz.github.io/SketchyBar/setup
 brew tap FelixKratz/formulae
 brew install sketchybar
+brew install --cask sf-symbols
 brew install --cask font-hack-nerd-font
+
 
 # installcask utorrent
 installcask iterm2
