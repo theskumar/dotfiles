@@ -17,11 +17,13 @@ after-startup-command = [
 ]
 
 # Notify Sketchybar about workspace change
+# Notify Sketchybar about workspace change and update icons
 exec-on-workspace-change = [
     '/bin/bash',
     '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE && ~/.config/sketchybar/plugins/update_workspace_icons.sh',
 ]
+
 
 # Start AeroSpace at login
 start-at-login = true
@@ -62,16 +64,16 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 In this example, 24 is a default value when there is no match.
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
-gaps.outer.top =     [
-  # offset of 32 on internal display, because of notch (16" MPB)
-  { monitor.'built-in.*' = 10 },
-  48
+gaps.outer.top = [
+    # offset of 32 on internal display, because of notch (16" MPB)
+    { monitor.'built-in.*' = 10 },
+    40,
 ]
 gaps.inner.horizontal = 2
-gaps.inner.vertical = 10
-gaps.outer.left = 10
-gaps.outer.bottom = 10
-gaps.outer.right = 10
+gaps.inner.vertical = 5
+gaps.outer.left = 5
+gaps.outer.bottom = 5
+gaps.outer.right = 5
 # gaps.inner.horizontal = 2
 # gaps.inner.vertical = 2
 # gaps.outer.left = 2
@@ -137,7 +139,6 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#workspace
-alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -149,7 +150,6 @@ alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#move-node-to-workspace
-alt-shift-0 = 'move-node-to-workspace 0 --focus-follows-window'
 alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
 alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
 alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
@@ -174,14 +174,26 @@ alt-enter = 'fullscreen'
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide.html#binding-modes
 [mode.service.binding]
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+r = [
+    'flatten-workspace-tree',
+    'mode main',
+    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
+] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = [
     'layout floating tiling',
     'mode main',
 ] # Toggle between floating and tiling layout
-backspace = ['close-all-windows-but-current', 'mode main']
-esc = ['reload-config', 'mode main']
+backspace = [
+    'close-all-windows-but-current',
+    'mode main',
+    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
+]
+esc = [
+    'reload-config',
+    'mode main',
+    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
+]
 
 # 'join' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide.html#binding-modes
