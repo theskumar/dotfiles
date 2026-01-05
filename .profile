@@ -16,10 +16,4 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    source ~/.osx
 fi
 
-# Check for startup SPLASH script
-if hash splash 2>/dev/null; then
-    splash
-fi
 . "$HOME/.cargo/env"
-
-source "$HOME/.rye/env"
