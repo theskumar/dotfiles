@@ -115,5 +115,18 @@ export default {
       },
       browser: "Arc", // your work browser
     },
+    {
+      // Open all linear.app links in the Linear macOS app
+      match: finicky.matchHostnames(["linear.app"]),
+      url: ({ url }) => {
+        // Example: https://linear.app/myteam/issue/ABC-123 -> linear://myteam/issue/ABC-123
+        const path = url.pathname.replace(/^\//, "");
+        return `linear://${path}`;
+      },
+      browser: {
+        name: "Linear",
+        // or the bundle id if needed: "com.linear.app"
+      },
+    },
   ],
 };
