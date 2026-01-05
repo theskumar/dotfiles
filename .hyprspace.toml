@@ -1,0 +1,615 @@
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                  HyprSpace - Complete Default Configuration                   ║
+# ║                                                                               ║
+# ║  HyprSpace is an enhanced fork of AeroSpace with exclusive features:          ║
+# ║  • Dwindle Layout - Binary tree-based tiling inspired by Hyprland             ║
+# ║  • Centered Workspace Bar - macOS menu bar with centered workspace indicators ║
+# ║  • Master Layout - Master/stack layout with configurable ratios               ║
+# ║  • Niri/Scroll/Paper Layout - Scrollable window management                    ║
+# ║                                                                               ║
+# ║  Configuration Location: ~/.hyprspace.toml                                    ║
+# ║  Documentation: https://github.com/barut/HyprSpace                            ║
+# ║                                                                               ║
+# ║  This file contains ALL possible configuration options with explanations.     ║
+# ║  Default values are set for optimal dwindle layout experience.                ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Config version for compatibility and deprecations
+# Fallback value (if you omit the key): config-version = 1
+config-version = 2
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                              STARTUP & LIFECYCLE                              ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Launch HyprSpace automatically when you log into macOS
+# Options: true, false
+start-at-login = true
+
+# Commands to run after HyprSpace starts
+# Can be a single command (string) or multiple commands (array)
+# Use 'exec-and-forget' to launch apps without blocking
+# Examples:
+#   after-startup-command = 'exec-and-forget open -a Ghostty'
+#   after-startup-command = ['exec-and-forget open -a Safari', 'exec-and-forget open -a Slack']
+after-startup-command = [
+'workspace 1',
+'layout dwindle',
+# 'exec-and-forget sketchybar',
+'exec-and-forget borders',
+]
+
+# Notify Sketchybar about workspace change
+# Notify Sketchybar about workspace change and update icons
+exec-on-workspace-change = [
+    # '/bin/bash',
+    # '-c',
+    # 'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE && ~/.config/sketchybar/plugins/update_workspace_icons.sh',
+]
+
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                            DEFAULT LAYOUT SETTINGS                            ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Default layout for new workspaces
+# Options: 'tiles', 'accordion', 'dwindle', 'master', 'scroll' (aka 'niri' or 'paper')
+# 'dwindle' - HyprSpace exclusive binary tree layout with automatic orientation
+# 'master' - HyprSpace exclusive master/stack layout
+# 'scroll'/'niri'/'paper' - HyprSpace exclusive scrollable layout
+default-root-container-layout = 'dwindle'
+
+# Default container orientation for tiles layout
+# Options: 'horizontal', 'vertical', 'auto'
+# 'auto' - Automatically choose based on screen dimensions
+default-root-container-orientation = 'auto'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                    DWINDLE LAYOUT (HYPRSPACE EXCLUSIVE)                       ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Split ratio for new dwindle containers
+# Range: 0.1 to 1.9 (1.0 = 50/50 split)
+# Examples:
+#   1.0 = Equal split (50%/50%)
+#   1.618 = Golden ratio split (~62%/38%)
+#   0.618 = Inverse golden ratio (~38%/62%)
+dwindle-default-split-ratio = 1.0
+
+# Enforce aspect ratio for single windows in dwindle layout
+# Format: [width, height] or [0, 0] to disable
+# Examples:
+#   [16, 9] = 16:9 widescreen
+#   [4, 3] = 4:3 traditional
+#   [21, 9] = 21:9 ultrawide
+#   [1, 1] = Square
+#   [0, 0] = Disabled (default)
+dwindle-single-window-aspect-ratio = [0, 0]
+
+# Tolerance for aspect ratio adjustments
+# Range: 0.0 to 1.0
+# Prevents tiny padding adjustments when window is close to target ratio
+# Lower values = more strict, higher values = more lenient
+dwindle-single-window-aspect-ratio-tolerance = 0.1
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                      MOUSE INTERACTION (HYPRSPACE EXCLUSIVE)                  ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Mouse resize sensitivity multiplier
+# Range: 0.1 to 3.0
+# Controls how aggressively windows resize when dragging with mouse
+# Examples:
+#   0.5 = Precise (slower, fine-grained control)
+#   1.0 = Balanced (default)
+#   2.0 = Aggressive (faster, coarse adjustments)
+mouse-sensitivity = 0.2
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                     MASTER LAYOUT (HYPRSPACE EXCLUSIVE)                       ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Master window width percentage
+# Range: 0.1 to 0.9 (0.5 = 50% of screen)
+# Examples:
+#   0.5 = Equal split (50%)
+#   0.618 = Golden ratio (~62%)
+#   0.66 = Two-thirds (~66%)
+master-default-percent = 0.5
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                SCROLL/NIRI/PAPER LAYOUT (HYPRSPACE EXCLUSIVE)                 ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Focused window width ratio for scroll/niri/paper layout
+# Controls how much of adjacent windows you see on the sides
+# Range: 0.1 to 1.0
+# Lower value = more focus, higher value = more context
+# Examples:
+#   0.5  = 50% width (25% peek each side) - maximum context
+#   0.67 = 67% width (16.5% peek each side) - balanced
+#   0.8  = 80% width (10% peek each side) - default
+#   0.9  = 90% width (5% peek each side) - focused
+#   1.0  = 100% width (no peek) - full screen
+niri-focused-width-ratio = 0.8
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                           OTHER LAYOUT SETTINGS                               ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Padding for accordion layout
+# Range: 0 to any positive integer (pixels)
+# 0 = No padding (disabled)
+# 30 = Default padding
+accordion-padding = 30
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                         NORMALIZATION SETTINGS                                ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Automatically flatten unnecessary container nesting
+# Eliminates weird tree configurations for cleaner window management
+# Options: true, false
+enable-normalization-flatten-containers = true
+
+# Force opposite orientation for nested containers
+# Prevents same-orientation nesting (e.g., horizontal inside horizontal)
+# Options: true, false
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                           MACOS INTEGRATION                                   ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Automatically unhide applications hidden with cmd-h
+# When true, focusing a hidden app will automatically unhide it
+# Options: true, false
+automatically-unhide-macos-hidden-apps = false
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║              WORKSPACE PERSISTENCE & MODE CALLBACKS                           ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# List of workspaces that should stay alive even when they contain no windows,
+# even when they are invisible.
+# This config version is only available since 'config-version = 2'
+# Fallback value (if you omit the key): persistent-workspaces = []
+persistent-workspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
+# Callback that runs every time binding mode changes
+# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# See: https://nikitabobko.github.io/AeroSpace/commands#mode
+on-mode-changed = []
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                            GAPS CONFIGURATION                                 ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+[gaps]
+# Inner gaps (spacing between windows)
+# Can be a constant or per-monitor configuration
+inner.horizontal = 10
+inner.vertical = 10
+
+# Outer gaps (spacing from screen edges)
+# Format: constant integer or per-monitor array
+# Per-monitor array syntax:
+#   outer.top = [
+#     { monitor.main = 16 },           # Main monitor gets 16px
+#     { monitor."Built-in" = 32 },     # Built-in display gets 32px
+#     { monitor.1 = 24 },              # First monitor in sequence gets 24px
+#     24                               # Default fallback (required)
+#   ]
+outer.left = 5
+outer.bottom = 5
+outer.top = 5
+outer.right = 5
+
+# Example: Different gaps for different monitors (uncomment to use)
+# [gaps]
+# outer.top = [
+#   { monitor.main = 20 },            # Main monitor menu bar spacing
+#   { monitor."Built-in" = 35 },      # MacBook notch spacing
+#   { monitor.secondary = 10 },       # Secondary monitor minimal spacing
+#   15                                 # Default for any other monitor
+# ]
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                     WORKSPACE TO MONITOR ASSIGNMENT                           ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Force specific workspaces to specific monitors
+# Format: workspace-number = "monitor-pattern" or ["pattern1", "pattern2"]
+# Monitor patterns:
+#   "main" - Primary monitor
+#   "secondary" - Non-primary monitors
+#   1, 2, 3 - Monitor by sequence number (1-based)
+#   "pattern" - Case-insensitive regex match (e.g., "Dell.*", "LG.*")
+#
+# Examples (uncomment to use):
+# [workspace-to-monitor-force-assignment]
+# 1 = "main"                          # Workspace 1 always on main monitor
+# 2 = "main"                          # Workspace 2 always on main monitor
+# 3 = "secondary"                     # Workspace 3 on any secondary monitor
+# 4 = ["Built-in", 1]                 # Workspace 4 prefers Built-in, falls back to monitor 1
+# 5 = "LG.*"                          # Workspace 5 on any LG monitor
+
+[workspace-to-monitor-force-assignment]
+# 1 = 'dell p2417h'
+1 = 'JBL Bar 5.1'
+2 = 'main'
+3 = 'built-in'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                            KEY MAPPING                                        ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+[key-mapping]
+# Keyboard layout preset
+# Options: 'qwerty', 'dvorak', 'colemak'
+preset = 'qwerty'
+
+# Custom key remapping (optional)
+# Map non-standard keys to key codes
+# Example (uncomment to use):
+# [key-mapping.key-notation-to-key-code]
+# delete = 'backspace'
+# capslock = 'esc'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                       EXEC ENVIRONMENT CONFIGURATION                          ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+[exec]
+# Inherit environment variables from parent process
+# Options: true, false
+inherit-env-vars = true
+
+[exec.env-vars]
+# Environment variables for executed commands
+# Supports ${VAR} interpolation for existing variables
+PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
+
+# Custom environment variables (examples):
+# EDITOR = 'nvim'
+# BROWSER = 'Safari'
+# TERMINAL = 'Ghostty'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                              EVENT CALLBACKS                                  ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Commands to run when focus changes
+# Can be a single command (string) or multiple commands (array)
+# Available variables: ${focused} ${workspace}
+# Examples (uncomment to use):
+# on-focus-changed = 'exec-and-forget echo "Focus changed to ${focused}"'
+# on-focus-changed = ['exec-and-forget sketchybar --trigger aerospace_focus_change focused=${focused}']
+
+# Commands to run when focused monitor changes
+# Available variables: ${focused-monitor} ${workspace}
+# Example: Move mouse to center of newly focused monitor
+on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                        WINDOW DETECTION RULES                                 ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Automatically configure windows when detected
+# Available conditions:
+#   - app-id: Bundle identifier (use 'aerospace list-apps' to find)
+#   - app-name-regex-substring: Partial regex match on app name
+#   - window-title-regex-substring: Partial regex match on window title
+#   - workspace: Current workspace name
+#   - during-aerospace-startup: Only during HyprSpace startup
+#
+# Available commands:
+#   - layout floating/tiling
+#   - move-node-to-workspace (must be last command if used)
+#
+# Examples (uncomment and modify to use):
+
+# # Float all Safari windows on workspace 5
+# [[on-window-detected]]
+# if.app-id = 'com.apple.Safari'
+# if.workspace = '5'
+# run = 'layout floating'
+
+# # Tile all Zoom meetings
+# [[on-window-detected]]
+# if.app-name-regex-substring = '.*Zoom.*'
+# if.window-title-regex-substring = '.*Meeting.*'
+# run = 'layout tiling'
+
+# # Move Ghostty to workspace 2 on startup
+# [[on-window-detected]]
+# if.app-id = 'com.mitchellh.ghostty'
+# if.during-aerospace-startup = true
+# run = 'move-node-to-workspace 2'
+
+# # Float System Settings/Preferences
+# [[on-window-detected]]
+# if.app-id = 'com.apple.systempreferences'
+# run = 'layout floating'
+
+# # Float Calculator
+# [[on-window-detected]]
+# if.app-id = 'com.apple.calculator'
+# run = 'layout floating'
+
+# # Move Slack to workspace 3
+# [[on-window-detected]]
+# if.app-id = 'com.tinyspeck.slackmacgap'
+# check-further-callbacks = false
+# run = 'move-node-to-workspace 3'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                          MAIN MODE KEYBINDINGS                                ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+[mode.main.binding]
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                              FOCUS MOVEMENT
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Arrow key navigation for focusing windows
+# alt-left = 'focus left'
+# alt-down = 'focus down'
+# alt-up = 'focus up'
+# alt-right = 'focus right'
+
+# Alternative: Vim-style navigation (uncomment to use instead of arrows)
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                              WINDOW MOVEMENT
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Move windows with arrow keys
+# alt-shift-left = 'move left'
+# alt-shift-down = 'move down'
+# alt-shift-up = 'move up'
+# alt-shift-right = 'move right'
+
+# Alternative: Vim-style window movement (uncomment to use)
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                            WORKSPACE SWITCHING
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Switch to workspaces 1-5
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+
+# Move windows to workspaces 1-5
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+
+# Navigate workspaces sequentially
+# alt-tab = 'workspace-back-and-forth'
+# alt-tab = 'workspace next'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+# alt-shift-tab = 'workspace prev'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                              LAYOUT COMMANDS
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Layout switching (HyprSpace exclusive layouts included)
+alt-shift-d = 'layout dwindle'          # HyprSpace exclusive
+alt-shift-t = 'layout tiles'            # Traditional tiling
+alt-shift-a = 'layout accordion'        # Accordion (one window visible)
+alt-shift-m = 'layout master'           # HyprSpace exclusive master/stack
+alt-shift-s = 'layout scroll'           # HyprSpace exclusive scrollable
+
+# Toggle between floating and tiling for current window
+alt-shift-space = 'layout floating tiling'
+
+# Balance window sizes (reset to equal sizes)
+# Especially useful after manual resizing in dwindle layout
+alt-b = 'balance-sizes'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                            WINDOW RESIZING
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Direct resize - immediate size adjustment without entering a mode
+alt-equal = 'resize width -300'
+alt-minus = 'resize width +300'
+alt-shift-equal = 'resize height -300'
+alt-shift-minus = 'resize height +300'
+
+# Alternative: Modal resize (requires entering resize mode first)
+# Uncomment the following line to enable resize mode
+# alt-r = 'mode resize'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                            WINDOW MANAGEMENT
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Close focused window
+alt-shift-q = 'close'
+
+# Fullscreen toggle
+alt-enter = 'fullscreen'
+
+# Split orientation (for tiles layout)
+# NOTE: Disabled because enable-normalization-flatten-containers = true
+# Uncomment and set enable-normalization-flatten-containers = false to use split commands
+# alt-shift-slash = 'split opposite'
+
+# Flatten container (remove unnecessary nesting)
+alt-shift-f = 'flatten-workspace-tree'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                          APPLICATION LAUNCHING
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Launch terminal (Ghostty)
+# alt-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
+alt-a = 'exec-and-forget open -a /Applications/Arc.app'
+alt-q = 'exec-and-forget open -a /Applications/Zed.app'
+alt-i = 'exec-and-forget open -a /Applications/iTerm.app'
+alt-s = 'exec-and-forget open -a /Applications/Slack.app'
+alt-f = 'exec-and-forget open ~/Downloads'
+alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
+# Alternative terminals (uncomment preferred option):
+# alt-enter = 'exec-and-forget open -n /Applications/Terminal.app'
+# alt-enter = 'exec-and-forget open -n /Applications/iTerm.app'
+# alt-enter = 'exec-and-forget open -n /Applications/Alacritty.app'
+# alt-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                           SYSTEM COMMANDS
+# ──────────────────────────────────────────────────────────────────────────────
+
+# Reload configuration
+alt-cmd-shift-r = 'reload-config'
+
+# Enable/disable HyprSpace (crisis key)
+alt-cmd-shift-e = 'enable toggle'
+
+# ──────────────────────────────────────────────────────────────────────────────
+#                             MODE SWITCHING
+# ──────────────────────────────────────────────────────────────────────────────
+
+# (Mode switching moved to alternative resize option above)
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║              RESIZE MODE KEYBINDINGS (ALTERNATIVE METHOD)                     ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Alternative: Modal resize configuration
+# To use modal resize instead of direct resize, uncomment this entire section
+# and the 'alt-r = mode resize' line in the Window Resizing section above
+
+# [mode.resize.binding]
+#
+# # ──────────────────────────────────────────────────────────────────────────────
+# #                            RESIZE WITH ARROWS
+# # ──────────────────────────────────────────────────────────────────────────────
+#
+# # Fine-grained resizing (50 pixels)
+# left = 'resize width -50'
+# down = 'resize height +50'
+# up = 'resize height -50'
+# right = 'resize width +50'
+#
+# # Coarse resizing (200 pixels)
+# shift-left = 'resize width -200'
+# shift-down = 'resize height +200'
+# shift-up = 'resize height -200'
+# shift-right = 'resize width +200'
+#
+# # Alternative: Vim-style resizing
+# # h = 'resize width -50'
+# # j = 'resize height +50'
+# # k = 'resize height -50'
+# # l = 'resize width +50'
+# # shift-h = 'resize width -200'
+# # shift-j = 'resize height +200'
+# # shift-k = 'resize height -200'
+# # shift-l = 'resize width +200'
+#
+# # ──────────────────────────────────────────────────────────────────────────────
+# #                            MODE NAVIGATION
+# # ──────────────────────────────────────────────────────────────────────────────
+#
+# # Return to main mode
+# esc = 'mode main'
+# alt-r = 'mode main'
+# enter = 'mode main'
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                     CENTERED WORKSPACE BAR SETTINGS                           ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │  IMPORTANT: Centered Workspace Bar is configured through the GUI, not TOML  │
+# │                                                                             │
+# │  To configure the centered workspace bar:                                   │
+# │  1. Click the HyprSpace menu bar icon                                       │
+# │  2. Select "Experimental UI Settings"                                       │
+# │  3. Configure the following options:                                        │
+# │                                                                             │
+# │  • Enable Centered Bar: Toggle the bar on/off                               │
+# │  • Show Numbers: Display workspace numbers                                  │
+# │  • Show Mode Indicator: Show current binding mode (main/resize)             │
+# │  • Window Level: Z-index (popup recommended)                                │
+# │  • Position: overlappingMenuBar or belowMenuBar                             │
+# │  • Notch Aware: Shift right of MacBook Pro notch                            │
+# │  • Deduplicate Icons: Group same-app windows                                │
+# │  • Hide Empty Workspaces: Only show occupied workspaces                     │
+# │                                                                             │
+# │  These settings are stored in macOS UserDefaults, not in this TOML file.    │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                         AVAILABLE KEY CODES REFERENCE                         ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# Letters: a-z
+# Numbers: 0-9
+# Keypad: keypad0-keypad9
+# F-keys: f1-f20
+#
+# Special Keys:
+# - minus, equal, period, comma, slash, backslash
+# - quote, semicolon, backtick
+# - leftSquareBracket, rightSquareBracket
+# - space, enter, esc, backspace, tab
+# - pageUp, pageDown, home, end, forwardDelete
+# - sectionSign (ISO keyboards only)
+#
+# Keypad Special:
+# - keypadClear, keypadDecimalMark, keypadDivide
+# - keypadEnter, keypadEqual, keypadMinus
+# - keypadMultiply, keypadPlus
+#
+# Arrows: left, down, up, right
+#
+# Modifiers (combine with keys):
+# - cmd (Command ⌘)
+# - alt (Option ⌥)
+# - ctrl (Control ⌃)
+# - shift (Shift ⇧)
+
+# ╔═══════════════════════════════════════════════════════════════════════════════╗
+# ║                           DEPRECATED OPTIONS                                  ║
+# ╚═══════════════════════════════════════════════════════════════════════════════╝
+
+# The following options are deprecated and kept here for reference only:
+#
+# after-login-command (deprecated since AeroSpace 0.19.0)
+#   → Use: after-startup-command
+#
+# exec-on-workspace-change (deprecated)
+#   → Use: on-focus-changed with ${workspace} variable
+#
+# non-empty-workspaces-root-containers-layout-on-startup (removed)
+#   → No replacement, feature removed
+#
+# indent-for-nested-containers-with-the-same-orientation (removed)
+#   → No replacement, feature removed

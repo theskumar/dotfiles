@@ -35,7 +35,7 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 # See: https://nikitabobko.github.io/AeroSpace/guide.html#layouts
 # The 'accordion-padding' specifies the size of accordion padding
 # You can set 0 to disable the padding feature
-accordion-padding = 300
+accordion-padding = 100
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
 # Useful if you don't use this macOS feature, but accidentally hit cmd-h or cmd-alt-h key
@@ -66,7 +66,7 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 gaps.outer.top = [
     # offset of 32 on internal display, because of notch (16" MPB)
-    { monitor.'built-in.*' = 10 },
+    { monitor.'built-in.*' = 0 },
     40,
 ]
 gaps.inner.horizontal = 2
@@ -112,6 +112,8 @@ non-empty-workspaces-root-containers-layout-on-startup = 'smart'
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#exec-and-forget
 alt-a = 'exec-and-forget open -a /Applications/Arc.app'
 alt-q = 'exec-and-forget open -a /Applications/Zed.app'
+alt-w = 'exec-and-forget open -a "/Applications/Zen Browser.app"'
+# alt-i = 'exec-and-forget open -a /Applications/Ghostty.app'
 alt-i = 'exec-and-forget open -a /Applications/iTerm.app'
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'
 alt-e = 'exec-and-forget open -a /Applications/Email.app'
@@ -150,15 +152,15 @@ alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1 --focus-follows-window'
-alt-shift-2 = 'move-node-to-workspace 2 --focus-follows-window'
-alt-shift-3 = 'move-node-to-workspace 3 --focus-follows-window'
-alt-shift-4 = 'move-node-to-workspace 4 --focus-follows-window'
-alt-shift-5 = 'move-node-to-workspace 5 --focus-follows-window'
-alt-shift-6 = 'move-node-to-workspace 6 --focus-follows-window'
-alt-shift-7 = 'move-node-to-workspace 7 --focus-follows-window'
-alt-shift-8 = 'move-node-to-workspace 8 --focus-follows-window'
-alt-shift-9 = 'move-node-to-workspace 9 --focus-follows-window'
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands.html#workspace-back-and-forth
 # alt-tab = 'workspace-back-and-forth'
@@ -205,9 +207,10 @@ alt-shift-l = ['join-with right', 'mode main']
 esc = 'mode main'
 
 [workspace-to-monitor-force-assignment]
-1 = 'built-in'
+# 1 = 'dell p2417h'
+1 = 'JBL Bar 5.1'
 2 = 'main'
-3 = 'dell p2417h'
+3 = 'built-in'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
@@ -219,6 +222,10 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.1password.1password'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.automattic.SimplenoteMac'
 run = 'layout floating'
 
 [[on-window-detected]]
