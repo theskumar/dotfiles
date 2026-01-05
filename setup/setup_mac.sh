@@ -84,6 +84,9 @@ installcask qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quickl
 brew tap ivandokov/homebrew-contrib
 brew install phockup
 
+# https://github.com/alexpasmantier/television
+brew install television
+
 # Postgres Database
 brew install postgres postgis
 
