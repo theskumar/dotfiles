@@ -1,0 +1,500 @@
+#!/bin/bash
+
+###############################################################################
+# murder - Gracefully kill processes by PID, name, or port
+#
+# DESCRIPTION:
+#   This script attempts to kill processes using escalating signals, giving
+#   processes a chance to shut down gracefully before forcing termination.
+#
+# SIGNAL ESCALATION:
+#   1. SIGTERM (15) - Polite termination request, waits 3 seconds
+#   2. SIGINT (2)   - Interrupt signal (like Ctrl+C), waits 3 seconds
+#   3. SIGHUP (1)   - Hangup signal, waits 4 seconds
+#   4. SIGKILL (9)  - Forceful kill, cannot be caught or ignored
+#
+# USAGE:
+#   murder <pid>        Kill process by PID
+#   murder <name>       Kill process(es) by name (with confirmation)
+#   murder :<port>      Kill process(es) using a port (with confirmation)
+#
+# EXAMPLES:
+#   murder 1234         # Kill process with PID 1234
+#   murder ruby         # Find and kill all Ruby processes (asks for each)
+#   murder :3000        # Kill process listening on port 3000
+#   murder node :8080   # Kill all node processes and anything on port 8080
+#
+# EXIT CODES:
+#   0 - All processes successfully killed
+#   1 - One or more processes could not be killed or were not found
+#
+# FEATURES:
+#   - Escalates through signals gracefully before forcing kill
+#   - Interactive confirmation for name and port searches
+#   - Prevents killing the murder script itself and parent process
+#   - Supports multiple arguments in one command
+#   - Detects and handles zombie processes
+#   - Validates port numbers (1-65535)
+#   - Provides helpful error messages
+#   - Prevents infinite loops with iteration limits
+#
+# REQUIREMENTS:
+#   - Bash 3.0 or higher
+#   - ps, kill commands (standard on Unix-like systems)
+#   - lsof command (for port-based killing)
+#   - grep, awk, cut commands
+#
+# AUTHOR:
+#   Converted from Ruby original
+#   https://codeberg.org/EvanHahn/dotfiles/src/commit/843b9ee13d949d346a4a73ccee2a99351aed285b/home/bin/bin/murder#
+#
+# VERSION:
+#   2.0
+#
+###############################################################################
+
+# Signal array: signal_code:wait_time
+# Format: "SIGNAL_NUMBER:SECONDS_TO_WAIT_AFTER_SIGNAL"
+# Each signal is attempted in order, with a wait period to see if the
+# process terminates before trying the next signal.
+SIGNALS=(
+  "15:3"  # SIGTERM - polite shutdown request (default kill signal)
+  "2:3"   # SIGINT  - interrupt (like pressing Ctrl+C)
+  "1:4"   # SIGHUP  - hangup signal (terminal disconnected)
+  "9:0"   # SIGKILL - forceful kill (cannot be caught, always terminates)
+)
+
+###############################################################################
+# Check if argument is a positive integer
+#
+# Uses regex matching to determine if the entire string consists only of
+# digits with no other characters.
+#
+# ARGUMENTS:
+#   $1 - String to check
+#
+# RETURNS:
+#   0 (success) if string is a positive integer
+#   1 (failure) otherwise
+#
+# EXAMPLES:
+#   is_integer "123"   # returns 0
+#   is_integer "12a"   # returns 1
+#   is_integer ""      # returns 1
+###############################################################################
+is_integer() {
+  [[ "$1" =~ ^[0-9]+$ ]]
+}
+
+###############################################################################
+# Validate if a port number is in the valid range
+#
+# Valid ports are integers between 1 and 65535 (inclusive).
+# Port 0 is reserved and not considered valid for this tool.
+#
+# ARGUMENTS:
+#   $1 - Port number to validate
+#
+# RETURNS:
+#   0 if port is valid (1-65535)
+#   1 if port is invalid
+#
+# EXAMPLES:
+#   is_valid_port "3000"   # returns 0
+#   is_valid_port "0"      # returns 1
+#   is_valid_port "70000"  # returns 1
+###############################################################################
+is_valid_port() {
+  local port=$1
+  [[ "$port" =~ ^[0-9]+$ ]] && (( port >= 1 && port <= 65535 ))
+}
+
+###############################################################################
+# Check if a process is currently running
+#
+# Uses 'kill -0' which sends a null signal to check if a process exists
+# and we have permission to signal it. This is more efficient than parsing
+# ps output. Also checks that the process is not a zombie (state 'Z').
+#
+# ARGUMENTS:
+#   $1 - Process ID to check
+#
+# RETURNS:
+#   0 if process exists and is not a zombie
+#   1 if process doesn't exist, is a zombie, or we lack permission
+#
+# NOTES:
+#   Zombie processes (defunct processes waiting for parent to collect their
+#   exit status) cannot be killed and are excluded from the "running" check.
+###############################################################################
+is_running() {
+  local pid=$1
+
+  # Use kill -0 for efficient existence check (doesn't actually send a signal)
+  if kill -0 "$pid" 2>/dev/null; then
+    # Ensure it's not a zombie process (state Z)
+    local state=$(ps -p "$pid" -o state= 2>/dev/null | tr -d ' ')
+    [[ "$state" != "Z" ]]
+  else
+    return 1
+  fi
+}
+
+###############################################################################
+# Prompt user for yes/no confirmation
+#
+# Reads user input from /dev/tty directly instead of stdin. This is crucial
+# because the calling functions may have redirected stdin (using process
+# substitution), so reading from stdin would fail or read from the wrong source.
+#
+# ACCEPTED RESPONSES:
+#   y, yes, yas (case-insensitive)
+#
+# RETURNS:
+#   0 if user confirmed (entered y/yes/yas)
+#   1 if user declined or entered anything else
+#
+# NOTES:
+#   Reading from /dev/tty ensures we always get interactive user input,
+#   even when called from within loops that have redirected stdin.
+###############################################################################
+go_ahead() {
+  local response
+  read -r response </dev/tty
+  response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
+  [[ "$response" == "y" || "$response" == "yes" || "$response" == "yas" ]]
+}
+
+###############################################################################
+# Kill a process using escalating signals
+#
+# Attempts to kill a process by trying each signal in the SIGNALS array
+# in order, waiting between each attempt to see if the process terminates.
+# More aggressive signals are only used if gentler ones fail.
+#
+# PROCESS:
+#   1. Check if we have permission to signal the process
+#   2. For each signal in SIGNALS:
+#      a. Send the signal
+#      b. Wait 0.5 seconds
+#      c. If process still running, wait additional time from SIGNALS array
+#   3. Verify the process was successfully terminated
+#
+# ARGUMENTS:
+#   $1 - Process ID to kill
+#
+# RETURNS:
+#   0 if process was successfully killed
+#   1 if process couldn't be killed or we lack permission
+#
+# ERROR MESSAGES:
+#   Prints to stderr if permission denied or signals fail
+###############################################################################
+murder_pid() {
+  local pid=$1
+
+  # Initial permission check using kill -0 (doesn't send actual signal)
+  if ! kill -0 "$pid" 2>/dev/null; then
+    echo "Error: Cannot access process $pid (doesn't exist or permission denied)" >&2
+    return 1
+  fi
+
+  # Try each signal in escalating order
+  for signal_spec in "${SIGNALS[@]}"; do
+    # Exit early if process already terminated
+    if ! is_running "$pid"; then
+      return 0
+    fi
+
+    # Parse signal specification (format: "code:wait_time")
+    local code="${signal_spec%%:*}"      # Everything before ':'
+    local wait="${signal_spec##*:}"      # Everything after ':'
+
+    # Send the signal
+    if ! kill -"$code" "$pid" 2>/dev/null; then
+      echo "Error: Failed to send signal $code to process $pid" >&2
+      return 1
+    fi
+
+    # Brief pause to let signal be processed
+    sleep 0.5
+
+    # If still running, wait longer before trying next signal
+    if is_running "$pid"; then
+      sleep "$wait"
+    fi
+  done
+
+  # Final verification that process was killed
+  if is_running "$pid"; then
+    echo "Warning: Process $pid may still be running" >&2
+    return 1
+  fi
+
+  return 0
+}
+
+###############################################################################
+# Find and kill processes by name
+#
+# Searches for all processes whose command line contains the given name
+# (case-insensitive word match). For each match, prompts the user for
+# confirmation before killing. Automatically excludes the murder script
+# itself and its parent process.
+#
+# SEARCH BEHAVIOR:
+#   - Case-insensitive (-i flag)
+#   - Whole word matching (-w flag)
+#   - Matches against full command line
+#   - Excludes grep itself (-v grep)
+#
+# SAFETY FEATURES:
+#   - Skips the current script ($$)
+#   - Skips parent process ($PPID)
+#   - Skips the murder script itself (checks command path)
+#   - Iteration limit (100) prevents infinite loops
+#
+# ARGUMENTS:
+#   $1 - Process name to search for
+#
+# RETURNS:
+#   0 if at least one process was found (whether killed or not)
+#   1 if no processes found matching the name
+#
+# NOTES:
+#   After killing a process, the search is restarted to catch any new
+#   processes that may have started. This continues until the user
+#   declines to kill all remaining matches or no matches remain.
+###############################################################################
+murder_names() {
+  local name=$1
+  local found_any=false
+  local max_iterations=100
+  local iteration=0
+
+  # Loop allows re-scanning after each kill (catches newly spawned processes)
+  while true; do
+    ((iteration++))
+
+    # Safety limit to prevent infinite loops
+    if (( iteration > max_iterations )); then
+      echo "Warning: Exceeded maximum iterations ($max_iterations), stopping" >&2
+      break
+    fi
+
+    local should_loop=false
+
+    # Search for matching processes
+    # ps -eo 'pid command': show PID and full command for all processes
+    # grep -Fiw: Fixed string, case-insensitive, whole word match
+    # grep -Fv grep: exclude the grep process itself from results
+    while IFS= read -r line; do
+      found_any=true
+      local pid=$(echo "$line" | awk '{print $1}')
+      local fullname=$(echo "$line" | cut -d' ' -f2-)
+
+      # Skip our own process, parent, and the murder script itself
+      if [[ "$pid" == "$$" ]] || [[ "$pid" == "$PPID" ]] || [[ "$fullname" == *"$0"* ]]; then
+        continue
+      fi
+
+      # Prompt for confirmation
+      echo -n "murder $fullname (pid $pid)? "
+      if go_ahead; then
+        murder_pid "$pid"
+        # Restart search after killing (catches any new processes)
+        should_loop=true
+        break
+      fi
+    done < <(ps -eo 'pid command' | grep -Fiw "$name" | grep -Fv grep)
+
+    # Exit loop if user declined all remaining processes
+    if [[ "$should_loop" == false ]]; then
+      break
+    fi
+  done
+
+  # Inform user if no matches were found
+  if [[ "$found_any" == false ]]; then
+    echo "No processes found matching: $name" >&2
+    return 1
+  fi
+
+  return 0
+}
+
+###############################################################################
+# Find and kill processes by port
+#
+# Uses lsof (list open files) to find processes listening on or connected
+# to the specified port. For each process found, prompts for confirmation
+# before killing.
+#
+# PORT FORMATS:
+#   :3000       - TCP or UDP on port 3000
+#   tcp:3000    - TCP only on port 3000
+#   udp:3000    - UDP only on port 3000
+#   :3000-3010  - Range of ports (lsof syntax)
+#
+# REQUIREMENTS:
+#   lsof command must be installed and accessible
+#
+# ARGUMENTS:
+#   $1 - Port specification (e.g., ":3000")
+#
+# RETURNS:
+#   0 if at least one process was found
+#   1 if no processes found or lsof not available
+#
+# NOTES:
+#   Like murder_names, this restarts the search after each kill to catch
+#   any newly spawned processes. Has iteration limit for safety.
+###############################################################################
+murder_port() {
+  local arg=$1
+
+  # Verify lsof is available
+  if ! command -v lsof &>/dev/null; then
+    echo "Error: lsof command not found. Please install lsof to use port-based killing." >&2
+    return 1
+  fi
+
+  local found_any=false
+  local max_iterations=100
+  local iteration=0
+
+  # Loop allows re-scanning after each kill
+  while true; do
+    ((iteration++))
+
+    # Safety limit to prevent infinite loops
+    if (( iteration > max_iterations )); then
+      echo "Warning: Exceeded maximum iterations ($max_iterations), stopping" >&2
+      break
+    fi
+
+    local should_loop=false
+
+    # Use lsof to find processes using the port
+    # lsof -i: list network connections
+    # tail -n +2: skip header line
+    while IFS= read -r line; do
+      found_any=true
+
+      # Extract PID (second column in lsof output)
+      local pid=$(echo "$line" | awk '{print $2}')
+
+      # Validate that we got a numeric PID
+      if ! is_integer "$pid"; then
+        continue
+      fi
+
+      # Get full command name for this PID
+      local fullname=$(ps -p "$pid" -o command= 2>/dev/null)
+
+      # Only process if we successfully got the command name
+      if [[ -n "$fullname" ]]; then
+        # Prompt for confirmation
+        echo -n "murder $fullname (pid $pid)? "
+        if go_ahead; then
+          murder_pid "$pid"
+          # Restart search after killing
+          should_loop=true
+          break
+        fi
+      fi
+    done < <(lsof -i "$arg" 2>/dev/null | tail -n +2)
+
+    # Exit loop if user declined all remaining processes
+    if [[ "$should_loop" == false ]]; then
+      break
+    fi
+  done
+
+  # Inform user if no processes found using this port
+  if [[ "$found_any" == false ]]; then
+    echo "No processes found using port: $arg" >&2
+    return 1
+  fi
+
+  return 0
+}
+
+###############################################################################
+# Main murder dispatcher function
+#
+# Determines the type of argument (PID, port, or name) and routes to the
+# appropriate handler function.
+#
+# ARGUMENT DETECTION:
+#   - All digits → PID (e.g., "1234")
+#   - Starts with ":" followed by valid port → Port (e.g., ":3000")
+#   - Anything else → Process name (e.g., "ruby", "node", "my-app")
+#
+# ARGUMENTS:
+#   $1 - PID, port specification, or process name
+#
+# RETURNS:
+#   0 if successful
+#   1 if failed or invalid input
+#
+# EXAMPLES:
+#   murder "1234"        # Calls murder_pid
+#   murder ":3000"       # Calls murder_port
+#   murder "ruby"        # Calls murder_names
+#   murder ":99999"      # Returns error (invalid port)
+###############################################################################
+murder() {
+  local arg=$1
+
+  # Check if argument is a PID (all digits)
+  if is_integer "$arg"; then
+    murder_pid "$arg"
+  # Check if argument is a port (starts with : and has valid port number)
+  elif [[ "$arg" == :* ]] && is_valid_port "${arg:1}"; then
+    murder_port "$arg"
+  # Check if it looks like a port but has invalid number
+  elif [[ "$arg" == :* ]]; then
+    echo "Error: Invalid port number '${arg:1}' (must be 1-65535)" >&2
+    return 1
+  # Otherwise treat as process name
+  else
+    murder_names "$arg"
+  fi
+}
+
+###############################################################################
+# Main script entry point
+#
+# Processes command-line arguments and dispatches to the murder function
+# for each one. Tracks success/failure across all arguments and returns
+# appropriate exit code.
+#
+# BEHAVIOR:
+#   - If no arguments: print usage and exit with code 1
+#   - For each argument: call murder function
+#   - Track any failures and return 1 if any occurred
+#   - Return 0 only if all arguments succeeded
+#
+# EXIT CODES:
+#   0 - All operations successful
+#   1 - No arguments provided or one or more operations failed
+###############################################################################
+
+if [[ $# -lt 1 ]]; then
+  # No arguments provided - show usage
+  echo "usage:"
+  echo "  murder 123       # kill by pid"
+  echo "  murder ruby      # kill by process name"
+  echo "  murder :3000     # kill by port"
+  echo "  murder node :80  # multiple arguments"
+  exit 1
+else
+  # Process each argument
+  exit_code=0
+  for arg in "$@"; do
+    # Call murder for this argument, track failures
+    murder "$arg" || exit_code=1
+  done
+  exit $exit_code
+fi
