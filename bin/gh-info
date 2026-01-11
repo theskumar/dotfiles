@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+# GitHub Repository Info Fetcher
+# Usage: ./github-repo-info.sh <github-repo-url>
+
+set -euo pipefail
+
+# Color codes for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Function to display usage
+usage() {
+    echo "Usage: $0 <github-repo-url>"
+    echo "Example: $0 https://github.com/torvalds/linux"
+    exit 1
+}
+
+# Function to copy to clipboard (portable across different systems)
+copy_to_clipboard() {
+    local text="$1"
+
+    if command -v pbcopy &> /dev/null; then
+        # macOS
+        echo -n "$text" | pbcopy
+    elif command -v xclip &> /dev/null; then
+        # Linux with xclip
+        echo -n "$text" | xclip -selection clipboard
+    elif command -v xsel &> /dev/null; then
+        # Linux with xsel
+        echo -n "$text" | xsel --clipboard --input
+    elif command -v wl-copy &> /dev/null; then
+        # Wayland
+        echo -n "$text" | wl-copy
+    elif [[ -n "${WSL_DISTRO_NAME:-}" ]] && command -v clip.exe &> /dev/null; then
+        # WSL (Windows Subsystem for Linux)
+        echo -n "$text" | clip.exe
+    else
+        echo -e "${RED}Warning: No clipboard utility found. Output not copied.${NC}" >&2
+        echo "Install one of: pbcopy (macOS), xclip, xsel (Linux), or wl-copy (Wayland)" >&2
+        return 1
+    fi
+    return 0
+}
+
+# Check if URL is provided
+if [ $# -eq 0 ]; then
+    usage
+fi
+
+REPO_URL="$1"
+
+# Extract owner and repo name from URL
+# Handles various GitHub URL formats:
+# - https://github.com/user/repo
+# - https://github.com/user/repo.git
+# - git@github.com:user/repo.git
+if [[ "$REPO_URL" =~ github\.com[/:]([^/]+)/([^/]+)(\.git)?$ ]]; then
+    OWNER="${BASH_REMATCH[1]}"
+    REPO="${BASH_REMATCH[2]}"
+    REPO="${REPO%.git}"  # Remove .git suffix if present
+else
+    echo -e "${RED}Error: Invalid GitHub repository URL${NC}" >&2
+    echo "Expected format: https://github.com/owner/repo" >&2
+    exit 1
+fi
+
+# Check if curl is available
+if ! command -v curl &> /dev/null; then
+    echo -e "${RED}Error: curl is required but not installed${NC}" >&2
+    exit 1
+fi
+
+# Check if jq is available
+if ! command -v jq &> /dev/null; then
+    echo -e "${RED}Error: jq is required but not installed${NC}" >&2
+    echo "Install it with: apt-get install jq, brew install jq, or yum install jq" >&2
+    exit 1
+fi
+
+# Fetch repository information from GitHub API
+API_URL="https://api.github.com/repos/$OWNER/$REPO"
+
+# Make API request
+RESPONSE=$(curl -s -w "\n%{http_code}" "$API_URL")
+HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+JSON_DATA=$(echo "$RESPONSE" | sed '$d')
+
+# Check if request was successful
+if [ "$HTTP_CODE" != "200" ]; then
+    echo -e "${RED}Error: Failed to fetch repository information (HTTP $HTTP_CODE)${NC}" >&2
+    if [ "$HTTP_CODE" == "404" ]; then
+        echo "Repository not found: $OWNER/$REPO" >&2
+    elif [ "$HTTP_CODE" == "403" ]; then
+        echo "Rate limit exceeded or access forbidden" >&2
+    fi
+    exit 1
+fi
+
+# Parse JSON response
+DESCRIPTION=$(echo "$JSON_DATA" | jq -r '.description // "No description provided"')
+STARS=$(echo "$JSON_DATA" | jq -r '.stargazers_count')
+
+# Format output
+OUTPUT="[$OWNER/$REPO]($REPO_URL): $DESCRIPTION (⭐$STARS)"
+
+# Print to stdout
+echo "$OUTPUT"
+
+# Copy to clipboard
+if copy_to_clipboard "$OUTPUT"; then
+    echo -e "${GREEN}✓ Copied to clipboard${NC}" >&2
+fi
