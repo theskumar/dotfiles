@@ -1,0 +1,97 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "richxerox",
+#     "markdown-it-py[linkify]",
+# ]
+# ///
+"""
+slackify - Convert Markdown to rich text and copy to clipboard for Slack.
+
+Usage:
+    # From clipboard (copy markdown first, then run):
+    slackify
+
+    # From file:
+    slackify path/to/file.md
+
+    # From stdin:
+    echo "**bold** text" | slackify -
+"""
+
+import re
+import subprocess
+import sys
+
+from markdown_it import MarkdownIt
+
+
+def get_markdown_content() -> str:
+    """Get markdown from file, stdin, or clipboard."""
+    if len(sys.argv) > 1:
+        arg = sys.argv[1]
+        if arg == "-":
+            return sys.stdin.read()
+        else:
+            with open(arg, "r") as f:
+                return f.read()
+    else:
+        # Read from clipboard
+        result = subprocess.run(["pbpaste"], capture_output=True, text=True)
+        return result.stdout
+
+
+def markdown_to_html(md_text: str) -> str:
+    """Convert markdown to HTML using markdown-it-py."""
+    md = MarkdownIt("commonmark", {"linkify": True}).enable("linkify").enable("table")
+    return md.render(md_text)
+
+
+def convert_headings_to_bold(html: str) -> str:
+    """Convert all heading tags (h1-h6) to bold paragraphs with empty line before."""
+    # First, convert all headings to bold
+    result = re.sub(
+        r"<h[1-6]>(.*?)</h[1-6]>",
+        r"<p><strong>\1</strong></p>",
+        html,
+        flags=re.DOTALL,
+    )
+    # Add empty line before each bold heading, except at the very start
+    result = re.sub(
+        r"(?<!^)(<p><strong>)",
+        r"<p><br></p>\1",
+        result,
+    )
+    return result
+
+
+def fix_lists_for_slack(html: str) -> str:
+    """Ensure list items are wrapped properly for Slack."""
+    # Wrap li content in spans to preserve formatting
+    html = re.sub(r"<li>(.*?)</li>", r"<li><p>\1</p></li>", html, flags=re.DOTALL)
+    return html
+
+
+def copy_to_clipboard(html: str, plain: str) -> None:
+    """Copy HTML to clipboard with plain text fallback."""
+    import richxerox
+
+    richxerox.copy(html=html, text=plain)
+
+
+def main() -> None:
+    md_content = get_markdown_content()
+    if not md_content.strip():
+        print("Error: No markdown content provided", file=sys.stderr)
+        sys.exit(1)
+
+    html = markdown_to_html(md_content)
+    html = fix_lists_for_slack(html)
+    html = convert_headings_to_bold(html)
+    copy_to_clipboard(html, md_content)
+    print("✓ Copied formatted text to clipboard. Paste into Slack!")
+
+
+if __name__ == "__main__":
+    main()
