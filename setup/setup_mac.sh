@@ -47,6 +47,7 @@ brew install pure
 # brew install git git-extras hub git-ftp git-crypt
 # brew install rename htop-osx tree ngrep mtr nmap
 brew install zoxide
+brew install git-filter-repo
 # brew install legit      # http://www.git-legit.org/
 # brew install Zopfli     # https://code.google.com/p/zopfli/
 brew install fortune cowsay
