@@ -35,6 +35,7 @@ brew install curl
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew install gnu-sed
 brew install grep
+brew install moor
 # Install more recent versions of some OS X tools
 
 # Pure
