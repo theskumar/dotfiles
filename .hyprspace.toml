@@ -475,6 +475,8 @@ alt-i = 'exec-and-forget open -a /Applications/iTerm.app'
 alt-s = 'exec-and-forget open -a /Applications/Slack.app'
 alt-f = 'exec-and-forget open ~/Downloads'
 alt-o = 'exec-and-forget open -a /Applications/Obsidian.app'
+alt-l = 'exec-and-forget open -a /Applications/Linear.app'
+alt-n = 'exec-and-forget open -a /Applications/Notion.app'
 # Alternative terminals (uncomment preferred option):
 # alt-enter = 'exec-and-forget open -n /Applications/Terminal.app'
 # alt-enter = 'exec-and-forget open -n /Applications/iTerm.app'
