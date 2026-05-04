@@ -235,8 +235,8 @@ outer.right = 5
 # 5 = "LG.*"                          # Workspace 5 on any LG monitor
 
 [workspace-to-monitor-force-assignment]
-# 1 = 'dell p2417h'
-1 = 'JBL Bar 5.1'
+1 = 'dell p2417h'
+#1 = 'JBL Bar 5.1'
 2 = 'main'
 3 = 'built-in'
 
@@ -354,16 +354,16 @@ on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
 # ──────────────────────────────────────────────────────────────────────────────
 
 # Arrow key navigation for focusing windows
-# alt-left = 'focus left'
-# alt-down = 'focus down'
-# alt-up = 'focus up'
-# alt-right = 'focus right'
+alt-left = 'focus left'
+alt-down = 'focus down'
+alt-up = 'focus up'
+alt-right = 'focus right'
 
 # Alternative: Vim-style navigation (uncomment to use instead of arrows)
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+# alt-h = 'focus left'
+# alt-j = 'focus down'
+# alt-k = 'focus up'
+# alt-l = 'focus right'
 
 # ──────────────────────────────────────────────────────────────────────────────
 #                              WINDOW MOVEMENT
