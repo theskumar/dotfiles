@@ -41,7 +41,7 @@ alias gitconfig="e ~/.gitconfig"
 alias ports='sudo netstat -vatnp'
 alias ez='e ~/.zshrc'
 alias sz='source ~/.zshrc'
-alias c='claude'
+alias cc='claude'
 
 # ------------------------------------------------------------------------------
 # | Shorter Commands                                                           |
