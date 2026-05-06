@@ -67,16 +67,7 @@ brew install --cask font-fira-code-nerd-font
 # brew install editorconfig
 # brew install ssh-copy-id  # http://linux.die.net/man/1/ssh-copy-id
 brew install eza
-
-function installcask() {
-    brew install "${@}" --cask
-}
-
-# https://felixkratz.github.io/SketchyBar/setup
-brew tap FelixKratz/formulae
-brew install sketchybar
 brew install --cask sf-symbols
-brew install --cask font-hack-nerd-font
 
 
 # installcask utorrent
@@ -91,17 +82,16 @@ brew install phockup
 
 # https://github.com/alexpasmantier/television
 brew install television
+brew install stow
 
 # Postgres Database
-brew install postgres postgis
+# brew install postgres postgis
 
 # Fonts
 brew tap caskroom/fonts
 
 brew cask install font-source-code-pro
-
-sudo easy_install pip
-sudo pip install -r requirements.pip
+brew install --cask font-hack-nerd-font
 
 # Remove outdated versions from the cellar
 brew cleanup && brew cask cleanup
