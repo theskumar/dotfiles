@@ -70,10 +70,9 @@ else # OS X `ls`
 fi
 
 # List directory contents
-alias l='eza'
-alias ll='eza -l'
-alias la='eza -lA'
-alias lst='eza -T'
+alias l='eza -l --icons --git -a'
+alias lt="eza --tree --level=2 --long --icons --git"
+alias ltree="eza --tree --level=2  --icons --git"
 
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
