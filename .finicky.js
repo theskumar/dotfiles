@@ -94,7 +94,7 @@ const slackRewriter = {
 };
 
 export default {
-  defaultBrowser: "Arc",
+  defaultBrowser: "Zen Browser",
   rewrite: [slackRewriter],
   handlers: [
     {
