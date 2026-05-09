@@ -41,6 +41,7 @@ autoload -Uz _zinit
 zinit ice depth=1; zinit load zdharma-continuum/fast-syntax-highlighting
 zinit ice depth=1; zinit load zsh-users/zsh-history-substring-search
 zinit ice depth=1; zinit load zsh-users/zsh-autosuggestions
+zinit load wfxr/forgit
 
 # # nvm
 # export NVM_DIR="$HOME/.nvm"
@@ -67,3 +68,6 @@ FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
   eval "`fnm env`"
 fi
+eval "$(~/.local/bin/mise activate zsh)"
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

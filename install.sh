@@ -39,4 +39,9 @@ if [ ${#OS_PKGS[@]} -gt 0 ]; then
     stow --target="$HOME" --restow "${OS_PKGS[@]}"
 fi
 
+if [ ! -f "$HOME/.gitignore" ]; then
+    echo "==> Copying global .gitignore (stow skips .gitignore files)"
+    cp "$DOTFILES/.gitignore" "$HOME/.gitignore"
+fi
+
 echo "==> Done. Run 'source ~/.zshrc' to reload shell."

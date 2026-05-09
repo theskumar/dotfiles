@@ -1,6 +1,9 @@
 #
 # Contains scripts applicable to Mac OSX
-#
+
+
+export GDAL_LIBRARY_PATH=/opt/homebrew/lib/libgdal.dylib 
+export GEOS_LIBRARY_PATH=/opt/homebrew/lib/libgeos_c.dylib
 
 
 # ---[ exports ]---------------------------------------------------------

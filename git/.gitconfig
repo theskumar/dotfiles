@@ -250,12 +250,19 @@
 
 [user]
 	signingkey = 05B68DA30A7FFCE9
-
-
+	name = Saurabh Kumar
+	email = theskumar@users.noreply.github.com
 
 [rerere]
 	# Remember and auto apply conflict resolutions from previous merges
 	enabled = true
 	autoUpdate = true
+
 [gitbutler]
 	gitbutlerCommitter = 0
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

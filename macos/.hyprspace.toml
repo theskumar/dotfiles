@@ -337,11 +337,16 @@ on-focused-monitor-changed = 'move-mouse monitor-lazy-center'
 # if.app-id = 'com.apple.calculator'
 # run = 'layout floating'
 
-# # Move Slack to workspace 3
-# [[on-window-detected]]
-# if.app-id = 'com.tinyspeck.slackmacgap'
-# check-further-callbacks = false
-# run = 'move-node-to-workspace 3'
+# Move Slack to workspace 3
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+check-further-callbacks = false
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+check-further-callbacks = false
+run = 'move-node-to-workspace 1'
 
 # ╔═══════════════════════════════════════════════════════════════════════════════╗
 # ║                          MAIN MODE KEYBINDINGS                                ║

@@ -56,6 +56,7 @@ alias e="zed"
 alias rf='rm -rf'
 alias q="exit"
 alias :q="exit"
+alias t="tmux"
 
 alias dc="docker-compose"
 alias d="docker"
@@ -96,7 +97,7 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias gc='git commit -m'
 alias gca='git commit -a'
-alias ga='git add'
+# alias ga='git add'
 alias gco='git checkout'
 alias gb='git branch -va'
 alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
