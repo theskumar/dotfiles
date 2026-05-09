@@ -1,3 +1,3 @@
 [submodule ".zsh/plugins/gpg-crypt"]
-	path = .zsh/plugins/gpg-crypt
+	path = zsh/.zsh/plugins/gpg-crypt
 	url = https://github.com/Czocher/gpg-crypt.git

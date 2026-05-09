@@ -1,0 +1,6 @@
+--target=~
+--ignore=\.DS_Store
+--ignore=\.gitkeep
+--ignore=node_modules
+--ignore=package-lock\.json
+--ignore=yarn\.lock
