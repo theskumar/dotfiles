@@ -1,0 +1,42 @@
+{
+  "ri-preset": {
+    "t": "one-dark",
+    "bg": "#F2FAF5",
+    "wt": "none",
+    "wc": true,
+    "fm": "Hack",
+    "fs": "18px",
+    "ln": false,
+    "ds": true,
+    "dsyoff": "20px",
+    "dsblur": "68px",
+    "wa": true,
+    "lh": "133%",
+    "pv": "50px",
+    "ph": "50px",
+    "si": false,
+    "wm": false,
+    "es": "2x",
+    "type": "png"
+  },
+  "latest-preset": {
+    "t": "one-dark",
+    "bg": "#F2FAF5",
+    "wt": "none",
+    "wc": true,
+    "fm": "Hack",
+    "fs": "18px",
+    "ln": false,
+    "ds": true,
+    "dsyoff": "20px",
+    "dsblur": "68px",
+    "wa": true,
+    "lh": "133%",
+    "pv": "50px",
+    "ph": "50px",
+    "si": false,
+    "wm": false,
+    "es": "2x",
+    "type": "png"
+  }
+}
