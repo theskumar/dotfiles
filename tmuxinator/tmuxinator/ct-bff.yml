@@ -1,0 +1,11 @@
+name: ct-bff
+root: ~/work/ct-bff
+
+windows:
+  - shell: ~/work/ct-bff
+  - server:
+      panes:
+        - make dev
+  - claude:
+      panes:
+        - claude

@@ -1,0 +1,126 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+// Thanks:
+// 1. https://gist.github.com/oca159/0b480ed6555056418905b6e59af33674
+[
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "A": "project_panel::NewDirectory",
+      "r": "project_panel::Rename",
+      "d": "project_panel::Delete",
+      "p": "project_panel::Paste",
+      // Close project panel as project file panel on the right
+      "q": "workspace::ToggleLeftDock",
+      "space e": "workspace::ToggleLeftDock",
+      "%": "project_panel::NewFile",
+      "/": "project_panel::NewSearchInDirectory",
+      "enter": "project_panel::OpenPermanent",
+      "escape": "project_panel::ToggleFocus",
+      // "h": "project_panel::CollapseSelectedEntry",
+      // "j": "menu::SelectNext",
+      // "k": "menu::SelectPrevious",
+      // "l": "project_panel::ExpandSelectedEntry",
+      "o": "project_panel::OpenPermanent",
+      "shift-d": "project_panel::Delete",
+      "shift-r": "project_panel::Rename",
+      "t": "project_panel::OpenPermanent",
+      "v": "project_panel::OpenPermanent",
+      "shift-g": "menu::SelectLast",
+      "g g": "menu::SelectFirst",
+      "-": "project_panel::SelectParent",
+      "ctrl-6": "pane::AlternateFile",
+    },
+  },
+
+  // Auto exit insert mode and save when pressing ctrl + s
+  {
+    "context": "Editor && vim_mode == insert && !VimWaiting && !menu",
+    "bindings": {
+      "cmd-s": ["workspace::SendKeystrokes", "escape cmd-s"],
+    },
+  },
+
+  // Empty pane, set of keybindings that are available when there is no active editor
+  {
+    "context": "EmptyPane || SharedScreen",
+    "bindings": {
+      // Open file finder
+      "space space": [
+        "task::Spawn",
+        { "task_name": "Television File Finder", "reveal_target": "center" },
+      ],
+      "space f f": [
+        "task::Spawn",
+        { "task_name": "Television File Finder", "reveal_target": "center" },
+      ],
+      // gew file
+      "space f n": "workspace::NewFile",
+      // Open recent project
+      "space f p": "projects::OpenRecent",
+      // Search in all the files
+      "space s g": "workspace::NewSearch",
+      // Quit zed
+      "space q q": "zed::Quit",
+    },
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space f w": [
+        "task::Spawn",
+        { "task_name": "Live Grep", "reveal_target": "center" },
+      ],
+      "space t": "workspace::NewCenterTerminal",
+      "space o": "tab_switcher::Toggle",
+      "space space": [
+        "task::Spawn",
+        { "task_name": "Television File Finder", "reveal_target": "center" },
+      ],
+      "space f f": [
+        "task::Spawn",
+        { "task_name": "Television File Finder", "reveal_target": "center" },
+      ],
+      "space g g": [
+        "task::Spawn",
+        { "task_name": "LazyGit", "reveal_target": "center" },
+      ],
+      // github dash
+      "space g h": [
+        "task::Spawn",
+        {
+          "task_name": "github dash",
+          "reveal_target": "center",
+        },
+      ],
+      "space g t": [
+        "task::Spawn",
+        { "task_name": "Open Claude Code", "reveal_target": "center" },
+      ],
+      "space e": "workspace::ToggleLeftDock",
+      "space s s": "outline::Toggle",
+
+      // Zed mode
+      "space z": [
+        "action::Sequence",
+        [
+          "workspace::CloseAllDocks",
+          "workspace::CloseInactiveTabsAndPanes",
+          "workspace::ToggleCenteredLayout",
+        ],
+      ],
+    },
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "shift-enter": ["terminal::SendText", "\u001b\r"],
+    },
+  },
+]

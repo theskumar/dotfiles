@@ -1,0 +1,4 @@
+os:
+  edit: "zed {{filename}}"
+  editAtLine: "zed {{filename}}:{{line}}"
+  editInTerminal: false

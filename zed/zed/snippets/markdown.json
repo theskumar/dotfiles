@@ -1,0 +1,27 @@
+{
+  "today": {
+    "prefix": "@today",
+    "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+    "description": "Insert today's date in YYYY-MM-DD format",
+  },
+  "date": {
+    "prefix": "date",
+    "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+    "description": "Insert today's date in YYYY-MM-DD format",
+  },
+  "datetime": {
+    "prefix": "datetime",
+    "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+    "description": "Insert current date and time",
+  },
+  "date-us": {
+    "prefix": "date-us",
+    "body": "$CURRENT_MONTH/$CURRENT_DATE/$CURRENT_YEAR",
+    "description": "Insert today's date in MM/DD/YYYY format",
+  },
+  "date-long": {
+    "prefix": "date-long",
+    "body": "$CURRENT_MONTH_NAME $CURRENT_DATE, $CURRENT_YEAR",
+    "description": "Insert today's date in long format (e.g., January 01, 2024)",
+  },
+}

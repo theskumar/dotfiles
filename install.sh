@@ -8,12 +8,12 @@ OS="$(uname -s)"
 
 COMMON=(shell zsh git vim tools ssh fonts)
 
-XDG=(starship tmux)
+XDG=(starship tmux ghostty gh gh-dash lazygit sesh zed tmuxinator worktrunk)
 
 case "$OS" in
     Darwin)
         OS_PKGS=(macos)
-        XDG+=(borders sketchybar)
+        XDG+=(borders sketchybar omniwm)
         ;;
     Linux)
         OS_PKGS=(linux xmonad)

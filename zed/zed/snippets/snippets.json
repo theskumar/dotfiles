@@ -1,0 +1,7 @@
+{
+  "Insert current datetime": {
+    "prefix": "datetime",
+    "body": "`date '+%Y-%m-%d %H:%M:%S'`",
+    "description": "Insert current date and time",
+  },
+}
