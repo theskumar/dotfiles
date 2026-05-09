@@ -1,50 +1,114 @@
 dotfiles
 ========
 
-My dotfiles. see: http://dotfiles.github.io/
-
-OS related setup scripts can be found in `setup` folder.
-
-## Features
-
-* Sane defaults for Mac and debian/ubuntu
-* Zsh
-* Git
-* vim
+My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Setup
 
-If you are using Mac OSX, this repo includes a script to install dependecies in this [script](setup/setup_mac.sh).
+### Prerequisites
 
-    curl -L http://git.io/3hD1Kw | sh
-
-This [script](setup/osx_defaults.sh) will help you add some defaults to your mac.
-
-For other linux, checkout `apt_init.sh` file in [`setup`](setup/) folder, i have tried to keep this updated, but you'll the full list of packages in `setup_mac.sh` which you can install manually.
-
-### Installing dotfiles
-
-Once you have installed basics software and libraries, you can install the dotfililes bu, clone this repo into `~/dotfiles` and symlinking the files inside it to your home directory `~`. Symlinking helps keep all your dotfiles maintainable inside a git repo, while being functional at the same time.
+Install Stow:
 
 ```shell
-cd ~ && git clone --recursive git@github.com:theskumar/dotfiles.git && cd ~/dotfiles
-# To create symbolic links in your home
-sh bootstrap.sh  ## this will create the required symlinks
-pip install -r requirements.pip
+# macOS
+brew install stow
+
+# Debian/Ubuntu
+sudo apt install stow
 ```
 
-## Not Exactly What You Want?
+OS related setup scripts are in the `setup/` folder.
 
-This is what I want. It might not be what you want. Don't worry, you have options:
+### Install
 
-### Fork This
+```shell
+cd ~ && git clone --recursive git@github.com:theskumar/dotfiles.git
+cd ~/dotfiles
+./install.sh
+```
 
-If you have differences in your preferred setup, I encourage you to fork this to create your own version. Once you have your fork working, let me know and I'll add it to a 'Similar dotfiles' list here. It's up to you whether or not to rename your fork.
+`install.sh` stows all packages to `$HOME` and `$HOME/.config` based on your OS.
 
-### Or Submit a Pull Request
+### Installing a single package
 
-I also accept pull requests on this, if they're small, atomic, and if they make my own project development experience better.
+```shell
+cd ~/dotfiles
+stow --target="$HOME" shell           # packages targeting $HOME
+stow --target="$HOME/.config" ghostty  # packages targeting $HOME/.config
+```
 
-### Thanks
+### Uninstalling a package
 
-- https://github.com/hbthen3rd/dotfiles
+```shell
+stow --target="$HOME" -D shell
+```
+
+## Packages
+
+### Core (all machines)
+
+| Package | Contents |
+|---------|----------|
+| `shell` | .aliases, .bashrc, .exports, .functions, .inputrc, .profile |
+| `zsh` | .zshrc, .zsh/ (plugins, functions, lib) |
+| `git` | .gitconfig, .gitmessage, .gitattributes, .config/git/ignore |
+| `vim` | .vimrc, .vim/ |
+| `tools` | .ackrc, .actrc, .carbon-now.json, .cookiecutterrc, .curlrc, .nuxtrc, .pythonrc.py, .wgetrc |
+| `ssh` | .ssh/config.sample |
+| `fonts` | .fonts/ (Hermit, Source Code Pro) |
+
+### Editor and terminal (XDG, stowed to ~/.config)
+
+| Package | Contents |
+|---------|----------|
+| `ghostty` | Terminal config |
+| `zed` | settings.json, keymap.json, tasks.json, snippets/ |
+| `lazygit` | Zed as external editor |
+| `starship` | Prompt config |
+| `tmux` | tmux.conf, tmux.reset.conf |
+| `sesh` | Tmux session definitions |
+| `tmuxinator` | Project layouts |
+
+### Git and dev tools (XDG)
+
+| Package | Contents |
+|---------|----------|
+| `gh` | GitHub CLI config (aliases) |
+| `gh-dash` | GitHub dashboard layout |
+| `worktrunk` | Git worktree path templates |
+
+### macOS specific
+
+| Package | Target | Contents |
+|---------|--------|----------|
+| `macos` | $HOME | .aerospace.toml, .finicky.js, .hyprspace.toml, .osx |
+| `omniwm` | ~/.config | Niri tiling WM config, hotkeys, app rules |
+| `borders` | ~/.config | Window border config |
+| `sketchybar` | ~/.config | Status bar config, colors.sh |
+| `karabiner` | (not stowed) | Keyboard customization (build based, has its own workflow) |
+
+### Linux specific
+
+| Package | Contents |
+|---------|----------|
+| `linux` | .linux, .xmobarrc, .Xresources, .xsession, .xsessionrc |
+| `xmonad` | .xmonad/xmonad.hs |
+
+### Other
+
+| Package | Contents |
+|---------|----------|
+| `freebsd` | .freebsd |
+
+## Not stowed
+
+| Directory | Why |
+|-----------|-----|
+| `bin/` | Scripts added to PATH via .exports, not symlinked |
+| `setup/` | One shot install scripts, run manually |
+| `karabiner/` | Build based workflow, outputs to ~/.config/karabiner/ |
+| `.private/` | Gitignored secrets |
+
+## Notes
+
+`~/.gitignore` is copied (not symlinked) by `install.sh` because Stow skips `.gitignore` files by default.
