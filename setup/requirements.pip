@@ -1,11 +1,5 @@
-ipython
-ipdb
 dnsyo
 xerox
-fabric
-cookiecutter
-virtualenv
 ghp-import
-piprot
 html2text
 requests[security]
