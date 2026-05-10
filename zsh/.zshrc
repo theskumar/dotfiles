@@ -95,10 +95,7 @@ source ~/.zsh/lib/completions.zsh
 eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
-# fnm (binary on PATH via .zshenv)
-if command -v fnm >/dev/null 2>&1; then
-  eval "$(fnm env)"
-fi
+# Node/Python/Go/etc. version management (replaces fnm, pyenv, etc.)
 eval "$(~/.local/bin/mise activate zsh)"
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

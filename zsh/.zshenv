@@ -8,7 +8,6 @@ typeset -U path PATH
 path=(
   "$HOME/.local/bin"
   "$PNPM_HOME"
-  "/opt/homebrew/opt/fnm/bin"
   $path
 )
 
