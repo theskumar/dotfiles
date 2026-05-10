@@ -23,7 +23,6 @@ zstyle ':completion:*' list-colors ''
 # should this be in keybindings?
 bindkey -M menuselect '^o' accept-and-infer-next-history
 
-zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -w"
 
@@ -49,7 +48,7 @@ zstyle ':completion:*' users off
 
 # Use caching so that commands like apt and dpkg complete are useable
 zstyle ':completion::complete:*' use-cache 1
-zstyle ':completion::complete:*' cache-path $ZSH/cache/
+zstyle ':completion::complete:*' cache-path ~/.zsh/cache/
 
 # Don't complete uninteresting users
 zstyle ':completion:*:*:*:users' ignored-patterns \
@@ -77,10 +76,8 @@ fi
 # configure zsh's autocompletion system; man zshcompsys
 zstyle ':completion:*' use-cache on
 
-zstyle ':completion:*' completer _expand _complete _match _approximate
-zstyle ':completion:*' matcher-list '+' '+m:{[:lower:]}={[:upper:]}' '+r:|[._-]=** r:|=**' '+l:|=* r:|=*'
+zstyle ':completion:*' completer _expand _complete _match
 zstyle ':completion:*:match:*' original only
-zstyle -e ':completion:*' max-errors 'reply=( $(( ($#PREFIX+$#SUFFIX)/3 )) numeric )'
 zstyle ':completion:*:functions' ignored-patterns '_*'
 zstyle ':completion:*' ignore-parents parent pwd
 zstyle ':completion:*' list-suffixes true
