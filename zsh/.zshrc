@@ -1,9 +1,18 @@
 # zmodload zsh/zprof
 
+HISTFILE="$HOME/.zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
+setopt EXTENDED_HISTORY        # timestamps
+setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE       # ignore commands starting with space
 setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_VERIFY             # don't auto-execute !! expansions
+setopt SHARE_HISTORY           # share across sessions
+setopt INC_APPEND_HISTORY      # write immediately
 
 source ~/.profile
 
