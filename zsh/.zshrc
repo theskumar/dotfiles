@@ -14,6 +14,16 @@ setopt HIST_VERIFY             # don't auto-execute !! expansions
 setopt SHARE_HISTORY           # share across sessions
 setopt INC_APPEND_HISTORY      # write immediately
 
+# Shell behavior
+setopt AUTO_CD                 # `cd foo` → just type `foo`
+setopt AUTO_PUSHD              # `cd` pushes to dir stack
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
+setopt EXTENDED_GLOB
+setopt INTERACTIVE_COMMENTS    # allow `# comments` in interactive shell
+setopt NO_BEEP
+# setopt CORRECT               # offer typo correction (optional)
+
 source ~/.profile
 
 eval "$(starship init zsh)"
