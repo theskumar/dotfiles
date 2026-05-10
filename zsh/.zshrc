@@ -44,53 +44,42 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit ice depth=1; zinit load zdharma-continuum/fast-syntax-highlighting
-zinit ice depth=1; zinit load zsh-users/zsh-history-substring-search
-zinit ice depth=1; zinit load zsh-users/zsh-autosuggestions
-zinit load wfxr/forgit
-
 # # nvm
 # export NVM_DIR="$HOME/.nvm"
 # export NVM_LAZY_LOAD=true
 # zinit light lukechilds/zsh-nvm
 
-# Load completions
-zinit ice blockf
-zinit light zsh-users/zsh-completions
-
-# Add local completions to fpath
+# Add local completions + cache to fpath (must be set before compinit runs in turbo block)
 fpath=(~/.zsh/completions $fpath)
 
-# Run compinit after all completion plugins are loaded
-autoload -Uz compinit
-zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
-if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
-  compinit -d "$zcompdump"
-else
-  compinit -C -d "$zcompdump"
-fi
-# Compile the dump for faster loads on subsequent shells
-if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-  zcompile "$zcompdump"
+# Turbo-loaded plugins (deferred until after first prompt).
+# atinit on the first plugin runs compinit once, then replays cached completions.
+zinit wait lucid light-mode for \
+    atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay; (( \${#__deferred_compdefs} )) && for c in \"\${__deferred_compdefs[@]}\"; do eval \"compdef \$c\"; done; unset __deferred_compdefs" \
+        zdharma-continuum/fast-syntax-highlighting \
+    atload"_zsh_autosuggest_start" \
+        zsh-users/zsh-autosuggestions \
+    blockf atpull'zinit creinstall -q .' \
+        zsh-users/zsh-completions \
+    atload"bindkey '^[[A' history-substring-search-up; bindkey '^[[B' history-substring-search-down" \
+        zsh-users/zsh-history-substring-search \
+    wfxr/forgit
+
+zinit wait lucid for \
+    OMZP::git
+
+# Shim compdef until turbo compinit runs (zicdreplay will replay these).
+# Needed because the eval-based completions below (uv/zoxide/mise/wt) call
+# compdef synchronously at startup, before zicompinit has executed.
+if ! (( ${+functions[compdef]} )); then
+  typeset -ga __deferred_compdefs
+  compdef() { __deferred_compdefs+=("${(j: :)@}") }
 fi
 
 # Load local completion config and fzf integration
 source ~/.zsh/lib/completions.zsh
 [[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]] && source /opt/homebrew/opt/fzf/shell/completion.zsh
 [[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
-
-# kubectl completions (cached)
-if command -v kubectl &>/dev/null; then
-  if [[ ! -f ~/.zsh/cache/_kubectl ]] || [[ $(date +%s) -gt $(( $(date -r ~/.zsh/cache/_kubectl +%s 2>/dev/null || echo 0) + 86400 )) ]]; then
-    mkdir -p ~/.zsh/cache && kubectl completion zsh > ~/.zsh/cache/_kubectl
-  fi
-  source ~/.zsh/cache/_kubectl
-fi
-
-zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
-
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
 
 eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
