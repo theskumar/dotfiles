@@ -54,10 +54,15 @@ fpath=(~/.zsh/completions $fpath)
 
 # Run compinit after all completion plugins are loaded
 autoload -Uz compinit
-if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
-  compinit -i
+zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -n "$zcompdump"(#qN.mh+24) ]]; then
+  compinit -d "$zcompdump"
 else
-  compinit -C -i
+  compinit -C -d "$zcompdump"
+fi
+# Compile the dump for faster loads on subsequent shells
+if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+  zcompile "$zcompdump"
 fi
 
 # Load local completion config and fzf integration
