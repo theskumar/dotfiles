@@ -18,17 +18,6 @@ source ~/.profile
 
 eval "$(starship init zsh)"
 
-# Created by `pipx` on 2022-07-05 05:47:49
-export PATH="$PATH:/Users/theskumar/.local/bin"
-
-# pnpm
-export PNPM_HOME="/Users/theskumar/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
@@ -84,10 +73,9 @@ source ~/.zsh/lib/completions.zsh
 eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
-# fnm
-FNM_PATH="/opt/homebrew/opt/fnm/bin"
-if [ -d "$FNM_PATH" ]; then
-  eval "`fnm env`"
+# fnm (binary on PATH via .zshenv)
+if command -v fnm >/dev/null 2>&1; then
+  eval "$(fnm env)"
 fi
 eval "$(~/.local/bin/mise activate zsh)"
 
