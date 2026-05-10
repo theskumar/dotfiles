@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>zsh Config Reference</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; font-size: 15px; line-height: 1.6; color: #222; background: #fafafa; padding: 2rem; }
+  h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+  .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.9rem; }
+  h2 { font-size: 1.1rem; font-weight: 700; margin: 2rem 0 0.75rem; padding-bottom: 0.25rem; border-bottom: 2px solid #e0e0e0; }
+  h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin: 1.25rem 0 0.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  th { text-align: left; padding: 0.4rem 0.6rem; background: #f0f0f0; border: 1px solid #ddd; }
+  td { padding: 0.35rem 0.6rem; border: 1px solid #ddd; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f7f7; }
+  code { font-family: 'Menlo', 'Monaco', monospace; font-size: 0.85em; background: #eee; padding: 0.1em 0.3em; border-radius: 3px; }
+  .note { font-size: 0.82rem; color: #555; margin-top: 0.4rem; }
+  .badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.1em 0.4em; border-radius: 3px; vertical-align: middle; margin-left: 4px; }
+  .badge-mac { background: #e8f4fd; color: #1a6fa0; }
+  .badge-dep { background: #fff3cd; color: #856404; }
+  .toc { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .toc a { font-size: 0.82rem; text-decoration: none; color: #444; background: #eee; padding: 0.25rem 0.6rem; border-radius: 4px; }
+  .toc a:hover { background: #ddd; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } body { padding: 1rem; } }
+</style>
+</head>
+<body>
+
+<h1>zsh Config Reference</h1>
+<p class="subtitle">Generated from <code>~/.zshrc</code>, <code>~/.profile</code>, <code>~/.exports</code>, <code>~/.aliases</code>, <code>~/.functions</code>, <code>~/.osx</code></p>
+
+<nav class="toc">
+  <a href="#stack">Stack</a>
+  <a href="#history">History</a>
+  <a href="#nav">Navigation</a>
+  <a href="#editors">Editors</a>
+  <a href="#git-aliases">Git</a>
+  <a href="#python">Python</a>
+  <a href="#node">Node / JS</a>
+  <a href="#docker">Docker</a>
+  <a href="#network">Network</a>
+  <a href="#filesystem">File System</a>
+  <a href="#functions">Functions</a>
+  <a href="#macos">macOS</a>
+  <a href="#global-aliases">Global Aliases</a>
+  <a href="#path">PATH Order</a>
+  <a href="#observations">Observations</a>
+</nav>
+
+<!-- ─── STACK ─────────────────────────────────────────────────────────────── -->
+<h2 id="stack">Core Stack</h2>
+<table>
+  <tr><th>Role</th><th>Tool</th><th>Notes</th></tr>
+  <tr><td>Plugin manager</td><td><code>zinit</code></td><td>Auto-installs from <code>~/.local/share/zinit/</code></td></tr>
+  <tr><td>Prompt</td><td><code>starship</code></td><td><code>eval "$(starship init zsh)"</code></td></tr>
+  <tr><td>Syntax highlighting</td><td><code>fast-syntax-highlighting</code></td><td>zinit plugin</td></tr>
+  <tr><td>History search</td><td><code>zsh-history-substring-search</code></td><td>↑/↓ arrows bound</td></tr>
+  <tr><td>Autosuggestions</td><td><code>zsh-autosuggestions</code></td><td>zinit plugin</td></tr>
+  <tr><td>Completions</td><td><code>zsh-completions</code> + oh-my-zsh git plugin</td><td>blockf mode</td></tr>
+  <tr><td>Git TUI</td><td><code>forgit</code> (wfxr/forgit)</td><td>Interactive git with fzf; also <code>gg</code> → lazygit</td></tr>
+  <tr><td>cd replacement</td><td><code>zoxide</code></td><td>Aliased to <code>j</code></td></tr>
+  <tr><td>Node version mgr</td><td><code>fnm</code></td><td>via Homebrew at <code>/opt/homebrew/opt/fnm/bin</code>; nvm commented out</td></tr>
+  <tr><td>Runtime version mgr</td><td><code>mise</code> (ex-rtx)</td><td><code>~/.local/bin/mise activate zsh</code></td></tr>
+  <tr><td>Python pkg runner</td><td><code>uv</code></td><td>Completions via <code>uv generate-shell-completion zsh</code></td></tr>
+  <tr><td>ls replacement</td><td><code>eza</code></td><td><code>l</code>, <code>lt</code>, <code>ltree</code></td></tr>
+  <tr><td>File manager</td><td><code>yazi</code></td><td><code>y()</code> function — changes dir on exit</td></tr>
+  <tr><td>Pager</td><td><code>moor</code></td><td><code>/opt/homebrew/bin/moor</code></td></tr>
+</table>
+
+<!-- ─── HISTORY ───────────────────────────────────────────────────────────── -->
+<h2 id="history">History</h2>
+<table>
+  <tr><th>Setting</th><th>Value</th></tr>
+  <tr><td><code>HISTSIZE</code> / <code>SAVEHIST</code></td><td>100 000 (zsh) — also 32 768 set in <code>.exports</code> for bash compat; zsh value wins</td></tr>
+  <tr><td>Dedup</td><td><code>HIST_IGNORE_DUPS</code> + <code>HIST_FIND_NO_DUPS</code></td></tr>
+  <tr><td>Ignored cmds</td><td><code>ls</code>, <code>cd</code>, <code>pwd</code>, <code>exit</code>, <code>date</code>, <code>* --help</code></td></tr>
+  <tr><td>Timestamps</td><td><code>HISTTIMEFORMAT='%F %T '</code></td></tr>
+  <tr><td>Keyboard</td><td><code>↑</code> / <code>↓</code> → substring search (history-substring-search plugin)</td></tr>
+  <tr><td>Incognito session</td><td><code>incognito</code> → <code>export HISTFILE=/dev/null</code></td></tr>
+</table>
+
+<!-- ─── NAVIGATION ────────────────────────────────────────────────────────── -->
+<h2 id="nav">Navigation &amp; Directory</h2>
+<table>
+  <tr><th>Alias / Fn</th><th>Expands to</th></tr>
+  <tr><td><code>j &lt;name&gt;</code></td><td>zoxide jump (frecency-based)</td></tr>
+  <tr><td><code>y [path]</code></td><td>Open yazi; cd into selected dir on quit</td></tr>
+  <tr><td><code>dl</code></td><td><code>cd ~/Downloads</code></td></tr>
+  <tr><td><code>dt</code></td><td><code>cd ~/Desktop</code></td></tr>
+  <tr><td><code>w</code></td><td><code>cd ~/work</code></td></tr>
+  <tr><td><code>gr</code></td><td>cd to git root</td></tr>
+  <tr><td><code>md &lt;dir&gt;</code></td><td><code>mkdir -pv</code> + cd into first</td></tr>
+  <tr><td><code>tmpd [prefix]</code></td><td>Create &amp; cd into a temp dir</td></tr>
+  <tr><td><code>cdf</code> <span class="badge badge-mac">mac</span></td><td>cd to frontmost Finder window</td></tr>
+  <tr><td><code>pwdc</code></td><td>Copy current path to clipboard</td></tr>
+</table>
+<p class="note">Auto-activate: <code>chpwd()</code> hook — sources <code>venv/bin/activate</code> when entering a directory that has it.</p>
+
+<!-- ─── EDITORS ───────────────────────────────────────────────────────────── -->
+<h2 id="editors">Editors &amp; Apps</h2>
+<table>
+  <tr><th>Alias</th><th>Tool</th></tr>
+  <tr><td><code>e</code></td><td>Zed (<code>zed</code>)</td></tr>
+  <tr><td><code>s</code></td><td>Cursor (<code>cursor</code>)</td></tr>
+  <tr><td><code>cc</code></td><td>Claude CLI (<code>claude</code>)</td></tr>
+  <tr><td><code>EDITOR</code></td><td><code>vim</code> (env default)</td></tr>
+  <tr><td><code>ez</code></td><td>Edit <code>~/.zshrc</code> in Zed</td></tr>
+  <tr><td><code>sz</code></td><td><code>source ~/.zshrc</code></td></tr>
+  <tr><td><code>gitconfig</code></td><td>Open <code>~/.gitconfig</code> in Zed</td></tr>
+  <tr><td><code>sshconfig</code></td><td>Open <code>~/.ssh/config</code> in Zed</td></tr>
+  <tr><td><code>etchost</code></td><td>sudo open <code>/etc/hosts</code> in Zed</td></tr>
+</table>
+
+<!-- ─── GIT ───────────────────────────────────────────────────────────────── -->
+<h2 id="git-aliases">Git</h2>
+<div class="two-col">
+<div>
+<h3>Short aliases</h3>
+<table>
+  <tr><th>Alias</th><th>Command</th></tr>
+  <tr><td><code>g</code></td><td><code>git</code></td></tr>
+  <tr><td><code>gg</code></td><td><code>lazygit</code> (TUI)</td></tr>
+  <tr><td><code>gs</code></td><td><code>git status -sb</code></td></tr>
+  <tr><td><code>gd</code></td><td><code>git diff</code></td></tr>
+  <tr><td><code>gdc</code></td><td><code>git diff --cached</code></td></tr>
+  <tr><td><code>gc</code></td><td><code>git commit -m</code></td></tr>
+  <tr><td><code>gca</code></td><td><code>git commit -a</code></td></tr>
+  <tr><td><code>gco</code></td><td><code>git checkout</code></td></tr>
+  <tr><td><code>gb</code></td><td><code>git branch -va</code></td></tr>
+  <tr><td><code>gp</code></td><td><code>git push</code></td></tr>
+  <tr><td><code>gaa</code></td><td><code>git add :/; git status -sb</code></td></tr>
+  <tr><td><code>gap</code></td><td><code>git add -p; git commit -v; git status -sb</code></td></tr>
+  <tr><td><code>grm</code></td><td>git rm all deleted files</td></tr>
+  <tr><td><code>undopush</code></td><td>Force-push HEAD^ to undo a push</td></tr>
+</table>
+</div>
+<div>
+<h3>Functions</h3>
+<table>
+  <tr><th>Function</th><th>Does</th></tr>
+  <tr><td><code>clone &lt;url&gt;</code></td><td>git clone + cd + open in Zed</td></tr>
+  <tr><td><code>gitexport &lt;dir&gt;</code></td><td>Export repo without .git</td></tr>
+  <tr><td><code>gitignore &lt;lang&gt;</code></td><td>Fetch .gitignore from gitignore.io</td></tr>
+  <tr><td><code>git_normalize_eol</code></td><td>Add .gitattributes + commit EOL fix</td></tr>
+  <tr><td><code>gh repo adduser &lt;user&gt; &lt;repo&gt;</code></td><td>GitHub collaborator via API (wraps gh CLI)</td></tr>
+  <tr><td><code>ghcs [opts] &lt;prompt&gt;</code></td><td>gh copilot suggest (shell/git/gh)</td></tr>
+  <tr><td><code>ghce &lt;cmd&gt;</code></td><td>gh copilot explain</td></tr>
+</table>
+</div>
+</div>
+
+<!-- ─── PYTHON ────────────────────────────────────────────────────────────── -->
+<h2 id="python">Python</h2>
+<table>
+  <tr><th>Alias / Var</th><th>Notes</th></tr>
+  <tr><td><code>py</code></td><td><code>ipython</code> if available, else <code>python</code></td></tr>
+  <tr><td><code>sv</code> / <code>sv3</code></td><td>Create (if needed) &amp; activate <code>.venv</code> via <code>python3 -m venv</code></td></tr>
+  <tr><td><code>pycclean</code></td><td>Delete all <code>.pyc</code> files recursively</td></tr>
+  <tr><td><code>pepfix</code></td><td><code>autopep8 --max-line-length=120 -i</code></td></tr>
+  <tr><td><code>pipgrep</code></td><td><code>pip freeze | grep</code></td></tr>
+  <tr><td><code>dj &lt;cmd&gt;</code></td><td>Find <code>manage.py</code> in subdirs and run Django command</td></tr>
+  <tr><td><code>djrun</code></td><td>Alias for <code>dj runserver</code></td></tr>
+  <tr><td><code>PYTHONSTARTUP</code></td><td><code>~/.pythonrc.py</code></td></tr>
+  <tr><td><code>PYTHONHASHSEED</code></td><td><code>random</code></td></tr>
+  <tr><td><code>uv</code></td><td>Shell completions loaded; <code>pipx</code> at <code>~/.local/bin</code></td></tr>
+  <tr><td><code>mise</code></td><td>Manages Python (and other) runtime versions</td></tr>
+  <tr><td><code>LLM_MODEL</code></td><td><code>gemini-flash-latest</code></td></tr>
+</table>
+<p class="note"><code>chpwd()</code> auto-activates <code>venv/bin/activate</code> (not <code>.venv</code>) on directory change.</p>
+
+<!-- ─── NODE ──────────────────────────────────────────────────────────────── -->
+<h2 id="node">Node / JS</h2>
+<table>
+  <tr><th>Tool</th><th>Notes</th></tr>
+  <tr><td><code>fnm</code></td><td>Active. Initialized from <code>/opt/homebrew/opt/fnm/bin</code></td></tr>
+  <tr><td><code>nvm</code></td><td><span class="badge badge-dep">commented out</span> — zinit plugin still present but disabled</td></tr>
+  <tr><td><code>pnpm</code></td><td>Home: <code>~/Library/pnpm</code>; prepended to PATH</td></tr>
+</table>
+
+<!-- ─── DOCKER ────────────────────────────────────────────────────────────── -->
+<h2 id="docker">Docker</h2>
+<table>
+  <tr><th>Alias</th><th>Expands to</th></tr>
+  <tr><td><code>d</code></td><td><code>docker</code></td></tr>
+  <tr><td><code>dc</code></td><td><code>docker-compose</code></td></tr>
+  <tr><td><code>lgd</code></td><td><code>lazydocker</code></td></tr>
+</table>
+
+<!-- ─── NETWORK ───────────────────────────────────────────────────────────── -->
+<h2 id="network">Network</h2>
+<table>
+  <tr><th>Alias / Fn</th><th>Does</th></tr>
+  <tr><td><code>ip</code></td><td>Public IP via <code>curl ipinfo.io/ip</code></td></tr>
+  <tr><td><code>localip</code></td><td><code>ipconfig getifaddr en0</code></td></tr>
+  <tr><td><code>ifactive</code></td><td>Show active network interfaces</td></tr>
+  <tr><td><code>whois &lt;domain&gt;</code></td><td>Enhanced whois</td></tr>
+  <tr><td><code>headers &lt;url&gt;</code></td><td><code>curl -sI</code> (HTTP headers only)</td></tr>
+  <tr><td><code>httpcompression &lt;url&gt;</code></td><td>Test if gzip encoding is active</td></tr>
+  <tr><td><code>server [port]</code></td><td>Python HTTP server (default 8000) + auto-open browser</td></tr>
+  <tr><td><code>phpserver [port]</code></td><td>PHP built-in server (default 4000)</td></tr>
+  <tr><td><code>sniff</code></td><td>ngrep GET/POST on en0:80</td></tr>
+  <tr><td><code>httpdump</code></td><td>tcpdump HTTP hosts on en0</td></tr>
+  <tr><td><code>ports</code></td><td><code>sudo netstat -vatnp</code></td></tr>
+  <tr><td><code>gurl</code></td><td><code>curl --compressed</code></td></tr>
+  <tr><td><code>pubkey</code></td><td>Copy <code>~/.ssh/id_rsa.pub</code> to clipboard</td></tr>
+</table>
+
+<!-- ─── FILE SYSTEM ───────────────────────────────────────────────────────── -->
+<h2 id="filesystem">File System</h2>
+<table>
+  <tr><th>Alias / Fn</th><th>Does</th></tr>
+  <tr><td><code>l</code></td><td><code>eza -l --icons --git -a</code></td></tr>
+  <tr><td><code>lt</code></td><td><code>eza --tree --level=2 --long --icons --git</code></td></tr>
+  <tr><td><code>ltree</code></td><td><code>eza --tree --level=2 --icons --git</code></td></tr>
+  <tr><td><code>lsd</code></td><td>List directories only</td></tr>
+  <tr><td><code>df</code></td><td><code>df -h</code></td></tr>
+  <tr><td><code>du</code></td><td><code>du -hs</code></td></tr>
+  <tr><td><code>fs [path]</code></td><td>Human-readable size of file/dir</td></tr>
+  <tr><td><code>cleanup</code></td><td>Delete all <code>.DS_Store</code> recursively</td></tr>
+  <tr><td><code>rf</code></td><td><code>rm -rf</code></td></tr>
+  <tr><td><code>supertouch &lt;path&gt;</code></td><td>touch + mkdir -p for nested files</td></tr>
+  <tr><td><code>targz &lt;dir&gt;</code></td><td>Smart tar.gz using zopfli/pigz/gzip</td></tr>
+  <tr><td><code>x &lt;archive&gt;</code></td><td>Extract <code>.tar*</code> or <code>.zip</code></td></tr>
+  <tr><td><code>datauri &lt;file&gt;</code></td><td>Output base64 data URI for a file</td></tr>
+  <tr><td><code>svg-to-base64 &lt;file&gt;</code></td><td>CSS background-image snippet with SVG as base64</td></tr>
+  <tr><td><code>fixcrlf</code></td><td>Recursively convert CRLF → LF (perl)</td></tr>
+  <tr><td><code>cp_p &lt;src&gt; &lt;dst&gt;</code></td><td>rsync copy with progress</td></tr>
+  <tr><td><code>rcopy</code></td><td><code>rsync -av --progress -h</code></td></tr>
+  <tr><td><code>rmove</code></td><td>rsync move (remove source)</td></tr>
+  <tr><td><code>rupdate</code></td><td>rsync update (skip newer)</td></tr>
+  <tr><td><code>rsynchronize</code></td><td>rsync sync with delete</td></tr>
+  <tr><td><code>openfiles</code></td><td>Monitor open files via dtrace</td></tr>
+  <tr><td><code>json</code></td><td>Pretty-print + syntax-highlight JSON (pygments)</td></tr>
+</table>
+
+<!-- ─── FUNCTIONS ─────────────────────────────────────────────────────────── -->
+<h2 id="functions">Utility Functions</h2>
+<table>
+  <tr><th>Function</th><th>Does</th></tr>
+  <tr><td><code>timer</code></td><td>Stopwatch — press Ctrl-D to stop</td></tr>
+  <tr><td><code>now</code></td><td>Print current time (<code>date +"%T"</code>)</td></tr>
+  <tr><td><code>week</code></td><td>Print ISO week number</td></tr>
+  <tr><td><code>path</code></td><td>Print each PATH entry on its own line</td></tr>
+  <tr><td><code>catn</code></td><td><code>cat -n</code> (line numbers)</td></tr>
+  <tr><td><code>openssl-to-pem &lt;p12&gt;</code></td><td>Convert PKCS12 → PEM</td></tr>
+  <tr><td><code>ec2-list-all</code></td><td>List EC2 instances across all AWS regions</td></tr>
+  <tr><td><code>note &lt;text&gt;</code> <span class="badge badge-mac">mac</span></td><td>Add note to Notes.app</td></tr>
+  <tr><td><code>remind &lt;text&gt;</code> <span class="badge badge-mac">mac</span></td><td>Add reminder to Reminders.app</td></tr>
+</table>
+
+<!-- ─── MACOS ──────────────────────────────────────────────────────────────── -->
+<h2 id="macos">macOS-Specific <span class="badge badge-mac">mac</span></h2>
+<table>
+  <tr><th>Alias / Fn</th><th>Does</th></tr>
+  <tr><td><code>o</code></td><td><code>open</code></td></tr>
+  <tr><td><code>oo</code></td><td><code>open .</code></td></tr>
+  <tr><td><code>afk</code></td><td>Lock screen</td></tr>
+  <tr><td><code>free</code></td><td>Fake Linux <code>free</code> via <code>top</code></td></tr>
+  <tr><td><code>update</code></td><td>softwareupdate + brew + npm + gem all at once</td></tr>
+  <tr><td><code>emptytrash</code></td><td>Empty Trash on all volumes</td></tr>
+  <tr><td><code>hidedesktop</code> / <code>showdesktop</code></td><td>Toggle Finder desktop icons</td></tr>
+  <tr><td><code>hidehiddenfiles</code> / <code>showhiddenfiles</code></td><td>Toggle hidden file visibility in Finder</td></tr>
+  <tr><td><code>halt</code> / <code>reboot</code></td><td>Shutdown / reboot now</td></tr>
+  <tr><td><code>spotify</code></td><td>SpotifyControl via AppleScript</td></tr>
+  <tr><td><code>GDAL_LIBRARY_PATH</code></td><td><code>/opt/homebrew/lib/libgdal.dylib</code></td></tr>
+  <tr><td><code>GEOS_LIBRARY_PATH</code></td><td><code>/opt/homebrew/lib/libgeos_c.dylib</code></td></tr>
+  <tr><td>GNU coreutils</td><td>gnubin prefixed for: coreutils, findutils, gnu-sed, grep, curl</td></tr>
+</table>
+
+<!-- ─── GLOBAL ALIASES ────────────────────────────────────────────────────── -->
+<h2 id="global-aliases">Global Aliases (pipe shortcuts)</h2>
+<table>
+  <tr><th>Alias</th><th>Expands to</th><th>Usage</th></tr>
+  <tr><td><code>G</code></td><td><code>| grep</code></td><td><code>ps aux G nginx</code></td></tr>
+  <tr><td><code>L</code></td><td><code>| less</code></td><td><code>cat file L</code></td></tr>
+  <tr><td><code>H</code></td><td><code>| head</code></td><td><code>ls H</code></td></tr>
+  <tr><td><code>T</code></td><td><code>| tail</code></td><td><code>log T</code></td></tr>
+  <tr><td><code>Y</code></td><td><code>| xclip … (clipboard)</code></td><td>Copy output to clipboard</td></tr>
+  <tr><td><code>R</code></td><td><code>$(git rev-parse --show-toplevel)</code></td><td>Expands to git root path</td></tr>
+</table>
+
+<!-- ─── PATH ──────────────────────────────────────────────────────────────── -->
+<h2 id="path">PATH Order (highest → lowest priority)</h2>
+<table>
+  <tr><th>#</th><th>Entry</th><th>Source</th></tr>
+  <tr><td>1</td><td><code>$(brew --prefix coreutils)/libexec/gnubin</code></td><td>.osx</td></tr>
+  <tr><td>2</td><td><code>$(brew --prefix findutils,gnu-sed,grep)/libexec/gnubin</code></td><td>.osx</td></tr>
+  <tr><td>3</td><td><code>$(brew --prefix curl)/bin</code></td><td>.osx</td></tr>
+  <tr><td>4</td><td><code>~/bin</code>, <code>~/dotfiles/bin</code></td><td>.exports</td></tr>
+  <tr><td>5</td><td><code>/usr/local/bin</code>, <code>/usr/local/sbin</code></td><td>.exports</td></tr>
+  <tr><td>6</td><td><code>/opt/homebrew/opt/fnm/bin</code></td><td>.zshrc (fnm)</td></tr>
+  <tr><td>7</td><td><code>$PNPM_HOME</code> (<code>~/Library/pnpm</code>)</td><td>.zshrc</td></tr>
+  <tr><td>8</td><td><code>~/.local/bin</code> (pipx)</td><td>.zshrc</td></tr>
+  <tr><td>9</td><td><code>/usr/local/opt/openssl@1.1/bin</code></td><td>.exports</td></tr>
+  <tr><td>10</td><td><code>~/.poetry/bin</code></td><td>.exports <span class="badge badge-dep">legacy</span></td></tr>
+  <tr><td>11</td><td><code>~/.cargo/bin</code></td><td>.exports</td></tr>
+  <tr><td>12</td><td><code>/usr/local/go/bin</code>, <code>$GOPATH/bin</code></td><td>.exports</td></tr>
+  <tr><td>13</td><td><code>/usr/local/mysql/bin</code></td><td>.exports <span class="badge badge-dep">legacy</span></td></tr>
+  <tr><td>14</td><td><code>$EC2_HOME/bin</code></td><td>.exports <span class="badge badge-dep">legacy</span></td></tr>
+</table>
+
+<!-- ─── OBSERVATIONS ─────────────────────────────────────────────────────── -->
+<h2 id="observations">Observations &amp; Cleanup Ideas</h2>
+<table>
+  <tr><th>Issue</th><th>Detail</th></tr>
+  <tr><td>Double <code>source ~/.profile</code></td><td><code>.zshrc</code> sources it twice — once near the top, once after fnm setup. The second is redundant and runs two <code>for</code> loops over <code>~/.exports</code>, <code>~/.aliases</code>, etc.</td></tr>
+  <tr><td><code>HISTSIZE</code> conflict</td><td>Set to 100 000 in <code>.zshrc</code>, then overridden to 32 768 in <code>.exports</code>. Since <code>.profile</code> (which loads <code>.exports</code>) is sourced after, the bash value wins. Set once, in one place.</td></tr>
+  <tr><td>NVM leftover</td><td>Commented-out nvm block still present; safe to delete entirely since fnm is active.</td></tr>
+  <tr><td>Legacy PATH entries</td><td><code>/usr/local/mysql/bin</code>, <code>$EC2_HOME/bin</code>, <code>~/.poetry/bin</code>, <code>$JAVA_HOME</code> — likely unused; auditing won't hurt startup time but removing unused entries is cleaner.</td></tr>
+  <tr><td><code>GREP_OPTIONS</code> deprecated</td><td>Removed in GNU grep 2.22+. Use a <code>grep</code> alias with <code>--color=auto</code> instead.</td></tr>
+  <tr><td><code>l()</code> function vs alias</td><td><code>~/.functions</code> defines an <code>l()</code> function; <code>~/.aliases</code> also defines <code>alias l='eza ...'</code>. The alias wins in interactive zsh. The function is unreachable.</td></tr>
+  <tr><td><code>zprof</code></td><td>Profiling lines are commented out — re-enable with <code>zmodload zsh/zprof</code> at top and <code>zprof</code> at bottom to benchmark startup.</td></tr>
+  <tr><td><code>chpwd</code> activates <code>venv/</code></td><td>Only activates <code>venv/</code>, not <code>.venv/</code>. The <code>sv</code> alias creates <code>.venv/</code>. These are inconsistent.</td></tr>
+  <tr><td><code>wt</code> init</td><td>Last line initialises an unknown tool (<code>wt</code>) — verify this is still in use.</td></tr>
+</table>
+
+<p style="margin-top:2rem; font-size:0.8rem; color:#999;">Generated 2026-05-10 · source files: ~/.zshrc ~/.profile ~/.exports ~/.aliases ~/.functions ~/.osx</p>
+
+</body>
+</html>
