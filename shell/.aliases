@@ -21,8 +21,6 @@ else
   alias py=python
 fi
 alias pepfix='autopep8 --max-line-length=120 -i'
-alias pi='pip install'
-alias pipfix='piprot --verbatim --latest'
 alias pipgrep='pip freeze | grep '
 alias pycclean='find . -name \*.pyc -type f -ls -delete'
 

@@ -1,8 +1,5 @@
 # zmodload zsh/zprof
 
-autoload -Uz compinit
-compinit -i
-
 HISTSIZE=100000
 SAVEHIST=100000
 setopt HIST_IGNORE_DUPS
@@ -52,6 +49,30 @@ zinit load wfxr/forgit
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
+# Add local completions to fpath
+fpath=(~/.zsh/completions $fpath)
+
+# Run compinit after all completion plugins are loaded
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit -i
+else
+  compinit -C -i
+fi
+
+# Load local completion config and fzf integration
+source ~/.zsh/lib/completions.zsh
+[[ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]] && source /opt/homebrew/opt/fzf/shell/completion.zsh
+[[ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]] && source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+
+# kubectl completions (cached)
+if command -v kubectl &>/dev/null; then
+  if [[ ! -f ~/.zsh/cache/_kubectl ]] || [[ $(date +%s) -gt $(( $(date -r ~/.zsh/cache/_kubectl +%s 2>/dev/null || echo 0) + 86400 )) ]]; then
+    mkdir -p ~/.zsh/cache && kubectl completion zsh > ~/.zsh/cache/_kubectl
+  fi
+  source ~/.zsh/cache/_kubectl
+fi
+
 zinit snippet 'https://github.com/robbyrussell/oh-my-zsh/raw/master/plugins/git/git.plugin.zsh'
 
 bindkey '^[[A' history-substring-search-up
@@ -60,8 +81,8 @@ bindkey '^[[B' history-substring-search-down
 eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
-source ~/.profile
 # zprof
+source ~/.profile
 
 # fnm
 FNM_PATH="/opt/homebrew/opt/fnm/bin"

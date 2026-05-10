@@ -1,0 +1,106 @@
+#compdef pi
+
+# Zsh completion for pi - AI coding assistant
+# https://github.com/earendil-works/pi-coding-agent
+
+_pi() {
+  local context state state_descr line
+  typeset -A opt_args
+
+  local -a providers
+  providers=(
+    anthropic openai azure-openai deepseek google groq cerebras xai
+    fireworks openrouter mistral moonshot github-copilot bedrock
+  )
+
+  local -a thinking_levels
+  thinking_levels=(off minimal low medium high xhigh)
+
+  local -a modes
+  modes=(text json rpc)
+
+  local -a tools
+  tools=(read bash edit write grep find ls)
+
+  _arguments -C \
+    '(-h --help)'{-h,--help}'[Show help]' \
+    '(-v --version)'{-v,--version}'[Show version number]' \
+    '--provider[Provider name]:provider:((anthropic openai azure-openai deepseek google groq cerebras xai fireworks openrouter mistral moonshot github-copilot bedrock cloudflare))' \
+    '--model[Model pattern or ID (supports "provider/id" and optional ":<thinking>")]:model:' \
+    '--api-key[API key]:api key:' \
+    '--system-prompt[System prompt text or file]:prompt:_files' \
+    '*--append-system-prompt[Append text or file to system prompt]:prompt:_files' \
+    '--mode[Output mode]:mode:(text json rpc)' \
+    '(-p --print)'{-p,--print}'[Non-interactive mode: process prompt and exit]' \
+    '(-c --continue)'{-c,--continue}'[Continue previous session]' \
+    '(-r --resume)'{-r,--resume}'[Select a session to resume]' \
+    '--session[Use specific session file or partial UUID]:session:_files' \
+    '--fork[Fork specific session into a new session]:session:_files' \
+    '--session-dir[Directory for session storage]:directory:_files -/' \
+    '--no-session[Do not save session (ephemeral)]' \
+    '--models[Comma-separated model patterns for Ctrl+P cycling]:models:' \
+    '(-nt --no-tools)'{-nt,--no-tools}'[Disable all tools by default]' \
+    '(-nbt --no-builtin-tools)'{-nbt,--no-builtin-tools}'[Disable built-in tools but keep extension tools]' \
+    '(-t --tools)'{-t,--tools}'[Comma-separated allowlist of tool names]:tools:_pi_tools' \
+    '--thinking[Set thinking level]:level:(off minimal low medium high xhigh)' \
+    '(-e --extension)*'{-e,--extension}'[Load an extension file]:extension:_files' \
+    '(-ne --no-extensions)'{-ne,--no-extensions}'[Disable extension discovery]' \
+    '*--skill[Load a skill file or directory]:skill:_files' \
+    '(-ns --no-skills)'{-ns,--no-skills}'[Disable skills discovery and loading]' \
+    '*--prompt-template[Load a prompt template file or directory]:template:_files' \
+    '(-np --no-prompt-templates)'{-np,--no-prompt-templates}'[Disable prompt template discovery]' \
+    '*--theme[Load a theme file or directory]:theme:_files' \
+    '--no-themes[Disable theme discovery and loading]' \
+    '(-nc --no-context-files)'{-nc,--no-context-files}'[Disable AGENTS.md and CLAUDE.md discovery]' \
+    '--export[Export session file to HTML]:session file:_files' \
+    '--list-models[List available models with optional search]:search:' \
+    '--verbose[Force verbose startup]' \
+    '--offline[Disable startup network operations]' \
+    '1: :_pi_commands' \
+    '*:: :->args'
+
+  case $state in
+    args)
+      case $words[1] in
+        install)
+          _arguments \
+            '(-l --local)'-l'[Install locally (project-level)]' \
+            '1:source:_files'
+          ;;
+        remove|uninstall)
+          _arguments \
+            '(-l --local)'-l'[Remove locally (project-level)]' \
+            '1:source:'
+          ;;
+        update)
+          _arguments \
+            '1:target:(self pi)'
+          ;;
+        list|config)
+          # no further args
+          ;;
+      esac
+      ;;
+  esac
+}
+
+_pi_commands() {
+  local -a commands
+  commands=(
+    'install:Install an extension source'
+    'remove:Remove an extension source'
+    'uninstall:Alias for remove'
+    'update:Update pi, self, or installed extensions'
+    'list:List installed extensions'
+    'config:Open TUI to enable/disable package resources'
+  )
+  _describe 'command' commands
+}
+
+_pi_tools() {
+  local -a tool_list
+  tool_list=(read bash edit write grep find ls)
+  _values -s , 'tools' $tool_list
+}
+
+_pi "$@"
