@@ -18,11 +18,15 @@ export GEOS_LIBRARY_PATH=/opt/homebrew/lib/libgeos_c.dylib
 #     PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
 # So here is it!
 # http://www.gnu.org/software/coreutils/manual/html_node/index.html
-export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
-export PATH=$(brew --prefix findutils)/libexec/gnubin:$PATH
-export PATH=$(brew --prefix gnu-sed)/libexec/gnubin:$PATH
-export PATH=$(brew --prefix grep)/libexec/gnubin:$PATH
-export PATH=$(brew --prefix curl)/bin:$PATH
+#
+# Hardcoded brew opt prefix — `brew --prefix <formula>` always resolves to
+# `${HOMEBREW_PREFIX}/opt/<formula>`. Forking brew 5x at shell startup cost
+# ~180ms; this path-prefix lookup is ~0ms. Detect prefix from arch fallback
+# in case HOMEBREW_PREFIX is unset (e.g. bash without brew shellenv).
+_brew_opt="${HOMEBREW_PREFIX:-/opt/homebrew}/opt"
+[ -d "$_brew_opt" ] || _brew_opt="/usr/local/opt"
+export PATH="$_brew_opt/coreutils/libexec/gnubin:$_brew_opt/findutils/libexec/gnubin:$_brew_opt/gnu-sed/libexec/gnubin:$_brew_opt/grep/libexec/gnubin:$_brew_opt/curl/bin:$PATH"
+unset _brew_opt
 
 # ---[ aliases ]---------------------------------------------------------
 alias o="open"
