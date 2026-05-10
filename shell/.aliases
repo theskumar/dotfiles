@@ -102,6 +102,13 @@ alias gs='git status -sb' # upgrade your git if -sb breaks for you. it's fun.
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias gaa='git add :/; git status -sb'
 
+# Extra git shortcuts (previously inherited from OMZ git plugin)
+alias gsw='git switch'
+alias glo='git log --oneline --decorate'
+alias gf='git fetch'
+alias gclean='git clean --interactive -d'
+alias gss='git status --short'
+
 
 # ------------------------------------------------------------------------------
 # | Network                                                                    |

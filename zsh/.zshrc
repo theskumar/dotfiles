@@ -76,9 +76,6 @@ zinit wait lucid light-mode for \
         zsh-users/zsh-history-substring-search \
     wfxr/forgit
 
-zinit wait lucid for \
-    OMZP::git
-
 # ─── 5. compinit ─────────────────────────────────────────────────────────────
 # Handled inside the turbo block above (zicompinit + zicdreplay) for speed.
 
