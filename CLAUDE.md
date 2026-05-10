@@ -5,7 +5,7 @@ Dotfiles managed with GNU Stow. Each top-level directory is a stow package.
 ## Structure
 
 - Packages targeting `$HOME`: shell, zsh, git, vim, tools, ssh, fonts, macos, linux, freebsd, xmonad
-- Packages targeting `$HOME/.config`: ghostty, gh, gh-dash, lazygit, sesh, zed, omniwm, borders, sketchybar, starship, tmux, tmuxinator, worktrunk
+- Packages targeting `$HOME/.config`: ghostty, gh, gh-dash, lazygit, mise, sesh, zed, omniwm, borders, sketchybar, starship, tmux, tmuxinator, worktrunk
 - `karabiner/` is not stowed (build based workflow)
 - `bin/` is not stowed (added to PATH via .exports)
 - `install.sh` is the entry point
