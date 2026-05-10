@@ -81,9 +81,6 @@ bindkey '^[[B' history-substring-search-down
 eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
-# zprof
-source ~/.profile
-
 # fnm
 FNM_PATH="/opt/homebrew/opt/fnm/bin"
 if [ -d "$FNM_PATH" ]; then
