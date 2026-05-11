@@ -1,0 +1,8 @@
+{
+  "lastChangelogVersion": "0.74.0",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-sonnet-4.6",
+  "defaultThinkingLevel": "minimal",
+  "hideThinkingBlock": false,
+  "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep -E '^alias [A-Za-z_]' ~/.aliases)\" 2>/dev/null"
+}
