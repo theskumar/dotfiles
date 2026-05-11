@@ -93,7 +93,9 @@ eval "$(uv generate-shell-completion zsh)"
 eval "$(zoxide init zsh --cmd j)"
 
 # Node/Python/Go/etc. version management (replaces fnm, pyenv, etc.)
-eval "$(~/.local/bin/mise activate zsh)"
+# Using --shims mode: no precmd hook, tools resolve via ~/.local/share/mise/shims.
+# Trade-off: ~17 ms shell-startup savings vs ~10-30 ms per shim invocation.
+eval "$(~/.local/bin/mise activate zsh --shims)"
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
