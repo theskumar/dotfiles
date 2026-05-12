@@ -1,9 +1,12 @@
 {
   "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "claude-opus-4.6",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-opus-4-7",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": false,
   "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep -E '^alias [A-Za-z_]' ~/.aliases)\" 2>/dev/null",
-  "packages": ["git:github.com/v2nic/pi-caveman"]
+  "packages": [
+    "git:github.com/v2nic/pi-caveman",
+    "npm:@ff-labs/pi-fff"
+  ]
 }
