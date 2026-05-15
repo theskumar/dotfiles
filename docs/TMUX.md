@@ -98,13 +98,15 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 | `prefix + h` | Move to left pane                 |
 | `prefix + j` | Move to pane below                |
 | `prefix + k` | Move to pane above                |
+| `prefix + [` | Previous pane                     |
+| `prefix + ]` | Next pane                         |
 | `prefix + z` | Toggle pane zoom (fullscreen)     |
 | `prefix + x` | Swap pane down                    |
 | `prefix + c` | Kill current pane                 |
 | `prefix + *` | Synchronize input to all panes    |
 | `prefix + P` | Toggle pane border status         |
 
-> **Note:** `prefix + l` is bound to `refresh-client` (see Misc), not pane-right. There is no binding to move to the right pane.
+> **Note:** `prefix + l` is bound to `refresh-client` (see Misc), not pane-right. Use `prefix + ]` to cycle to the next pane instead.
 
 ### Resizing (repeatable)
 

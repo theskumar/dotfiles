@@ -24,6 +24,10 @@ keybind = cmd+j=text:\x01\x0a
 keybind = cmd+left=text:\x01\x48
 # prefix + L  → next window
 keybind = cmd+right=text:\x01\x4c
+# prefix + [  → previous pane
+keybind = cmd+[=text:\x01\x5b
+# prefix + ]  → next pane
+keybind = cmd+]=text:\x01\x5d
 # prefix + R  → reload tmux config
 keybind = cmd+r=text:\x01\x52
 
