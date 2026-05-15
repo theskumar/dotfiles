@@ -1,0 +1,109 @@
+# ─── Python ──────────────────────────────────────────────────────────────────
+# Install: uv tool install basedpyright && uv tool install ruff
+
+[[language]]
+name = "python"
+language-servers = ["basedpyright"]
+formatter = { command = "ruff", args = ["format", "--stdin-filename", "file.py", "-"] }
+auto-format = true
+
+[language-server.basedpyright]
+command = "basedpyright-langserver"
+args    = ["--stdio"]
+
+[language-server.basedpyright.config.basedpyright.analysis]
+typeCheckingMode     = "standard"
+autoImportCompletions = true
+
+# ─── Django templates ────────────────────────────────────────────────────────
+# Install: uv tool install django-template-lsp
+
+[[language]]
+name = "html"
+language-servers = ["djlsp", "vscode-html-language-server"]
+
+[[language]]
+name = "htmldjango"
+language-servers = ["djlsp"]
+
+[language-server.djlsp]
+command = "djlsp"
+
+# ─── Rust ────────────────────────────────────────────────────────────────────
+# Install: rustup component add rust-analyzer
+
+[[language]]
+name = "rust"
+auto-format = true
+
+# ─── JavaScript / TypeScript ─────────────────────────────────────────────────
+# Install: npm install -g typescript-language-server typescript
+
+[[language]]
+name = "typescript"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.ts"] }
+auto-format = true
+
+[[language]]
+name = "javascript"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.js"] }
+auto-format = true
+
+[[language]]
+name = "tsx"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.tsx"] }
+auto-format = true
+
+[[language]]
+name = "jsx"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.jsx"] }
+auto-format = true
+
+# ─── CSS / HTML ──────────────────────────────────────────────────────────────
+# Install: npm install -g vscode-langservers-extracted
+
+[[language]]
+name = "css"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.css"] }
+auto-format = true
+
+# ─── JSON ────────────────────────────────────────────────────────────────────
+# Install: npm install -g vscode-langservers-extracted
+
+[[language]]
+name = "json"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.json"] }
+auto-format = true
+
+# ─── TOML ────────────────────────────────────────────────────────────────────
+# Install: brew install taplo
+
+[[language]]
+name = "toml"
+formatter = { command = "taplo", args = ["fmt", "-"] }
+auto-format = true
+
+# ─── YAML ────────────────────────────────────────────────────────────────────
+# Install: npm install -g yaml-language-server
+
+[[language]]
+name = "yaml"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.yaml"] }
+auto-format = true
+
+# ─── Markdown ────────────────────────────────────────────────────────────────
+# Install: brew install marksman
+
+[[language]]
+name = "markdown"
+formatter = { command = "prettierd", args = ["--stdin-filepath", "file.md"] }
+auto-format = false
+soft-wrap.enable = true
+
+# ─── Bash ────────────────────────────────────────────────────────────────────
+# Install: npm install -g bash-language-server
+
+[[language]]
+name = "bash"
+formatter = { command = "shfmt", args = ["-i", "2", "-"] }
+auto-format = true

@@ -8,7 +8,7 @@ OS="$(uname -s)"
 
 COMMON=(shell zsh git vim tools ssh fonts)
 
-XDG=(starship tmux ghostty gh gh-dash lazygit mise sesh zed tmuxinator worktrunk)
+XDG=(starship tmux ghostty gh gh-dash lazygit mise sesh zed tmuxinator worktrunk helix)
 
 case "$OS" in
     Darwin)

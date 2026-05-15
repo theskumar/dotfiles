@@ -71,6 +71,7 @@ stow -D shell
 | `sesh` | Tmux session definitions |
 | `tmuxinator` | Project layouts |
 | `mise` | Global tool versions config |
+| `helix` | config.toml (editor settings, theme, keybinds), languages.toml (LSPs, formatters) |
 
 ### Git and dev tools (XDG)
 

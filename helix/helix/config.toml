@@ -1,0 +1,88 @@
+theme = "catppuccin_mocha"
+
+# ─── Editor ──────────────────────────────────────────────────────────────────
+
+[editor]
+line-number          = "relative"
+cursorline           = true
+color-modes          = true
+rulers               = [88, 120]
+bufferline           = "multiple"
+text-width           = 88
+completion-timeout   = 100
+completion-replace   = false
+idle-timeout         = 250
+shell                = ["zsh", "-c"]
+
+[editor.statusline]
+left    = ["mode", "spinner", "file-name", "file-modification-indicator"]
+center  = ["diagnostics"]
+right   = ["selections", "position", "file-encoding", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.cursor-shape]
+insert  = "bar"
+normal  = "block"
+select  = "underline"
+
+[editor.file-picker]
+hidden           = false
+follow-symlinks  = true
+git-ignore       = true
+git-global       = true
+
+[editor.indent-guides]
+render    = true
+character = "╎"
+skip-levels = 1
+
+[editor.whitespace.render]
+tab   = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+tab       = "→"
+tabpad    = "·"
+
+[editor.lsp]
+display-messages    = true
+display-inlay-hints = true
+auto-signature-help = true
+
+[editor.soft-wrap]
+enable = false
+
+[editor.search]
+smart-case = true
+
+# ─── Keys ────────────────────────────────────────────────────────────────────
+
+[keys.normal]
+# Quick buffer/window navigation
+"C-h" = "jump_view_left"
+"C-j" = "jump_view_down"
+"C-k" = "jump_view_up"
+"C-l" = "jump_view_right"
+
+# Stay in the middle on scroll
+"C-d" = ["half_page_down", "align_view_center"]
+"C-u" = ["half_page_up",   "align_view_center"]
+
+# Clear search highlight
+"C-/" = "no_op"
+esc   = ["collapse_selection", "keep_primary_selection"]
+
+# Leap-style navigation
+"g." = "goto_last_modification"
+
+[keys.insert]
+"C-space" = "completion"
+"j" = { "k" = "normal_mode" }   # jk to escape insert
+
+[keys.select]
+# Keep select mode symmetry with normal
+"C-d" = ["half_page_down", "align_view_center"]
+"C-u" = ["half_page_up",   "align_view_center"]
