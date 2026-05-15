@@ -3,6 +3,8 @@ dotfiles
 
 My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
+A `.stowrc` at the repo root sets `--target=~` by default, so most `stow` commands work without an explicit `--target` flag.
+
 ## Setup
 
 ### Prerequisites
@@ -33,14 +35,14 @@ cd ~/dotfiles
 
 ```shell
 cd ~/dotfiles
-stow --target="$HOME" shell           # packages targeting $HOME
+stow shell                              # packages targeting $HOME (uses .stowrc default)
 stow --target="$HOME/.config" ghostty  # packages targeting $HOME/.config
 ```
 
 ### Uninstalling a package
 
 ```shell
-stow --target="$HOME" -D shell
+stow -D shell
 ```
 
 ## Packages
@@ -50,7 +52,7 @@ stow --target="$HOME" -D shell
 | Package | Contents |
 |---------|----------|
 | `shell` | .aliases, .bashrc, .exports, .functions, .inputrc, .profile |
-| `zsh` | .zshrc, .zsh/ (plugins, functions, lib) |
+| `zsh` | .zshrc, .zshenv, .zsh/ (plugins, functions, lib) |
 | `git` | .gitconfig, .gitmessage, .gitattributes, .config/git/ignore |
 | `vim` | .vimrc, .vim/ |
 | `tools` | .ackrc, .actrc, .carbon-now.json, .cookiecutterrc, .curlrc, .nuxtrc, .pythonrc.py, .wgetrc |
@@ -61,13 +63,14 @@ stow --target="$HOME" -D shell
 
 | Package | Contents |
 |---------|----------|
-| `ghostty` | Terminal config |
+| `ghostty` | Terminal config with tmux keybind layer |
 | `zed` | settings.json, keymap.json, tasks.json, snippets/ |
 | `lazygit` | Zed as external editor |
 | `starship` | Prompt config |
 | `tmux` | tmux.conf, tmux.reset.conf |
 | `sesh` | Tmux session definitions |
 | `tmuxinator` | Project layouts |
+| `mise` | Global tool versions config |
 
 ### Git and dev tools (XDG)
 
@@ -82,9 +85,9 @@ stow --target="$HOME" -D shell
 | Package | Target | Contents |
 |---------|--------|----------|
 | `macos` | $HOME | .aerospace.toml, .finicky.js, .hyprspace.toml, .osx |
-| `omniwm` | ~/.config | Niri tiling WM config, hotkeys, app rules |
-| `borders` | ~/.config | Window border config |
-| `sketchybar` | ~/.config | Status bar config, colors.sh |
+| `omniwm` | ~/.config | OmniWM tiling WM (niri/dwindle layouts), workspaces, hotkeys, app rules |
+| `borders` | ~/.config | Window border config (borderrc) |
+| `sketchybar` | ~/.config | Status bar config, plugins/, items/, themes/, colors.sh |
 | `karabiner` | (not stowed) | Keyboard customization (build based, has its own workflow) |
 
 ### Linux specific
@@ -105,8 +108,9 @@ stow --target="$HOME" -D shell
 | Directory | Why |
 |-----------|-----|
 | `bin/` | Scripts added to PATH via .exports, not symlinked |
-| `setup/` | One shot install scripts, run manually |
+| `setup/` | One-shot install scripts, run manually |
 | `karabiner/` | Build based workflow, outputs to ~/.config/karabiner/ |
+| `pi/` | AI coding agent settings (~/.pi/agent/settings.json), stow manually if needed |
 | `.private/` | Gitignored secrets |
 
 ## Notes
