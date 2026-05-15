@@ -100,4 +100,12 @@ eval "$(~/.local/bin/mise activate zsh --shims)"
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
 
 # ─── 8. Prompt ───────────────────────────────────────────────────────────────
+# Faded divider between command output and the next prompt.
+_prompt_divider_first=1
+_prompt_divider() {
+  (( _prompt_divider_first )) && { _prompt_divider_first=0; return; }
+  printf '\e[38;5;238m%s\e[0m\n' "$(printf '─%.0s' $(seq 1 ${COLUMNS:-80}))"
+}
+precmd_functions+=(_prompt_divider)
+
 eval "$(starship init zsh)"
