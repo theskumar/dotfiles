@@ -1,7 +1,7 @@
 {
   "lastChangelogVersion": "0.74.0",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-7",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "claude-sonnet-4.6",
   "defaultThinkingLevel": "medium",
   "hideThinkingBlock": false,
   "shellCommandPrefix": "shopt -s expand_aliases\neval \"$(grep -E '^alias [A-Za-z_]' ~/.aliases)\" 2>/dev/null",
