@@ -1,1 +1,59 @@
-background-opacity = 1.00
+# ─── tmux integration ──────────────────────────────────────────────
+# Your prefix is Ctrl-A (\x01). All cmd shortcuts send prefix + key.
+
+# prefix + ^C → new window
+keybind = cmd+t=text:\x01\x03
+
+# prefix + c  → kill pane
+keybind = cmd+w=text:\x01\x63
+# prefix + &  → kill window
+keybind = cmd+shift+w=text:\x01\x26
+# prefix + v  → vsplit
+keybind = cmd+d=text:\x01\x76
+# prefix + s  → hsplit
+keybind = cmd+shift+d=text:\x01\x73
+# prefix + z  → zoom
+keybind = cmd+z=text:\x01\x7a
+# prefix + S  → choose-session
+keybind = cmd+s=text:\x01\x53
+# prefix + Space → sesh picker
+keybind = cmd+p=text:\x01\x20
+# prefix + ^J → Claude/Pi Agent popup
+keybind = cmd+j=text:\x01\x0a
+# prefix + H  → previous window
+keybind = cmd+left=text:\x01\x48
+# prefix + L  → next window
+keybind = cmd+right=text:\x01\x4c
+# prefix + R  → reload tmux config
+keybind = cmd+r=text:\x01\x52
+
+# Numeric window switching (prefix + 1..9)
+keybind = cmd+digit_1=text:\x01\x31
+keybind = cmd+digit_2=text:\x01\x32
+keybind = cmd+digit_3=text:\x01\x33
+keybind = cmd+digit_4=text:\x01\x34
+keybind = cmd+digit_5=text:\x01\x35
+keybind = cmd+digit_6=text:\x01\x36
+keybind = cmd+digit_7=text:\x01\x37
+keybind = cmd+digit_8=text:\x01\x38
+keybind = cmd+digit_9=text:\x01\x39
+
+# ─── appearance ────────────────────────────────────────────────────
+# theme = Catppuccin Mocha
+background-opacity = 0.92
+background-blur-radius = 20
+macos-titlebar-style = hidden
+alpha-blending = linear-corrected
+
+# ─── shell integration ─────────────────────────────────────────────
+# Auto-detects zsh/bash/fish. Keep all features on for prompt marks,
+# OSC 7 cwd reporting, and sudo support.
+shell-integration = detect
+shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
+
+# ─── behavior ─────────────────────────────────────────────
+command = /bin/zsh -lc "tmux attach || tmux new-session -s main"
+confirm-close-surface = false
+
+# ---- Reload -------
+keybind = cmd+shift+r=reload_config

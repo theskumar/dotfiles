@@ -42,11 +42,12 @@ tmux attach -t client-name
 tmux ls
 ```
 
-| Keys             | Action                            |
-| ---------------- | --------------------------------- |
-| `prefix + Space` | Fuzzy find sessions via sesh      |
-| `prefix + S`     | Choose session from built-in list |
-| `prefix + d`     | Detach from current session       |
+| Keys               | Action                            |
+| ------------------ | --------------------------------- |
+| `prefix + Space`   | Fuzzy find sessions via sesh      |
+| `prefix + S`       | Choose session from built-in list |
+| `prefix + Ctrl+D`  | Detach from current session       |
+| `prefix + Ctrl+X`  | Lock server                       |
 
 Closing the last window in a session switches to another session instead of detaching.
 
@@ -84,6 +85,7 @@ Windows are numbered starting from 1.
 | `prefix + Ctrl+C` | New window (current directory)  |
 | `prefix + r`      | Rename current window           |
 | `prefix + w`      | List all windows                |
+| `prefix + "`      | Choose window                   |
 
 ## Panes
 
@@ -96,11 +98,13 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 | `prefix + h` | Move to left pane                 |
 | `prefix + j` | Move to pane below                |
 | `prefix + k` | Move to pane above                |
-| `prefix + l` | Move to right pane                |
 | `prefix + z` | Toggle pane zoom (fullscreen)     |
 | `prefix + x` | Swap pane down                    |
 | `prefix + c` | Kill current pane                 |
 | `prefix + *` | Synchronize input to all panes    |
+| `prefix + P` | Toggle pane border status         |
+
+> **Note:** `prefix + l` is bound to `refresh-client` (see Misc), not pane-right. There is no binding to move to the right pane.
 
 ### Resizing (repeatable)
 
@@ -115,11 +119,11 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 
 Enter with `prefix + [`. Vi keys for navigation.
 
-| Keys       | Action                                  |
-| ---------- | --------------------------------------- |
-| `v`        | Begin selection                         |
-| `y`        | Copy to clipboard (pbcopy)              |
-| Mouse drag | Auto copies selection to clipboard      |
+| Keys       | Action                                   |
+| ---------- | ---------------------------------------- |
+| `v`        | Begin selection                          |
+| `y`        | Copy to clipboard (pbcopy)               |
+| Mouse drag | Auto copies selection to clipboard       |
 | Scroll     | Mouse wheel, `j`/`k`, `Ctrl+d`/`Ctrl+u` |
 
 tmux-yank handles clipboard across platforms (pbcopy on macOS, xclip/xsel on Linux).
@@ -145,24 +149,43 @@ Managed by TPM at `~/.config/tmux/plugins/`.
 
 ### Installed
 
-| Plugin          | Purpose                                              |
-| --------------- | ---------------------------------------------------- |
-| tmux-sensible   | Sane defaults                                        |
-| tmux-yank       | Cross-platform clipboard                             |
-| tmux-resurrect  | Save/restore sessions (`prefix + Ctrl+s` / `Ctrl+r`) |
-| tmux-continuum  | Auto-save every 15 min, auto-restore on start        |
-| tmux-thumbs     | Quick copy visible hashes, paths, IPs, URLs (`prefix + t`) |
-| tmux-fzf-url    | Extract and open URLs from scrollback (`prefix + u`) |
-| catppuccin-tmux | Status bar theme                                     |
+| Plugin          | Purpose                                                      |
+| --------------- | ------------------------------------------------------------ |
+| tmux-sensible   | Sane defaults                                                |
+| tmux-yank       | Cross-platform clipboard                                     |
+| tmux-resurrect  | Save/restore sessions (`prefix + Ctrl+s` / `Ctrl+r`); also restores nvim sessions |
+| tmux-continuum  | Auto-save every 15 min, auto-restore on start                |
+| tmux-thumbs     | Quick copy visible hashes, paths, IPs, URLs (`prefix + t`)  |
+| tmux-fzf-url    | Extract and open URLs from scrollback (`prefix + u`)         |
+| catppuccin-tmux | Status bar theme (omerxx fork)                               |
 
 ## Misc
 
-| Keys              | Action             |
-| ----------------- | ------------------ |
-| `prefix + R`      | Reload tmux config |
-| `prefix + K`      | Clear terminal     |
-| `prefix + Ctrl+L` | Refresh client     |
-| `prefix + :`      | Command prompt     |
+| Keys              | Action              |
+| ----------------- | ------------------- |
+| `prefix + R`      | Reload tmux config  |
+| `prefix + K`      | Clear terminal      |
+| `prefix + Ctrl+L` | Refresh client      |
+| `prefix + l`      | Refresh client      |
+| `prefix + :`      | Command prompt      |
+
+## Terminal Features
+
+Uses `terminal-features` (tmux 3.2+) instead of `terminal-overrides`. Per-terminal declarations:
+
+| Terminal        | Features                                          |
+| --------------- | ------------------------------------------------- |
+| xterm-ghostty   | RGB, hyperlinks, sixel, usstyle, clipboard        |
+| xterm-256color  | RGB, usstyle                                      |
+| alacritty       | RGB, usstyle                                      |
+| tmux-256color   | RGB, usstyle                                      |
+
+Additional settings:
+- `extended-keys on` + `extended-keys-format csi-u` — CSI u encoding for modified keys (e.g. `Ctrl+Shift+…`)
+- `allow-passthrough on` — OSC sequences pass through (images, hyperlinks, inline graphics)
+- `focus-events on` — focus gain/loss events forwarded to applications
+
+OSC52 (`set-clipboard on`) handles clipboard back to your Mac over SSH. No pbcopy needed on the server.
 
 ## Onboarding a New Server
 
@@ -174,8 +197,6 @@ tmux new -s work
 # prefix + I to install plugins
 ```
 
-OSC52 (`set-clipboard on`) handles clipboard back to your Mac over SSH. No pbcopy needed on the server.
-
 ## Status Bar
 
-Catppuccin theme. Session name on the left. Current directory and time (HH:MM) on the right. Current window is highlighted. Zoomed windows show `()` indicator.
+Catppuccin theme (omerxx fork). Session name on the left. Current directory basename and time (`HH:MM`) on the right. Current window is highlighted. Zoomed windows show `()` indicator.
