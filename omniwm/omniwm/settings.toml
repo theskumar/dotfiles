@@ -16,6 +16,12 @@ blue = 0.479300037944676
 green = 0.2
 red = 0.08458520228437894
 
+[clipboard]
+historyEnabled = false
+maxItemBytes = 8388608
+maxItems = 200
+maxTotalBytes = 67108864
+
 [dwindle]
 defaultSplitRatio = 1.0
 moveToRootStable = true
@@ -45,12 +51,6 @@ hotkeysEnabled = true
 ipcEnabled = true
 preventSleepEnabled = false
 updateChecksEnabled = true
-
-[clipboard]
-historyEnabled = false
-maxItemBytes = 8388608
-maxItems = 200
-maxTotalBytes = 67108864
 
 [gestures]
 fingerCount = 3
@@ -239,12 +239,14 @@ minWidth = 500.0
 [[appRules]]
 bundleId = "com.dmitrynikolaev.numi"
 id = "8A76415F-69AE-47AE-98F5-5E9208EF0D2C"
+layout = "float"
 minHeight = 100.0
 minWidth = 200.0
 
 [[appRules]]
 bundleId = "com.todoist.mac.Todoist"
 id = "B8E74496-6EEA-40AA-9166-1BE2AC579C24"
+layout = "float"
 minHeight = 500.0
 minWidth = 400.0
 
@@ -333,19 +335,19 @@ binding = "Unassigned"
 id = "switchWorkspace.previous"
 
 [[hotkeys]]
-binding = "Option+H"
+binding = "Option+Left Arrow"
 id = "focus.left"
 
 [[hotkeys]]
-binding = "Option+J"
+binding = "Option+Down Arrow"
 id = "focus.down"
 
 [[hotkeys]]
-binding = "Option+K"
+binding = "Option+Up Arrow"
 id = "focus.up"
 
 [[hotkeys]]
-binding = "Option+L"
+binding = "Option+Right Arrow"
 id = "focus.right"
 
 [[hotkeys]]
@@ -361,11 +363,11 @@ binding = "Unassigned"
 id = "focusUpOrRight"
 
 [[hotkeys]]
-binding = "Control+Option+Shift+K"
+binding = "Control+Option+Shift+Up Arrow"
 id = "moveWindowToWorkspaceUp"
 
 [[hotkeys]]
-binding = "Control+Option+Shift+J"
+binding = "Control+Option+Shift+Down Arrow"
 id = "moveWindowToWorkspaceDown"
 
 [[hotkeys]]
@@ -413,19 +415,19 @@ binding = "Unassigned"
 id = "moveColumnToWorkspace.8"
 
 [[hotkeys]]
-binding = "Option+Shift+H"
+binding = "Option+Shift+Left Arrow"
 id = "move.left"
 
 [[hotkeys]]
-binding = "Option+Shift+J"
+binding = "Option+Shift+Down Arrow"
 id = "move.down"
 
 [[hotkeys]]
-binding = "Option+Shift+K"
+binding = "Option+Shift+Up Arrow"
 id = "move.up"
 
 [[hotkeys]]
-binding = "Option+Shift+L"
+binding = "Option+Shift+Right Arrow"
 id = "move.right"
 
 [[hotkeys]]
@@ -449,11 +451,11 @@ binding = "Unassigned"
 id = "toggleNativeFullscreen"
 
 [[hotkeys]]
-binding = "Control+Option+Shift+H"
+binding = "Control+Option+Shift+Left Arrow"
 id = "moveColumn.left"
 
 [[hotkeys]]
-binding = "Control+Option+Shift+L"
+binding = "Control+Option+Shift+Right Arrow"
 id = "moveColumn.right"
 
 [[hotkeys]]
