@@ -26,7 +26,7 @@ maxTotalBytes = 67108864
 defaultSplitRatio = 1.0
 moveToRootStable = true
 singleWindowAspectRatio = "4:3"
-smartSplit = true
+smartSplit = false
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
 
