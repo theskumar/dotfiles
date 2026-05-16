@@ -79,7 +79,7 @@ alwaysCenterSingleColumn = true        # Center the window when it's alone on th
 centerFocusedColumn = "never"          # Auto-scroll to focused column: "never" | "always" | "on-overflow"
 columnWidthPresets = [0.333, 0.5, 0.66] # Width fractions cycled with Option+. / Option+,
 defaultColumnWidth = 0.5               # Default width for newly created columns (v0.4.9+)
-infiniteLoop = false                   # Wrap-around scroll at workspace edges
+infiniteLoop = true                    # Wrap-around scroll at workspace edges
 maxVisibleColumns = 2                  # How many columns are visible side-by-side at once
 maxWindowsPerColumn = 3                # Max windows stacked vertically in one column
 singleWindowAspectRatio = "4:3"        # Aspect ratio when a window is alone: "none" | "4:3" | "16:9" etc.
@@ -171,8 +171,9 @@ notchAware = true                 # Avoid the MacBook Pro notch ✓
 showLabels = true                 # Show workspace names/numbers
 labelFontSize = 12.0
 backgroundOpacity = 0.1           # 0.0 = fully transparent background
-hideEmptyWorkspaces = false       # Hide workspaces with no windows
-showFloatingWindows = false        # Include floating windows in bar display
+hideEmptyWorkspaces = true        # Hide workspaces with no windows
+reserveLayoutSpace = false        # Don't reserve layout space for the bar (overlaps menu bar)
+showFloatingWindows = false       # Include floating windows in bar display
 deduplicateAppIcons = false        # Merge duplicate app icons in the bar
 windowLevel = "popup"             # Z-level: "popup" sits above most windows
 xOffset = 0.0                     # Horizontal nudge
@@ -228,17 +229,26 @@ Drop-down terminal toggled with `Option+\``.
 ```toml
 [quakeTerminal]
 enabled = true
-heightPercent = 50.0         # Height as % of screen
-widthPercent = 50.0          # Width as % of screen
-position = "center"          # "center" | "top" | "bottom" | "left" | "right"
-monitorMode = "focusedWindow" # Which monitor: "focusedWindow" | "primary"
-opacity = 1.0
-autoHide = false             # Auto-hide when focus leaves the terminal
-animationDuration = 0.2      # Slide-in animation speed (seconds)
-useCustomFrame = false       # Use OmniWM's custom frameless window chrome
+heightPercent = 50.0          # Height as % of screen
+widthPercent = 50.0           # Width as % of screen
+position = "center"           # "center" | "top" | "bottom" | "left" | "right"
+monitorMode = "focusedWindow"  # Which monitor: "focusedWindow" | "primary"
+opacity = 0.8                 # Window opacity (0.0–1.0)
+autoHide = true               # Auto-hide when focus leaves the terminal
+animationDuration = 0.2       # Slide-in animation speed (seconds)
+useCustomFrame = true         # Use OmniWM's custom frameless window chrome
+
+# Saved position/size from last manual resize — managed by OmniWM
+[quakeTerminal.customFrame]
+height = 645.0
+width = 1028.0
+x = 514.0
+y = 323.0
 ```
 
 The terminal app used is whatever your quake terminal app rule is set to (Ghostty by default — `com.mitchellh.ghostty`).
+
+> **Tip:** `useCustomFrame = true` replaces the native Ghostty title bar with OmniWM's own chrome. `autoHide = true` dismisses the terminal when you click away — retoggle with `` Option+` ``.
 
 ---
 
@@ -306,7 +316,22 @@ bundleId = "com.mitchellh.ghostty"
 id = "7876C9EF-437E-4D4F-9C27-B1B02F4AABCE"  # Internal UUID, leave as-is
 minHeight = 48.0
 minWidth = 90.0
+
+# Float rules — set via IPC (setup-rules.sh) and synced back into settings.toml
+[[appRules]]
+bundleId = "com.dmitrynikolaev.numi"
+layout = "float"
+minHeight = 100.0
+minWidth = 200.0
+
+[[appRules]]
+bundleId = "com.todoist.mac.Todoist"
+layout = "float"
+minHeight = 500.0
+minWidth = 400.0
 ```
+
+> **Float rules note:** `layout = "float"` entries in `settings.toml` are synced back from OmniWM's IPC layer after running `omniwm/setup-rules.sh`. Do not add float rules manually to TOML — always use the script so they round-trip correctly.
 
 **Common bundle IDs** (for adding new rules):
 
@@ -384,20 +409,19 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 
 ### Current Bindings
 
-> Navigation uses **vim-style hjkl** (not arrow keys) to avoid conflicts with cursor movement shortcuts in text editors.
-
 | Action | Binding |
+|--------|---------|
 | Switch workspace 1–9 | `Option+1..9` |
 | Move window to workspace 1–9 | `Option+Shift+1..9` |
-| Focus left / right / up / down | `Option+h/j/k/l` |
-| Move window | `Option+Shift+h/j/k/l` |
+| Focus left / right / up / down | `Option+←/↓/↑/→` |
+| Move window | `Option+Shift+←/↓/↑/→` |
 | Focus previous window | `Option+Tab` |
 | Workspace back-and-forth | `Ctrl+Option+Tab` |
 | Focus column 1–9 | `Ctrl+Option+1..9` |
 | Focus first column | `Option+Home` |
 | Focus last column | `Option+End` |
-| Move column left / right | `Ctrl+Option+Shift+h/l` |
-| Move window to workspace ↑/↓ | `Ctrl+Option+Shift+k/j` |
+| Move column left / right | `Ctrl+Option+Shift+←/→` |
+| Move window to workspace ↑/↓ | `Ctrl+Option+Shift+↑/↓` |
 | Center column | `Option+C` |
 | Float / unfloat focused window | `Ctrl+Option+W` |
 | Column width −10% / +10% | `Option+-` / `Option+=` |
