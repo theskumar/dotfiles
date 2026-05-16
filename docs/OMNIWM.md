@@ -2,7 +2,8 @@
 
 > **Repo:** [BarutSRB/OmniWM](https://github.com/BarutSRB/OmniWM)
 > **Config:** `omniwm/omniwm/settings.toml` → stowed to `~/.config/omniwm/settings.toml`
-> **Latest:** v0.4.9 · **Installed:** check with `defaults read /Applications/OmniWM.app/Contents/Info.plist CFBundleShortVersionString`
+> **Float rules script:** `omniwm/setup-rules.sh` — run once after fresh install
+> **Installed:** v0.4.9 via `brew install barutsrb/tap/omniwm` · check with `omniwmctl version`
 
 OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
 
@@ -31,6 +32,8 @@ OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It suppor
   - [[workspaces]](#workspaces)
 - [Hotkey Reference](#hotkey-reference)
 - [IPC & CLI (omniwmctl)](#ipc--cli-omniwmctl)
+- [Float Rules Setup](#float-rules-setup)
+- [Multi-Monitor Setup](#multi-monitor-setup)
 - [Updating](#updating)
 
 ---
@@ -381,19 +384,27 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 
 ### Current Bindings
 
+> Navigation uses **vim-style hjkl** (not arrow keys) to avoid conflicts with cursor movement shortcuts in text editors.
+
 | Action | Binding |
-|--------|---------|
 | Switch workspace 1–9 | `Option+1..9` |
 | Move window to workspace 1–9 | `Option+Shift+1..9` |
-| Focus left / right / up / down | `Option+Arrow` |
-| Move window | `Option+Shift+Arrow` |
+| Focus left / right / up / down | `Option+h/j/k/l` |
+| Move window | `Option+Shift+h/j/k/l` |
 | Focus previous window | `Option+Tab` |
 | Workspace back-and-forth | `Ctrl+Option+Tab` |
 | Focus column 1–9 | `Ctrl+Option+1..9` |
 | Focus first column | `Option+Home` |
 | Focus last column | `Option+End` |
-| Move column left / right | `Ctrl+Option+Shift+←/→` |
-| Move window to workspace ↑/↓ | `Ctrl+Option+Shift+↑/↓` |
+| Move column left / right | `Ctrl+Option+Shift+h/l` |
+| Move window to workspace ↑/↓ | `Ctrl+Option+Shift+k/j` |
+| Center column | `Option+C` |
+| Float / unfloat focused window | `Ctrl+Option+W` |
+| Column width −10% / +10% | `Option+-` / `Option+=` |
+| Window height −10% / +10% | `Option+Shift+-` / `Option+Shift+=` |
+| Expand column to available width | `Ctrl+Option+F` |
+| Reset window height | `Ctrl+Option+R` |
+| Move column to first / last | `Ctrl+Option+Home` / `Ctrl+Option+End` |
 | Move column to workspace ↑/↓ | `Ctrl+Option+Shift+PgUp/PgDn` |
 | Cycle column width forward | `Option+.` |
 | Cycle column width backward | `Option+,` |
@@ -500,17 +511,86 @@ omniwmctl query capabilities                   # Full protocol feature list
 
 ---
 
+## Float Rules Setup
+
+Float rules (always-floating apps) **cannot live in `settings.toml`** — they are persisted by OmniWM's IPC layer separately. Run the setup script once after a fresh install or OmniWM state reset:
+
+```bash
+bash ~/dotfiles/omniwm/setup-rules.sh
+```
+
+The script is idempotent — it skips rules already set to `float`, and upgrades `auto` rules in-place preserving min-size constraints.
+
+**Currently configured float apps:**
+
+| App | Bundle ID |
+|-----|-----------|
+| Numi | `com.dmitrynikolaev.numi` |
+| Todoist | `com.todoist.mac.Todoist` |
+
+To add more float apps, edit the `ensure_float_rule` calls at the bottom of `omniwm/setup-rules.sh`.
+
+Verify at any time:
+```bash
+omniwmctl query rules --format table
+```
+
+---
+
+## Multi-Monitor Setup
+
+Two working modes are configured:
+
+### Mode 1 — MacBook only
+Workspaces 1–5 on `main` (built-in display). Workspaces 6–7 (`secondary`) remain inactive.
+
+### Mode 2 — Three-monitor desk
+| Monitor | Position | Role | Workspaces |
+|---------|----------|------|------------|
+| 4K 27" | Center | **primary / `main`** | 1–5 |
+| 1900px 27" | Left | **`secondary`** | 6 (❤️), 7 (🚀) |
+| MacBook | Left-below external | **tertiary** | — (see below) |
+
+Workspaces 1–5 follow whichever monitor is set as macOS primary — they'll land on the 4K in desk mode and the MacBook in solo mode automatically.
+
+### Adding MacBook-as-tertiary workspaces
+
+OmniWM supports pinning workspaces to a specific display by name via `type = "specificDisplay"`. To set this up:
+
+1. Connect all monitors and launch OmniWM
+2. Get your MacBook display name:
+   ```bash
+   omniwmctl query displays --format table
+   ```
+   Look for the built-in display (e.g. `"Built-in Retina Display"`).
+3. Add workspaces to `settings.toml`:
+   ```toml
+   [[workspaces]]
+   id = "<new-uuid>"
+   name = "8"
+   layoutType = "niri"
+
+   [workspaces.monitorAssignment]
+   type = "specificDisplay"
+   output = { displayId = 1, name = "Built-in Retina Display" }
+   ```
+   Replace the `name` value from step 2. Generate a UUID with `python3 -c "import uuid; print(uuid.uuid4())"` .
+
+> **Note:** `displayId` can change across reboots; OmniWM falls back to name-matching when the ID doesn't match, so the display name is what matters.
+
+---
+
 ## Updating
 
 ```bash
 # Check installed version
-defaults read /Applications/OmniWM.app/Contents/Info.plist CFBundleShortVersionString
+omniwmctl version
 
-# Check latest release
+# Upgrade via Homebrew
+brew upgrade barutsrb/tap/omniwm
+
+# Check latest release on GitHub
 gh release list --repo BarutSRB/OmniWM --limit 3
-
-# Download latest
-gh release download --repo BarutSRB/OmniWM --pattern "OmniWM-*.zip" --dir ~/Downloads
 ```
 
 After updating, compare your `settings.toml` against the upstream canonical to pick up new config keys:
