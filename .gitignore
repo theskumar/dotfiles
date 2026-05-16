@@ -28,3 +28,4 @@ venv/
 *.ropeproject
 *.glue
 .vim/.netrwhist
+\n# OmniWM runtime data\nomniwm/omniwm/clipboard-history.json
