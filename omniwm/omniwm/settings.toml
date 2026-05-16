@@ -76,13 +76,13 @@ singleWindowAspectRatio = "4:3"
 
 [quakeTerminal]
 animationDuration = 0.2
-autoHide = false
+autoHide = true
 enabled = true
 heightPercent = 50.0
 monitorMode = "focusedWindow"
-opacity = 1.0
+opacity = 0.8
 position = "center"
-useCustomFrame = false
+useCustomFrame = true
 widthPercent = 50.0
 
 [state]
