@@ -90,7 +90,7 @@ stow -D shell
 | `omniwm` | ~/.config | OmniWM tiling WM (niri/dwindle layouts), workspaces, hotkeys, app rules |
 | `borders` | ~/.config | Window border config (borderrc) |
 | `sketchybar` | ~/.config | Status bar config, plugins/, items/, themes/, colors.sh |
-| `karabiner` | (not stowed) | Keyboard customization (build based, has its own workflow) |
+| `karabiner` | ~/.config | Keyboard customization (karabiner.json — app launchers, vim arrows, caps→ctrl/esc) |
 
 ### Linux specific
 
@@ -111,7 +111,7 @@ stow -D shell
 |-----------|-----|
 | `bin/` | Scripts added to PATH via .exports, not symlinked |
 | `setup/` | One-shot install scripts, run manually |
-| `karabiner/` | Build based workflow, outputs to ~/.config/karabiner/ |
+| `karabiner/` | (removed — now stowed to ~/.config like other XDG packages) |
 | `pi/` | AI coding agent settings (~/.pi/agent/settings.json), stow manually if needed |
 | `.private/` | Gitignored secrets |
 

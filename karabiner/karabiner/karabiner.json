@@ -1,0 +1,204 @@
+{
+    "global": { "show_in_menu_bar": false },
+    "profiles": [
+        {
+            "complex_modifications": {
+                "parameters": { "basic.to_if_alone_timeout_milliseconds": 500 },
+                "rules": [
+                    {
+                        "description": "App Launcher: Alt+B/S/N/L/E/I/C/O",
+                        "manipulators": [
+                            {
+                                "description": "Alt+B -> Zen Browser",
+                                "from": {
+                                    "key_code": "b",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Zen Browser\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+S -> Slack",
+                                "from": {
+                                    "key_code": "s",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Slack\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+N -> Notion",
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Notion\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+I -> Ghostty",
+                                "from": {
+                                    "key_code": "i",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+L -> Linear",
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Linear\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+E -> Zed Editor",
+                                "from": {
+                                    "key_code": "e",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Zed\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+C -> Claude",
+                                "from": {
+                                    "key_code": "c",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Claude\" to activate'" }],
+                                "type": "basic"
+                            },
+                            {
+                                "description": "Alt+O -> Obsidian",
+                                "from": {
+                                    "key_code": "o",
+                                    "modifiers": { "mandatory": ["left_option"] }
+                                },
+                                "to": [{ "shell_command": "osascript -e 'tell application \"Obsidian\" to activate'" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Post Esc if Caps is tapped, Control if held.",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "left_control",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "left_control",
+                                        "lazy": true
+                                    }
+                                ],
+                                "to_if_alone": [{ "key_code": "escape" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Command-Shift-Comma to open System Preferences",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": { "mandatory": ["command", "shift"] }
+                                },
+                                "to": { "shell_command": "open -a 'System Preferences'" },
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Change ctrl + h/j/k/l to Arrows",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "left_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "down_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "up_arrow" }],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": ["control"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "right_arrow" }],
+                                "type": "basic"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 643,
+                        "vendor_id": 13364
+                    },
+                    "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_pointing_device": true,
+                        "product_id": 50504,
+                        "vendor_id": 1133
+                    },
+                    "ignore": false
+                }
+            ],
+            "fn_function_keys": [
+                {
+                    "from": { "key_code": "f5" },
+                    "to": [{ "key_code": "f5" }]
+                }
+            ],
+            "name": "Default profile",
+            "selected": true,
+            "simple_modifications": [
+                {
+                    "from": { "key_code": "caps_lock" },
+                    "to": [{ "key_code": "left_control" }]
+                }
+            ],
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
+        }
+    ]
+}
