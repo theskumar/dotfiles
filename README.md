@@ -79,6 +79,7 @@ stow -D shell
 |---------|----------|
 | `gh` | GitHub CLI config (aliases) |
 | `gh-dash` | GitHub dashboard layout |
+| `jj` | Jujutsu VCS config (user, editor, git backend) + jjui TUI config |
 | `worktrunk` | Git worktree path templates |
 
 ### macOS specific

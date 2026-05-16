@@ -1,0 +1,6 @@
+# jjui configuration
+# https://github.com/idursun/jjui
+
+[ui]
+# Show relative timestamps in the log view
+relative-timestamps = true

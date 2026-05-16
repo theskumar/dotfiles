@@ -1,0 +1,18 @@
+[user]
+name = "Saurabh Kumar"
+email = "theskumar@users.noreply.github.com"
+
+[ui]
+# Use Helix as the default editor (matches helix dotfiles package)
+editor = "hx"
+# Use delta for diffs (matches git-delta in setup_mac.sh)
+diff-editor = ":builtin"
+pager = "delta"
+
+[git]
+# Keep local bookmarks in sync with remote tracking branches on fetch
+auto-local-bookmark = true
+
+[aliases]
+# Handy shortcuts
+tug = ["bookmark", "move", "--from", "main@origin", "--to", "main"]

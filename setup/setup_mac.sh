@@ -44,6 +44,8 @@ brew install git-delta             # better diff pager
 brew install git-trim              # prune merged branches
 brew install gitleaks              # secret scanner
 brew install lazygit               # TUI git client
+brew install jj                    # Jujutsu VCS — Git-compatible, change-first model
+brew install jjui                  # TUI for jj (like lazygit but for jj)
 brew install gh                    # GitHub CLI
 gh extension install dlvhdr/gh-dash  # GitHub dashboard TUI
 
