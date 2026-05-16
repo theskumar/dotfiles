@@ -59,3 +59,7 @@ confirm-close-surface = false
 
 # ---- Reload -------
 keybind = cmd+shift+r=reload_config
+
+# ─── omnivm / window management ───────────────────────────────────
+# Disable ghostty's built-in fullscreen on ctrl+enter (let omnivm handle it)
+keybind = cmd+enter=unbind
