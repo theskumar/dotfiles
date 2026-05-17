@@ -4,4 +4,5 @@
 #
 # Pipeline:
 #   newsboat html-renderer (pandoc) → markdown tempfile → glow → less -R
-exec glow "$1" | less -R
+# glow -p uses glow's built-in TUI pager — full colour, always waits for input
+exec glow -p "$1"
