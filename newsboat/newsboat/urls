@@ -32,3 +32,4 @@ https://github.com/newsboat/newsboat/releases.atom    releases "~Release: newsbo
 # Uncomment once you have more feeds:
 # "query:Unread Today:unread = \"yes\" and age < \"1\""
 # "query:All Unread:unread = \"yes\""
+https://simonwillison.net/atom/everything/

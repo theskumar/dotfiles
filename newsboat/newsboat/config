@@ -4,7 +4,7 @@
 
 # ─── Browser & Pager ──────────────────────────────────────────────────────────
 browser "open %u"                        # macOS default browser
-#pager internal                          # use newsboat's built-in pager
+pager internal                           # use newsboat's built-in pager
 
 # ─── Reload ───────────────────────────────────────────────────────────────────
 auto-reload yes
@@ -26,8 +26,7 @@ datetime-format "%Y-%m-%d"
 
 # ─── Reading ──────────────────────────────────────────────────────────────────
 text-width 80
-html-renderer "pandoc -f html -t markdown --wrap=none 2>/dev/null || cat"
-pager "~/.config/newsboat/scripts/pager.sh"
+html-renderer internal
 
 # ─── Bookmarking (cowork-kb) ───────────────────────────────────────────────────
 bookmark-cmd "~/.config/newsboat/scripts/bookmark-kb.sh"
