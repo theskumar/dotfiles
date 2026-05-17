@@ -67,9 +67,11 @@ Macros are triggered with `,` followed by the key. In the article list or articl
 | Keys | Action |
 |---|---|
 | `,o` | Open article in default browser (`open %u`) |
-| `,r` | Read clean article in terminal (`readable` + `glow`) |
+| `,r` | Fetch **full article** from source URL (`readable` + `glow`) — for truncated feeds |
 | `,y` | Play video/audio in `mpv` (YouTube, podcasts) |
 | `,b` | Save article silently to `cowork-kb/raw/clips/` |
+
+> **Default article view** (`Enter` / `l`): feed HTML → markdown via `pandoc` → rendered by `glow`. The `,r` macro is for truncated feeds where you want the full text fetched from the source URL.
 
 ---
 

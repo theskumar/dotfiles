@@ -26,7 +26,8 @@ datetime-format "%Y-%m-%d"
 
 # ─── Reading ──────────────────────────────────────────────────────────────────
 text-width 80
-html-renderer "internal"
+html-renderer "pandoc -f html -t markdown --wrap=none 2>/dev/null || cat"
+pager "glow"
 
 # ─── Bookmarking (cowork-kb) ───────────────────────────────────────────────────
 bookmark-cmd "~/.config/newsboat/scripts/bookmark-kb.sh"
