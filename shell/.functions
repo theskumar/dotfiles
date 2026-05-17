@@ -416,6 +416,108 @@ function gitexport(){
   git archive master | tar -x -C "$1"
 }
 
+# ─── Newsboat ────────────────────────────────────────────────────────────────
+
+# nb-add: discover and add an RSS/Atom feed from any URL
+#
+# Usage:
+#   nb-add <url> [tag1 tag2 ...]
+#
+# - Auto-discovers feeds via <link rel="alternate"> tags
+# - Resolves relative URLs to absolute
+# - Uses fzf to pick when multiple feeds found
+# - Prompts for tags (pre-filled from args, Enter to skip)
+# - Appends to ~/.config/newsboat/urls
+# - Reloads newsboat if it is running
+function nb-add() {
+  local url="${1:-}"
+  local urls_file="${HOME}/.config/newsboat/urls"
+
+  if [[ -z "$url" ]]; then
+    echo "Usage: nb-add <url> [tag1 tag2 ...]"
+    return 1
+  fi
+
+  # Remaining args become default tags
+  shift
+  local default_tags="${*:-}"
+
+  # ── Derive base URL for resolving relative hrefs ──────────────────────────
+  local base
+  base=$(echo "$url" | grep -oE 'https?://[^/]+')
+
+  # ── Fetch page and extract feed links ─────────────────────────────────────
+  echo "🔍 Discovering feeds at $url ..."
+  local raw_html
+  raw_html=$(curl -sL --max-time 10 "$url" 2>/dev/null) || {
+    echo "❌ Could not fetch $url"; return 1
+  }
+
+  # Extract href from <link rel="alternate" type="application/rss+xml or atom+xml">
+  local feeds
+  feeds=$(echo "$raw_html" \
+    | grep -oiE '<link[^>]+type="application/(rss|atom)\+xml"[^>]*>' \
+    | grep -oiE 'href="[^"]+"' \
+    | sed 's/href="//;s/"//' \
+    | while read -r href; do
+        # Resolve relative URLs
+        case "$href" in
+          http*) echo "$href" ;;
+          /*)    echo "${base}${href}" ;;
+          *)     echo "${url%/}/${href}" ;;
+        esac
+      done \
+    | sort -u)
+
+  # ── No feeds found: use the URL itself (may be a direct feed URL) ─────────
+  if [[ -z "$feeds" ]]; then
+    echo "⚠️  No feeds auto-discovered. Using URL directly."
+    feeds="$url"
+  fi
+
+  # ── Pick feed (fzf if multiple, auto-select if one) ───────────────────────
+  local feed_count
+  feed_count=$(echo "$feeds" | wc -l | tr -d ' ')
+
+  local chosen
+  if [[ $feed_count -gt 1 ]]; then
+    chosen=$(echo "$feeds" | fzf --prompt="Pick feed > " --height=40% --reverse) || {
+      echo "Aborted."; return 0
+    }
+  else
+    chosen="$feeds"
+  fi
+
+  [[ -z "$chosen" ]] && { echo "Aborted."; return 0; }
+
+  # ── Tags ──────────────────────────────────────────────────────────────────
+  local tags
+  echo -n "🏷  Tags (space-separated, Enter to skip) [${default_tags}]: "
+  read -r input_tags
+  tags="${input_tags:-$default_tags}"
+
+  # ── Check for duplicate ───────────────────────────────────────────────────
+  if grep -qF "$chosen" "$urls_file" 2>/dev/null; then
+    echo "⚠️  Already in urls: $chosen"
+    return 0
+  fi
+
+  # ── Append to urls file ───────────────────────────────────────────────────
+  if [[ -n "$tags" ]]; then
+    echo "${chosen}    ${tags}" >> "$urls_file"
+  else
+    echo "${chosen}" >> "$urls_file"
+  fi
+
+  echo "✅ Added: $chosen${tags:+  [$tags]}"
+
+  # ── Reload newsboat if running ────────────────────────────────────────────
+  if pgrep -x newsboat &>/dev/null; then
+    newsboat -x reload 2>/dev/null &
+    echo "🔄 Reloading newsboat..."
+  fi
+}
+
 # A better way to do git clone
 function clone() {
     url=$1;

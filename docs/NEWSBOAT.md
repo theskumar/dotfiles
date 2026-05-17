@@ -77,6 +77,25 @@ Macros are triggered with `,` followed by the key. In the article list or articl
 
 ## Adding Feeds
 
+### Quick add from any URL (recommended)
+
+```bash
+nb-add https://simonwillison.net            # auto-discovers feed, prompts for tags
+nb-add https://simonwillison.net tech       # pre-fills tags
+nb-add https://hnrss.org/frontpage hn       # direct feed URL also works
+```
+
+The `nb-add` function:
+1. Fetches the page and finds `<link rel="alternate">` RSS/Atom tags
+2. Multiple feeds found → `fzf` picker
+3. One feed found → uses it directly
+4. None found → treats the URL itself as a feed (for direct feed URLs)
+5. Prompts for optional tags (pre-filled from CLI args, Enter to skip)
+6. Checks for duplicates before appending
+7. Reloads newsboat automatically if it’s already running
+
+### Manual edit
+
 Edit `~/.config/newsboat/urls` (symlinked from dotfiles):
 
 ```
@@ -156,6 +175,7 @@ Defined in `shell/.aliases`:
 | Alias | Command |
 |---|---|
 | `nb` | `newsboat` — launch newsboat |
+| `nb-add <url> [tags]` | discover feeds from any URL and add to urls file |
 | `nb-idle` | `~/.config/newsboat/scripts/newsboat-idlefeeds.sh` — list idle feeds |
 
 ---
