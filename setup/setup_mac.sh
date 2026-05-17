@@ -126,6 +126,9 @@ brew install fnm                   # Node version manager
 brew install pnpm                  # fast Node package manager
 brew install yarn                  # Node package manager
 
+# Node global packages
+npm install -g readability-cli     # Mozilla Readability CLI (used by newsboat ,r macro)
+
 # Databases
 brew install postgresql@16         # PostgreSQL 16
 brew install postgresql@14         # PostgreSQL 14
@@ -143,6 +146,9 @@ brew install siege                 # HTTP load testing
 brew install sloccount             # source line counter
 brew install multitail             # tail multiple files simultaneously
 brew install bombardier            # HTTP benchmarking
+
+# RSS
+brew install newsboat              # terminal RSS/Atom feed reader
 
 # Fun
 brew install fortune               # random quotes

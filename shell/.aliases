@@ -165,3 +165,7 @@ alias starwars="telnet towel.blinkenlights.nl"
 
 # pi agent commit with haiku
 alias pi-commit='pi --print --model claude-haiku-4 --skill /Users/theskumar/code/agent-stuff/skills/commit/SKILL.md "commit"'
+
+# Newsboat
+alias nb='newsboat'                                                     # launch newsboat
+alias nb-idle='~/.config/newsboat/scripts/newsboat-idlefeeds.sh'        # list feeds idle > 6 months

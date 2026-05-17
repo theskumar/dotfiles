@@ -1,0 +1,34 @@
+# ─── Newsboat Feed List ────────────────────────────────────────────────────────
+# Stowed to: ~/.config/newsboat/urls
+#
+# Format:
+#   <url> [tag1 tag2 ...]           plain feed
+#   "~Custom Name" after tags       rename feed in UI
+#   filter:<script>:<url>           pipe feed through script before parsing
+#   "query:Name:FILTER_EXPR"        virtual feed from filter expression
+#
+# Substack feeds: wrap with filter script to strip nag prompts:
+#   filter:~/.config/newsboat/scripts/fltr-substack.sh:https://example.substack.com/feed
+#
+# YouTube channels:
+#   https://www.youtube.com/feeds/videos.xml?channel_id=<CHANNEL_ID>
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ─── Tech News ────────────────────────────────────────────────────────────────
+https://hnrss.org/frontpage    tech hn "~HN: Front Page"
+https://hnrss.org/best         tech hn "~HN: Best"
+
+# ─── Releases (tools in use) ──────────────────────────────────────────────────
+https://github.com/newsboat/newsboat/releases.atom    releases "~Release: newsboat"
+
+# ─── Add more feeds below ─────────────────────────────────────────────────────
+# Substacks (uncomment and wrap with filter script):
+# filter:~/.config/newsboat/scripts/fltr-substack.sh:https://example.substack.com/feed   newsletters
+
+# YouTube channels:
+# https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID   youtube
+
+# ─── Virtual / Smart Feeds ────────────────────────────────────────────────────
+# Uncomment once you have more feeds:
+# "query:Unread Today:unread = \"yes\" and age < \"1\""
+# "query:All Unread:unread = \"yes\""

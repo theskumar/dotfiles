@@ -1,0 +1,63 @@
+# ─── Newsboat Configuration ───────────────────────────────────────────────────
+# Stowed to: ~/.config/newsboat/config
+# Docs:      ~/dotfiles/docs/NEWSBOAT.md
+
+# ─── Browser & Pager ──────────────────────────────────────────────────────────
+browser "open %u"                        # macOS default browser
+#pager internal                          # use newsboat's built-in pager
+
+# ─── Reload ───────────────────────────────────────────────────────────────────
+auto-reload yes
+reload-time 60                           # refresh every 60 minutes
+reload-threads 50                        # parallel feed fetches
+download-retries 3
+download-timeout 30
+
+# ─── Display ──────────────────────────────────────────────────────────────────
+show-read-feeds yes
+show-read-articles yes
+max-items 100                            # keep last 100 articles per feed
+article-sort-order date-desc
+
+# ─── Feed list formatting ──────────────────────────────────────────────────────
+feedlist-format "%4i %n %11u %t"
+articlelist-format "%4i %f %D  %?T?[%-17T] ?%t"
+datetime-format "%Y-%m-%d"
+
+# ─── Reading ──────────────────────────────────────────────────────────────────
+text-width 80
+html-renderer "internal"
+
+# ─── Bookmarking (cowork-kb) ───────────────────────────────────────────────────
+bookmark-cmd "~/.config/newsboat/scripts/bookmark-kb.sh"
+bookmark-autopilot yes                   # silent — no prompts
+
+# ─── Colour scheme ────────────────────────────────────────────────────────────
+include "~/.config/newsboat/colorschemes/nord"
+
+# ─── Macros ───────────────────────────────────────────────────────────────────
+# Invoke with: <,> followed by the key
+#
+#   ,o  open in browser (default)
+#   ,r  read clean article in terminal (readable + glow)
+#   ,y  play video/audio in mpv
+#   ,b  save article to cowork-kb/raw/clips/
+
+macro o set browser "open %u" ; open-in-browser ; set browser "open %u"
+macro r set browser "readable %u | glow -" ; open-in-browser ; set browser "open %u"
+macro y set browser "mpv %u" ; open-in-browser ; set browser "open %u"
+macro b set browser "~/.config/newsboat/scripts/bookmark-kb.sh %u %t" ; open-in-browser ; set browser "open %u"
+
+# ─── Key bindings ─────────────────────────────────────────────────────────────
+bind-key j down feedlist
+bind-key k up feedlist
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed feedlist
+bind-key K prev-feed feedlist
+bind-key G end
+bind-key g home
+bind-key d pagedown
+bind-key u pageup
+bind-key l open
+bind-key h quit
