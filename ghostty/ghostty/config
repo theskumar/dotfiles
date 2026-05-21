@@ -20,6 +20,8 @@ keybind = cmd+s=text:\x01\x53
 keybind = cmd+p=text:\x01\x20
 # prefix + ^J → Claude/Pi Agent popup
 keybind = cmd+j=text:\x01\x0a
+# prefix + ^M → treemd markdown navigator
+keybind = cmd+shift+m=text:\x01\x0d
 # prefix + H  → previous window
 keybind = cmd+left=text:\x01\x48
 # prefix + L  → next window
@@ -63,3 +65,5 @@ keybind = cmd+shift+r=reload_config
 # ─── omnivm / window management ───────────────────────────────────
 # Disable ghostty's built-in fullscreen on ctrl+enter (let omnivm handle it)
 keybind = cmd+enter=unbind
+
+config-file = ?auto/theme.ghostty
