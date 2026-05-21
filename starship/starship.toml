@@ -1,8 +1,10 @@
 add_newline = false
-format = """$directory$git_branch$git_status$line_break$character"""
-right_format = """$all"""
+format = """$directory$git_branch$git_status$fill$all$line_break$character"""
 command_timeout = 1000
 palette = "catppuccin_mocha"
+
+[fill]
+symbol = ' '
 
 [character]
 vicmd_symbol = "[N] >>>"
