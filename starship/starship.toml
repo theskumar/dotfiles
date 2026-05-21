@@ -1,5 +1,5 @@
 add_newline = false
-format = """$directory$git_branch$git_status$fill$all$line_break$character"""
+format = """$directory$git_branch$git_status$fill$python$nodejs$golang$rust$aws$kubernetes$docker_context$cmd_duration$line_break$character"""
 command_timeout = 1000
 palette = "catppuccin_mocha"
 
