@@ -83,6 +83,7 @@ brew install gdal                  # geospatial data toolkit
 # Docs and writing
 brew install pandoc                # universal document converter
 brew install glow                  # markdown renderer in terminal
+brew install treemd                # interactive markdown navigator TUI
 brew install hugo                  # static site generator
 brew install typst                 # modern typesetting
 brew install monolith              # save web pages as single HTML
