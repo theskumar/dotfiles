@@ -62,7 +62,7 @@ scrollSensitivity = 5.0
 [mouseWarp]
 axis = "horizontal"
 margin = 1
-monitorOrder = []
+monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H"]
 
 [niri]
 alwaysCenterSingleColumn = true
@@ -85,9 +85,15 @@ position = "center"
 useCustomFrame = true
 widthPercent = 50.0
 
+[quakeTerminal.customFrame]
+height = 645.0
+width = 1028.0
+x = 514.0
+y = 323.0
+
 [state]
 commandPaletteLastMode = "windows"
-hiddenBarIsCollapsed = true
+hiddenBarIsCollapsed = false
 
 [statusBar]
 showAppNames = false
