@@ -1,0 +1,288 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_NAME=$(basename "$0")
+VERSION="3.0.0"
+
+# --- Config ---
+MAP_FILE="${GIST_SYNC_MAP:-$HOME/.gist-map}"
+CACHE_DIR="${GIST_SYNC_CACHE:-$HOME/.cache/gist-sync}"
+
+# --- Helpers ---
+
+usage() {
+  cat <<EOF
+$SCRIPT_NAME $VERSION - Bidirectional gist sync using cloned gist repos
+
+Usage:
+  $SCRIPT_NAME push   <file> [--private]   Push local file to its gist (creates if new)
+  $SCRIPT_NAME pull   <file>               Pull latest gist content back into local file
+  $SCRIPT_NAME diff   <file>               Show diff between local file and gist
+  $SCRIPT_NAME url    <file>               Print the gist URL
+  $SCRIPT_NAME unlink <file>               Remove mapping and cached clone
+  $SCRIPT_NAME list                        Show all mappings
+  $SCRIPT_NAME help                        Show this help
+
+Files:
+  Map:    $MAP_FILE
+  Cache:  $CACHE_DIR/<gist-id>/
+
+Environment:
+  GIST_SYNC_MAP     Override map file path  (default: ~/.gist-map)
+  GIST_SYNC_CACHE   Override cache dir      (default: ~/.cache/gist-sync)
+
+Requires: gh (GitHub CLI), git
+EOF
+}
+
+die() {
+  echo "error: $1" >&2
+  exit 1
+}
+
+# --- Map helpers ---
+
+resolve_file() {
+  realpath "$1"
+}
+
+lookup_id() {
+  local key="$1"
+  if [ -f "$MAP_FILE" ]; then
+    awk -F'\t' -v k="$key" '$1 == k { print $2; exit }' "$MAP_FILE"
+  fi
+}
+
+write_map() {
+  local key="$1" id="$2"
+  if [ -f "$MAP_FILE" ]; then
+    awk -F'\t' -v k="$key" '$1 != k' "$MAP_FILE" > "$MAP_FILE.tmp" || true
+    mv "$MAP_FILE.tmp" "$MAP_FILE"
+  fi
+  printf '%s\t%s\n' "$key" "$id" >> "$MAP_FILE"
+}
+
+remove_from_map() {
+  local key="$1"
+  [ -f "$MAP_FILE" ] || return 0
+  awk -F'\t' -v k="$key" '$1 != k' "$MAP_FILE" > "$MAP_FILE.tmp" || true
+  mv "$MAP_FILE.tmp" "$MAP_FILE"
+}
+
+# --- Clone cache helpers ---
+
+clone_dir() {
+  echo "$CACHE_DIR/$1"
+}
+
+# Ensure the gist repo is cloned and up to date.
+# Sets: CLONE_PATH
+ensure_clone() {
+  local gist_id="$1"
+  CLONE_PATH=$(clone_dir "$gist_id")
+
+  if [ -d "$CLONE_PATH/.git" ]; then
+    echo "Pulling latest from gist..."
+    git -C "$CLONE_PATH" pull --rebase --quiet 2>/dev/null || true
+  else
+    echo "Cloning gist $gist_id..."
+    mkdir -p "$CACHE_DIR"
+    gh gist clone "$gist_id" "$CLONE_PATH"
+  fi
+}
+
+# Copy local file into clone, commit, and push if there are changes.
+commit_and_push() {
+  local source_file="$1" clone_path="$2" gist_filename="$3"
+
+  cp "$source_file" "$clone_path/$gist_filename"
+  git -C "$clone_path" add "$gist_filename"
+
+  if git -C "$clone_path" diff --cached --quiet; then
+    echo "No changes to push."
+    return 0
+  fi
+
+  local timestamp
+  timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+  git -C "$clone_path" commit --quiet -m "sync: $timestamp"
+  git -C "$clone_path" push --quiet
+  echo "Pushed."
+}
+
+# --- Commands ---
+
+cmd_push() {
+  local file="${1:-}"
+  local visibility="--public"
+
+  [ -z "$file" ] && die "usage: $SCRIPT_NAME push <file> [--private]"
+  [ -f "$file" ] || die "file not found: $file"
+
+  local abs_path
+  abs_path=$(resolve_file "$file")
+  local basename
+  basename=$(basename "$abs_path")
+
+  shift
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --private) visibility="" ;;
+      *) die "unknown flag: $1" ;;
+    esac
+    shift
+  done
+
+  local gist_id
+  gist_id=$(lookup_id "$abs_path")
+
+  if [ -n "$gist_id" ]; then
+    ensure_clone "$gist_id"
+    echo "Pushing to gist $gist_id..."
+    commit_and_push "$abs_path" "$CLONE_PATH" "$basename"
+    echo "https://gist.github.com/$gist_id"
+  else
+    echo "Creating new gist..."
+    local url
+    url=$(gh gist create $visibility "$file" 2>&1)
+    local new_id
+    new_id=$(echo "$url" | grep -oE '[a-f0-9]{20,}' | head -1)
+    [ -z "$new_id" ] && die "failed to parse gist ID from: $url"
+
+    write_map "$abs_path" "$new_id"
+    echo "Mapped '$abs_path' -> $new_id"
+
+    ensure_clone "$new_id"
+    echo "$url"
+  fi
+}
+
+cmd_pull() {
+  local file="${1:-}"
+  [ -z "$file" ] && die "usage: $SCRIPT_NAME pull <file>"
+  [ -f "$file" ] || die "file not found: $file"
+
+  local abs_path
+  abs_path=$(resolve_file "$file")
+  local basename
+  basename=$(basename "$abs_path")
+
+  local gist_id
+  gist_id=$(lookup_id "$abs_path")
+  [ -z "$gist_id" ] && die "no mapping found for '$abs_path'"
+
+  ensure_clone "$gist_id"
+
+  local clone_file="$CLONE_PATH/$basename"
+  [ -f "$clone_file" ] || die "'$basename' not found in gist clone"
+
+  if diff -q "$abs_path" "$clone_file" > /dev/null 2>&1; then
+    echo "Already up to date."
+  else
+    cp "$clone_file" "$abs_path"
+    echo "Pulled latest from gist $gist_id"
+  fi
+}
+
+cmd_diff() {
+  local file="${1:-}"
+  [ -z "$file" ] && die "usage: $SCRIPT_NAME diff <file>"
+  [ -f "$file" ] || die "file not found: $file"
+
+  local abs_path
+  abs_path=$(resolve_file "$file")
+  local basename
+  basename=$(basename "$abs_path")
+
+  local gist_id
+  gist_id=$(lookup_id "$abs_path")
+  [ -z "$gist_id" ] && die "no mapping found for '$abs_path'"
+
+  ensure_clone "$gist_id"
+
+  local clone_file="$CLONE_PATH/$basename"
+  [ -f "$clone_file" ] || die "'$basename' not found in gist clone"
+
+  echo "--- gist (remote)"
+  echo "+++ local"
+  diff --color=auto -u "$clone_file" "$abs_path" || true
+}
+
+cmd_url() {
+  local file="${1:-}"
+  [ -z "$file" ] && die "usage: $SCRIPT_NAME url <file>"
+  [ -f "$file" ] || die "file not found: $file"
+
+  local abs_path
+  abs_path=$(resolve_file "$file")
+
+  local gist_id
+  gist_id=$(lookup_id "$abs_path")
+  [ -z "$gist_id" ] && die "no mapping found for '$abs_path'"
+
+  echo "https://gist.github.com/$gist_id"
+}
+
+cmd_unlink() {
+  local file="${1:-}"
+  [ -z "$file" ] && die "usage: $SCRIPT_NAME unlink <file>"
+  [ -f "$file" ] || die "file not found: $file"
+
+  local abs_path
+  abs_path=$(resolve_file "$file")
+
+  local gist_id
+  gist_id=$(lookup_id "$abs_path")
+
+  if [ -z "$gist_id" ]; then
+    echo "No mapping found for '$abs_path'"
+    return 0
+  fi
+
+  remove_from_map "$abs_path"
+  echo "Removed mapping for '$abs_path'"
+
+  # Only remove clone if no other mappings reference this gist ID
+  local remaining
+  remaining=$(grep -cF "$gist_id" "$MAP_FILE" 2>/dev/null || true)
+
+  if [ "$remaining" -eq 0 ]; then
+    local cdir
+    cdir=$(clone_dir "$gist_id")
+    if [ -d "$cdir" ]; then
+      rm -rf "$cdir"
+      echo "Removed cached clone"
+    fi
+  fi
+
+  echo "Unlinked (was gist $gist_id)"
+}
+
+cmd_list() {
+  if [ ! -f "$MAP_FILE" ]; then
+    echo "No mappings yet. ($MAP_FILE does not exist)"
+    return 0
+  fi
+
+  local count
+  count=$(wc -l < "$MAP_FILE")
+  echo "# $MAP_FILE ($count entries)"
+  echo ""
+  awk -F'\t' '{ printf "  %-50s  https://gist.github.com/%s\n", $1, $2 }' "$MAP_FILE"
+}
+
+# --- Main ---
+
+command="${1:-help}"
+shift 2>/dev/null || true
+
+case "$command" in
+  push)   cmd_push "$@" ;;
+  pull)   cmd_pull "$@" ;;
+  diff)   cmd_diff "$@" ;;
+  url)    cmd_url "$@" ;;
+  unlink) cmd_unlink "$@" ;;
+  list)   cmd_list ;;
+  help|-h|--help) usage ;;
+  *)      die "unknown command: $command (try '$SCRIPT_NAME help')" ;;
+esac
