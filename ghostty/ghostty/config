@@ -67,3 +67,5 @@ keybind = cmd+shift+r=reload_config
 keybind = cmd+enter=unbind
 
 config-file = ?auto/theme.ghostty
+
+background-opacity = 0.80
