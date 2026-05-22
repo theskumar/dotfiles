@@ -1,0 +1,38 @@
+#compdef jq
+
+_jq() {
+  _arguments -s \
+    '(-n --null-input)'{-n,--null-input}'[use null as the single input value]' \
+    '(-R --raw-input)'{-R,--raw-input}'[read each line as string instead of JSON]' \
+    '(-s --slurp)'{-s,--slurp}'[read all inputs into an array]' \
+    '(-c --compact-output)'{-c,--compact-output}'[compact instead of pretty-printed output]' \
+    '(-r --raw-output)'{-r,--raw-output}'[output strings without escapes and quotes]' \
+    '--raw-output0[output with NUL after each output]' \
+    '(-j --join-output)'{-j,--join-output}'[output without newline after each output]' \
+    '(-a --ascii-output)'{-a,--ascii-output}'[output strings using only ASCII characters]' \
+    '(-S --sort-keys)'{-S,--sort-keys}'[sort keys of each object on output]' \
+    '(-C --color-output)'{-C,--color-output}'[colorize JSON output]' \
+    '(-M --monochrome-output)'{-M,--monochrome-output}'[disable colored output]' \
+    '--tab[use tabs for indentation]' \
+    '--indent[use n spaces for indentation]:spaces:(1 2 3 4 5 6 7)' \
+    '--unbuffered[flush output after each output]' \
+    '--stream[parse input in streaming fashion]' \
+    '--stream-errors[report parse errors as arrays]' \
+    '--seq[parse input/output as application/json-seq]' \
+    '(-f --from-file)'{-f,--from-file}'[load filter from file]:filter file:_files' \
+    '*'{-L,--library-path}'[search modules from directory]:directory:_directories' \
+    '*--arg[set variable to string value]:name: :value: ' \
+    '*--argjson[set variable to JSON value]:name: :value: ' \
+    '*--slurpfile[set variable to JSON values from file]:name: :file:_files' \
+    '*--rawfile[set variable to string contents of file]:name: :file:_files' \
+    '--args[consume remaining arguments as positional strings]' \
+    '--jsonargs[consume remaining arguments as positional JSON]' \
+    '(-e --exit-status)'{-e,--exit-status}'[set exit status based on output]' \
+    '(-V --version)'{-V,--version}'[show version]' \
+    '--build-configuration[show build configuration]' \
+    '(-h --help)'{-h,--help}'[show help]' \
+    '1:filter:' \
+    '*:input file:_files -g "*.json(|.gz|.bz2|.xz|.zst)"'
+}
+
+_jq "$@"
