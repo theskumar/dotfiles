@@ -10,6 +10,9 @@ prepend_keymap = [
   { on = ["o", "z"], run = 'shell "zed \"$@\"" --orphan', desc = "Open in Zed" },
   { on = "<C-o>",    run = 'shell "zed \"$@\"" --orphan', desc = "Open in Zed" },
 
+  # Markdown preview in browser (mnemonic: open-markdown)
+  { on = ["o", "m"], run = 'shell "mdview \"$0\"" --confirm', desc = "Markdown preview" },
+
   # Permissions
   { on = "M", run = "plugin chmod", desc = "Chmod selection" },
 

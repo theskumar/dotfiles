@@ -105,6 +105,10 @@
       ],
       "space e": "workspace::ToggleLeftDock",
       "space s s": "outline::Toggle",
+      "space m p": [
+        "task::Spawn",
+        { "task_name": "Markdown Preview", "reveal_target": "center" },
+      ],
 
       // Zed mode
       "space z": [

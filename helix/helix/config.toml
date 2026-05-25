@@ -78,6 +78,9 @@ esc   = ["collapse_selection", "keep_primary_selection"]
 # Leap-style navigation
 "g" = { "." = "goto_last_modification" }
 
+# Markdown preview in browser (mdview script)
+"space"."m"."p" = [":sh mdview '%{buffer_name}'"]
+
 [keys.insert]
 "C-space" = "completion"
 "j" = { "k" = "normal_mode" }   # jk to escape insert
