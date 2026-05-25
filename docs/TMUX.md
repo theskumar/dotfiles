@@ -7,7 +7,7 @@ Prefix key: `Ctrl+A` (referred to as `prefix` below).
 **Terminal:** Ghostty (tmux host, handles local tabs and splits)
 **Editor:** Zed (editing only, its terminal for ephemeral one-offs)
 **Tmux role:** Persistent project sessions locally. Full pane management remotely over SSH.
-**AI coding:** Claude Code in a dedicated tmux window per project, plus `prefix + Ctrl+j` popup for ad-hoc questions.
+**AI coding:** Claude Code in a dedicated tmux window per project.
 
 ### Prerequisites (macOS)
 
@@ -23,7 +23,7 @@ brew install tmuxinator
 
 **Switching projects.** Client B pings you. `prefix + Space`, type a few letters, enter. You're in that session. Window 1 is shell, window 2 is dev server, window 3 is Claude. Open Zed pointed at the repo. Work.
 
-**Quick question about another project.** `prefix + Space` to switch sessions. `prefix + Ctrl+j` for a Claude popup, ask the question, dismiss.
+**Quick question about another project.** `prefix + Space` to switch sessions, jump to its Claude window, ask, switch back.
 
 **End of day.** Don't close anything. Quit Ghostty if you want, tmux server keeps running. Tomorrow morning, `tmux a` and you're exactly where you left off. Mac restart overnight: tmux-continuum restores sessions, dev servers are dead but window layouts, working directories, and Claude conversations are back. `up-arrow + enter` in the server windows to restart them.
 
@@ -95,9 +95,11 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 | ------------ | --------------------------------- |
 | `prefix + s` | Split vertically (top/bottom)     |
 | `prefix + v` | Split horizontally (side by side) |
+| `prefix + |` | Split (default tmux split)        |
 | `prefix + h` | Move to left pane                 |
 | `prefix + j` | Move to pane below                |
 | `prefix + k` | Move to pane above                |
+| `prefix + l` | Move to right pane (also refresh) |
 | `prefix + [` | Previous pane                     |
 | `prefix + ]` | Next pane                         |
 | `prefix + z` | Toggle pane zoom (fullscreen)     |
@@ -106,20 +108,20 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 | `prefix + *` | Synchronize input to all panes    |
 | `prefix + P` | Toggle pane border status         |
 
-> **Note:** `prefix + l` is bound to `refresh-client` (see Misc), not pane-right. Use `prefix + ]` to cycle to the next pane instead.
+> **Note:** `prefix + l` is bound twice in the config. The last binding wins (`select-pane -R`), so it moves to the right pane. `prefix + Ctrl+L` is the unambiguous refresh.
 
 ### Resizing (repeatable)
 
-| Keys         | Action         |
-| ------------ | -------------- |
-| `prefix + ,` | Shrink left 20 |
-| `prefix + .` | Grow right 20  |
-| `prefix + -` | Shrink down 7  |
-| `prefix + =` | Grow up 7      |
+| Keys         | Action                       |
+| ------------ | ---------------------------- |
+| `prefix + ,` | Resize pane border left 20   |
+| `prefix + .` | Resize pane border right 20  |
+| `prefix + -` | Resize pane border down 7    |
+| `prefix + =` | Resize pane border up 7      |
 
 ## Copy Mode
 
-Enter with `prefix + [`. Vi keys for navigation.
+The default `prefix + [` is rebound to previous-pane. Enter copy mode via mouse scroll-up (mouse is on), or `prefix + :` then `copy-mode`. Vi keys for navigation.
 
 | Keys       | Action                                   |
 | ---------- | ---------------------------------------- |
@@ -130,14 +132,17 @@ Enter with `prefix + [`. Vi keys for navigation.
 
 tmux-yank handles clipboard across platforms (pbcopy on macOS, xclip/xsel on Linux).
 
+## Popups & App Launchers
+
+| Keys              | Action                                                |
+| ----------------- | ----------------------------------------------------- |
+| `prefix + Ctrl+j` | Lazygit popup (90x90%, current directory)             |
+| `prefix + Ctrl+y` | Yazi in a new window (popup breaks terminal detection)|
+| `prefix + Ctrl+m` | Treemd markdown navigator in a new window             |
+
 ## Claude Code
 
-| Keys              | Action                                           |
-| ----------------- | ------------------------------------------------ |
-| `prefix + Ctrl+j` | Claude popup (80x80%, current directory)         |
-| `prefix + 3`      | Jump to Claude window (if using 3-window layout) |
-
-The popup is for quick questions. For long running agent tasks, use a dedicated Claude window so it survives session switching. Long Claude runs survive detach, reboot, and SSH disconnects.
+No dedicated binding. Convention: use a `claude` window per session (typically window 3 in the shell/server/claude layout). `prefix + 3` jumps to it. Long Claude runs survive detach, reboot, and SSH disconnects.
 
 ## Plugins
 
@@ -168,7 +173,6 @@ Managed by TPM at `~/.config/tmux/plugins/`.
 | `prefix + R`      | Reload tmux config  |
 | `prefix + K`      | Clear terminal      |
 | `prefix + Ctrl+L` | Refresh client      |
-| `prefix + l`      | Refresh client      |
 | `prefix + :`      | Command prompt      |
 
 ## Terminal Features
