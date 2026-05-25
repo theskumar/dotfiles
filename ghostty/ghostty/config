@@ -20,6 +20,8 @@ keybind = cmd+s=text:\x01\x53
 keybind = cmd+p=text:\x01\x20
 # prefix + ^J → Claude/Pi Agent popup
 keybind = cmd+j=text:\x01\x0a
+# prefix + ^Y → yazi popup
+keybind = cmd+y=text:\x01\x19
 # prefix + ^M → treemd markdown navigator
 keybind = cmd+shift+m=text:\x01\x0d
 # prefix + H  → previous window

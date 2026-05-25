@@ -1,0 +1,58 @@
+#:schema https://yazi-rs.github.io/schemas/yazi.json
+# Yazi config. Stowed to ~/.config/yazi/yazi.toml
+
+[mgr]
+ratio          = [1, 3, 4]
+show_hidden    = false
+show_symlink   = true
+sort_by        = "natural"
+sort_sensitive = false
+sort_reverse   = false
+sort_dir_first = true
+linemode       = "size"
+
+[preview]
+wrap            = "yes"
+tab_size        = 2
+max_width       = 1000
+max_height      = 1200
+image_filter    = "triangle"
+image_quality   = 75
+ueberzug_scale  = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+edit = [
+  { run = '${EDITOR:-hx} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+]
+zed = [
+  { run = 'zed "$@"', desc = "Zed", orphan = true, for = "macos" },
+]
+open = [
+  { run = 'open "$@"', desc = "Open", for = "macos" },
+]
+reveal = [
+  { run = 'open -R "$1"', desc = "Reveal in Finder", for = "macos" },
+]
+play = [
+  { run = 'open "$@"', desc = "Play", for = "macos" },
+]
+extract = [
+  { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
+]
+
+[open]
+prepend_rules = [
+  { url = "*/",                use = ["edit", "open", "reveal"] },
+  { mime = "text/*",           use = ["edit", "reveal"] },
+  { mime = "inode/empty",      use = ["edit", "reveal"] },
+  { mime = "application/json", use = ["edit", "reveal"] },
+]
+
+[[plugin.prepend_previewers]]
+url = "*.md"
+run = 'piper -- CLICOLOR_FORCE=1 glow -w $w -s dark "$1"'
+
+[[plugin.prepend_previewers]]
+url = "*.markdown"
+run = 'piper -- CLICOLOR_FORCE=1 glow -w $w -s dark "$1"'

@@ -34,6 +34,10 @@ brew install zsh-history-substring-search  # history search as you type
 brew install spacer                # visual separator in command output
 brew install yazi                  # TUI file manager
 brew install superfile             # TUI file manager
+brew install ffmpegthumbnailer     # video thumbnails (yazi preview)
+brew install poppler               # PDF rendering (yazi preview)
+brew install sevenzip              # 7z/archive handling (yazi)
+brew install helix                 # modal editor (hx)
 
 # Git
 brew install git                   # version control

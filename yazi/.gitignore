@@ -1,0 +1,3 @@
+# Plugin/flavor dirs are populated by `ya pkg install`. Don't track.
+yazi/plugins/
+yazi/flavors/

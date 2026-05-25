@@ -8,7 +8,7 @@ OS="$(uname -s)"
 
 COMMON=(shell zsh git vim tools ssh fonts)
 
-XDG=(starship tmux ghostty gh gh-dash lazygit jj mise sesh zed tmuxinator worktrunk helix karabiner newsboat)
+XDG=(starship tmux ghostty gh gh-dash lazygit jj mise sesh zed tmuxinator worktrunk helix karabiner newsboat yazi)
 
 case "$OS" in
     Darwin)
@@ -42,6 +42,11 @@ fi
 if [ ! -f "$HOME/.gitignore" ]; then
     echo "==> Copying global .gitignore (stow skips .gitignore files)"
     cp "$DOTFILES/.gitignore" "$HOME/.gitignore"
+fi
+
+if command -v ya >/dev/null 2>&1 && [ -f "$HOME/.config/yazi/package.toml" ]; then
+    echo "==> Installing yazi plugins"
+    ya pkg install || true
 fi
 
 echo "==> Done. Run 'source ~/.zshrc' to reload shell."

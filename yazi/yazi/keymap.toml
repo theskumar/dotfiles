@@ -1,0 +1,29 @@
+# Yazi keymap. Stowed to ~/.config/yazi/keymap.toml
+# `~` in yazi to view active keys.
+
+[mgr]
+prepend_keymap = [
+  # Smart Enter: cd into dir, open file
+  { on = "<Enter>", run = "plugin smart-enter", desc = "Enter dir or open file" },
+
+  # Open in Zed (mnemonic: open-zed, also Ctrl-o)
+  { on = ["o", "z"], run = "open --with zed", desc = "Open in Zed" },
+  { on = "<C-o>",    run = "open --with zed", desc = "Open in Zed" },
+
+  # Toggle full-screen preview
+  { on = "T", run = "plugin max-preview", desc = "Toggle max preview" },
+
+  # Permissions
+  { on = "M", run = "plugin chmod", desc = "Chmod selection" },
+
+  # Shell here (mirror lf/ranger habit)
+  { on = "<C-s>", run = 'shell "$SHELL" --block', desc = "Shell here" },
+
+  # Quick toggle hidden files (default is . but reinforce)
+  { on = ".", run = "hidden toggle", desc = "Toggle hidden" },
+
+  # Copy current path / filename to clipboard (macOS pbcopy)
+  { on = ["c", "p"], run = 'shell --confirm "echo -n \"$1\" | pbcopy"', desc = "Copy path" },
+  { on = ["c", "n"], run = 'shell --confirm "basename \"$1\" | tr -d \\n | pbcopy"', desc = "Copy filename" },
+  { on = ["c", "d"], run = 'shell --confirm "dirname \"$1\" | tr -d \\n | pbcopy"', desc = "Copy dirname" },
+]

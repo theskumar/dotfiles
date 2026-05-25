@@ -5,7 +5,8 @@ export ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future
 export ANSIBLE_NOCOWS=1
 
 # Make vim the default editor
-export EDITOR="vim"
+export EDITOR="hx"
+export VISUAL="hx"
 
 export PAGER=/opt/homebrew/bin/moor
 
