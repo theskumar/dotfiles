@@ -70,4 +70,4 @@ keybind = cmd+enter=unbind
 
 config-file = ?auto/theme.ghostty
 
-background-opacity = 0.80
+background-opacity = 1.0
