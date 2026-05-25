@@ -7,11 +7,8 @@ prepend_keymap = [
   { on = "<Enter>", run = "plugin smart-enter", desc = "Enter dir or open file" },
 
   # Open in Zed (mnemonic: open-zed, also Ctrl-o)
-  { on = ["o", "z"], run = "open --with zed", desc = "Open in Zed" },
-  { on = "<C-o>",    run = "open --with zed", desc = "Open in Zed" },
-
-  # Toggle full-screen preview
-  { on = "T", run = "plugin max-preview", desc = "Toggle max preview" },
+  { on = ["o", "z"], run = 'shell "zed \"$@\"" --orphan', desc = "Open in Zed" },
+  { on = "<C-o>",    run = 'shell "zed \"$@\"" --orphan', desc = "Open in Zed" },
 
   # Permissions
   { on = "M", run = "plugin chmod", desc = "Chmod selection" },

@@ -9,11 +9,6 @@ rev = "be524fb"
 hash = "7b625412411be411153886894d9acaf"
 
 [[plugin.deps]]
-use = "yazi-rs/plugins:max-preview"
-rev = "be524fb"
-hash = "99aa06d3014798d86001c324468d497f"
-
-[[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
 rev = "be524fb"
 hash = "f0c8c378184d5f8abd1b095a443d336d"
