@@ -130,6 +130,7 @@ brew install worktrunk             # git worktree CLI for parallel work
 brew install fnm                   # Node version manager
 brew install pnpm                  # fast Node package manager
 brew install yarn                  # Node package manager
+curl -fsSL https://bun.sh/install | bash  # fast JS runtime, bundler, test runner, package manager
 
 # Node global packages
 npm install -g readability-cli     # Mozilla Readability CLI (used by newsboat ,r macro)

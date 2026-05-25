@@ -109,3 +109,6 @@ _prompt_divider() {
 precmd_functions+=(_prompt_divider)
 
 eval "$(starship init zsh)"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
