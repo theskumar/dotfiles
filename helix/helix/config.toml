@@ -76,7 +76,7 @@ smart-case = true
 esc   = ["collapse_selection", "keep_primary_selection"]
 
 # Leap-style navigation
-"g." = "goto_last_modification"
+"g" = { "." = "goto_last_modification" }
 
 [keys.insert]
 "C-space" = "completion"
