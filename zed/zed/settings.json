@@ -1,4 +1,5 @@
 {
+  "diff_view_style": "split",
   "agent_buffer_font_size": 16.0,
   "agent_ui_font_size": 16.0,
   "ui_font_family": ".ZedSans",
@@ -87,9 +88,9 @@
       },
     },
     "default_model": {
-      "effort": "high",
-      "provider": "copilot_chat",
-      "model": "claude-opus-4.6",
+      "effort": "medium",
+      "provider": "google",
+      "model": "gemini-3.5-flash",
       "enable_thinking": true,
     },
     "favorite_models": [],
@@ -97,17 +98,11 @@
   },
   "agent_servers": {
     "pi-acp": {
-      "type": "registry"
+      "type": "registry",
     },
     "claude-acp": {
       "type": "registry",
       "default_model": "sonnet",
-    },
-    "cursor-agent": {
-      "type": "custom",
-      "command": "cursor-agent-acp",
-      "args": [],
-      "env": {},
     },
   },
   "theme": {
@@ -144,7 +139,8 @@
   },
   "terminal": {
     "font_size": 17.0,
-    "font_family": "Fira Code",
+    "font_family": "JetBrains Mono",
+    "font_fallbacks": ["Symbols Nerd Font Mono"],
     "copy_on_select": true,
     "env": {
       "EDITOR": "zed --wait",
@@ -202,25 +198,6 @@
         "!pyright",
         "!pylsp",
       ],
-    },
-  },
-  "context_servers": {
-    "mcp-server-git": {
-      "enabled": false,
-      "command": "uvx",
-      "args": ["mcp-server-git"],
-      "env": null,
-    },
-    "mcp-server-github": {
-      "settings": {
-        "github_personal_access_token": "",
-      },
-    },
-    "mcp-server-exa-search": {
-      "enabled": false,
-      "settings": {
-        "exa_api_key": "",
-      },
     },
   },
 }
