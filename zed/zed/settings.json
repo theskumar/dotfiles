@@ -187,6 +187,7 @@
       "soft_wrap": "editor_width",
       "preferred_line_length": 80,
       "remove_trailing_whitespace_on_save": false,
+      "language_servers": ["marksman"],
     },
     "Python": {
       "formatter": { "language_server": { "name": "ruff" } },
