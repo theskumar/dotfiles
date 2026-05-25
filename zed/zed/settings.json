@@ -171,6 +171,9 @@
     "provider": "zed",
     "mode": "eager",
   },
+  "auto_install_extensions": {
+    "marksman": true,
+  },
   "languages": {
     "HTML": {
       "format_on_save": "on",

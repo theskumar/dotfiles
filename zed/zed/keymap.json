@@ -104,7 +104,8 @@
         { "task_name": "Open Claude Code", "reveal_target": "center" },
       ],
       "space e": "workspace::ToggleLeftDock",
-      "space s s": "outline::Toggle",
+      "space s": "outline::Toggle",
+      "space shift-s": "project_symbols::Toggle",
       "space m p": [
         "task::Spawn",
         { "task_name": "Markdown Preview", "reveal_target": "center" },
