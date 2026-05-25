@@ -108,6 +108,12 @@ _prompt_divider() {
 }
 precmd_functions+=(_prompt_divider)
 
+# Re-broadcast real cwd to the terminal every prompt. Counteracts transient
+# `cd`s zinit performs while turbo-loading plugins, which otherwise leak the
+# plugin dir into Zed's terminal dir tracking.
+_zed_cwd_resync() { print -Pn "\e]7;file://${HOST}${PWD// /%20}\a" }
+precmd_functions+=(_zed_cwd_resync)
+
 eval "$(starship init zsh)"
 
 # bun completions
