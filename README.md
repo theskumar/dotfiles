@@ -115,6 +115,17 @@ stow -D shell
 | `pi/` | AI coding agent settings (~/.pi/agent/settings.json), stow manually if needed |
 | `.private/` | Gitignored secrets |
 
+## Docs
+
+Guides and references in `docs/`:
+
+| File | Topic |
+|------|-------|
+| [TMUX.md](docs/TMUX.md) | Tmux keybindings and workflow |
+| [OMNIWM.md](docs/OMNIWM.md) | OmniWM tiling window manager |
+| [NEWSBOAT.md](docs/NEWSBOAT.md) | Newsboat RSS reader |
+| [PI-TREE.md](docs/PI-TREE.md) | Pi agent tree, branch, and fork workflows |
+
 ## Notes
 
 `~/.gitignore` is copied (not symlinked) by `install.sh` because Stow skips `.gitignore` files by default.
