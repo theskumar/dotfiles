@@ -44,8 +44,31 @@ hr { border: 0; border-top: 1px solid #d0d7de; }
 '
 
 header="$(mktemp -t mdview-css.XXXXXX)"
-trap 'rm -f "$header"' EXIT
+footer="$(mktemp -t mdview-js.XXXXXX)"
+trap 'rm -f "$header" "$footer"' EXIT
 printf '<style>%s</style>\n' "$css" > "$header"
+
+cat > "$footer" <<'EOF'
+<style>
+pre.mermaid { background: transparent; padding: 0; }
+</style>
+<script type="module">
+import { renderMermaidSVG } from 'https://esm.sh/beautiful-mermaid';
+const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const opts = dark ? { bg: '#0d1117', fg: '#c9d1d9' } : { bg: '#ffffff', fg: '#24292f' };
+document.querySelectorAll('pre.mermaid').forEach(pre => {
+  const code = pre.querySelector('code');
+  const text = (code ?? pre).textContent.trim();
+  try {
+    const svg = renderMermaidSVG(text, opts);
+    pre.innerHTML = svg;
+  } catch (e) {
+    pre.textContent = text;
+    console.error('mermaid render error:', e);
+  }
+});
+</script>
+EOF
 
 pandoc \
   --standalone \
@@ -53,6 +76,7 @@ pandoc \
   --to html5 \
   --metadata title="$name" \
   --include-in-header="$header" \
+  --include-after-body="$footer" \
   "$src" -o "$out"
 
 open "$out"
