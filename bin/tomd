@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+fmt="md"
+if [[ "${1:-}" == "--json" ]]; then
+  fmt="json"
+  shift
+fi
+
+if [[ -z "${1:-}" ]]; then
+  echo "Usage: tomd [--json] <file-or-url> [output]"
+  exit 1
+fi
+
+out="${2:-}"
+if [[ -z "$out" ]]; then
+  if [[ "$1" == http* ]]; then
+    slug="${1##*/}"
+    slug="${slug%%\?*}"
+    out="${slug%.*}.${fmt}"
+    [[ "$out" == ".${fmt}" || -z "${out%.${fmt}}" ]] && out="output.${fmt}"
+  else
+    out="${1%.*}.${fmt}"
+  fi
+fi
+
+ext="${1##*.}"
+ext="${ext,,}"
+
+if [[ "$ext" == "pdf" && "$1" != http* ]]; then
+  if [[ "$fmt" == "json" ]]; then
+    uv run --with pymupdf4llm python3 -c "
+import pymupdf4llm, json, sys, io
+sys.stdout = io.StringIO()
+data = pymupdf4llm.to_markdown(sys.argv[1], page_chunks=True)
+sys.stdout = sys.__stdout__
+with open(sys.argv[2], 'w') as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)" "$1" "$out"
+  else
+    uv run --with pymupdf4llm python3 -c "
+import pymupdf4llm, sys, io
+sys.stdout = io.StringIO()
+md = pymupdf4llm.to_markdown(sys.argv[1])
+sys.stdout = sys.__stdout__
+print(md)" "$1" > "$out"
+  fi
+else
+  uvx --from 'markitdown[pdf]' markitdown "$1" > "$out"
+  if [[ "$fmt" == "json" ]]; then
+    uv run --with pymupdf4llm python3 -c "
+import json, sys
+md = open(sys.argv[1]).read()
+print(json.dumps({'content': md}, indent=2, ensure_ascii=False))" "$out" > "${out}.tmp" && mv "${out}.tmp" "$out"
+  fi
+fi
+
+echo "Saved to $out"
