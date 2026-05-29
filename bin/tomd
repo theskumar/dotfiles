@@ -1,57 +1,69 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#   "pymupdf4llm",
+#   "markitdown[pdf]",
+# ]
+# ///
 
-fmt="md"
-if [[ "${1:-}" == "--json" ]]; then
-  fmt="json"
-  shift
-fi
+import json
+import sys
+from pathlib import Path
 
-if [[ -z "${1:-}" ]]; then
-  echo "Usage: tomd [--json] <file-or-url> [output]"
-  exit 1
-fi
+def main():
+    args = sys.argv[1:]
+    fmt = "md"
 
-out="${2:-}"
-if [[ -z "$out" ]]; then
-  if [[ "$1" == http* ]]; then
-    slug="${1##*/}"
-    slug="${slug%%\?*}"
-    out="${slug%.*}.${fmt}"
-    [[ "$out" == ".${fmt}" || -z "${out%.${fmt}}" ]] && out="output.${fmt}"
-  else
-    out="${1%.*}.${fmt}"
-  fi
-fi
+    if args and args[0] == "--json":
+        fmt = "json"
+        args = args[1:]
 
-ext="${1##*.}"
-ext="${ext,,}"
+    if not args:
+        print("Usage: tomd [--json] <file-or-url> [output]")
+        sys.exit(1)
 
-if [[ "$ext" == "pdf" && "$1" != http* ]]; then
-  if [[ "$fmt" == "json" ]]; then
-    uv run --with pymupdf4llm python3 -c "
-import pymupdf4llm, json, sys, io
-sys.stdout = io.StringIO()
-data = pymupdf4llm.to_markdown(sys.argv[1], page_chunks=True)
-sys.stdout = sys.__stdout__
-with open(sys.argv[2], 'w') as f:
-    json.dump(data, f, indent=2, ensure_ascii=False)" "$1" "$out"
-  else
-    uv run --with pymupdf4llm python3 -c "
-import pymupdf4llm, sys, io
-sys.stdout = io.StringIO()
-md = pymupdf4llm.to_markdown(sys.argv[1])
-sys.stdout = sys.__stdout__
-print(md)" "$1" > "$out"
-  fi
-else
-  uvx --from 'markitdown[pdf]' markitdown "$1" > "$out"
-  if [[ "$fmt" == "json" ]]; then
-    uv run --with pymupdf4llm python3 -c "
-import json, sys
-md = open(sys.argv[1]).read()
-print(json.dumps({'content': md}, indent=2, ensure_ascii=False))" "$out" > "${out}.tmp" && mv "${out}.tmp" "$out"
-  fi
-fi
+    source = args[0]
+    out = args[1] if len(args) > 1 else None
 
-echo "Saved to $out"
+    if not out:
+        if source.startswith("http"):
+            slug = source.rstrip("/").rsplit("/", 1)[-1].split("?")[0]
+            base = slug.rsplit(".", 1)[0] if "." in slug else slug
+            out = f"{base}.{fmt}" if base else f"output.{fmt}"
+        else:
+            out = str(Path(source).with_suffix(f".{fmt}"))
+
+    ext = source.rsplit(".", 1)[-1].lower() if "." in source else ""
+    is_local_pdf = ext == "pdf" and not source.startswith("http")
+
+    if is_local_pdf:
+        import io
+        import pymupdf4llm
+
+        buf = io.StringIO()
+        old_stdout = sys.stdout
+        sys.stdout = buf
+        if fmt == "json":
+            data = pymupdf4llm.to_markdown(source, page_chunks=True)
+            sys.stdout = old_stdout
+            Path(out).write_text(json.dumps(data, indent=2, ensure_ascii=False))
+        else:
+            md = pymupdf4llm.to_markdown(source)
+            sys.stdout = old_stdout
+            Path(out).write_text(md)
+    else:
+        from markitdown import MarkItDown
+
+        result = MarkItDown().convert(source)
+        content = result.text_content
+
+        if fmt == "json":
+            Path(out).write_text(json.dumps({"content": content}, indent=2, ensure_ascii=False))
+        else:
+            Path(out).write_text(content)
+
+    print(f"Saved to {out}")
+
+if __name__ == "__main__":
+    main()
