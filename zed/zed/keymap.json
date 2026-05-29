@@ -91,6 +91,14 @@
         "task::Spawn",
         { "task_name": "LazyGit", "reveal_target": "center" },
       ],
+      "space f e": [
+        "task::Spawn",
+        { "task_name": "Yazi File Explorer", "reveal_target": "center" },
+      ],
+      "space o h": [
+        "task::Spawn",
+        { "task_name": "Open Helix", "reveal_target": "center" },
+      ],
       // github dash
       "space g h": [
         "task::Spawn",

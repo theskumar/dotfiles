@@ -1,4 +1,6 @@
 {
+  "ui_font_size": 18.0,
+  "disable_ai": true,
   "diff_view_style": "split",
   "agent_buffer_font_size": 16.0,
   "agent_ui_font_size": 16.0,
@@ -111,7 +113,7 @@
     "dark": "One Dark",
   },
   "buffer_font_family": ".ZedMono",
-  "buffer_font_size": 16.0,
+  "buffer_font_size": 17.0,
   "buffer_line_height": "comfortable",
   "file_scan_exclusions": [
     "**/.bare",
@@ -172,7 +174,8 @@
   },
   "languages": {
     "HTML": {
-      "format_on_save": "on",
+      "tab_size": 2,
+      "format_on_save": "off",
       // "formatter": {
       //   "external": {
       //     "command": "djhtml",
@@ -182,7 +185,7 @@
     },
     "Markdown": {
       "tab_size": 2,
-      "format_on_save": "on",
+      "format_on_save": "off",
       "soft_wrap": "editor_width",
       "preferred_line_length": 80,
       "remove_trailing_whitespace_on_save": false,

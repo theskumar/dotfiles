@@ -3,6 +3,38 @@
 // Example:
 [
   {
+    "label": "Yazi File Explorer",
+    "command": "EDITOR='zed' yazi",
+    "working_directory": "${ZED_WORKTREE_ROOT}",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "on_success",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
+  },
+  {
+    "label": "Open Helix",
+    "command": "hx .",
+    "working_directory": "${ZED_WORKTREE_ROOT}",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "center",
+    "hide": "on_success",
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
+  },
+  {
     "label": "Open Claude Code",
     "command": "EDITOR=zed claude $ZED_WORKTREE_ROOT",
     "working_directory": "${ZED_WORKTREE_ROOT}",
@@ -29,38 +61,6 @@
       },
     },
   },
-  // "Open codemux terminal"
-  // cargo install codemux
-  // https://github.com/jellydn/zed-codemux
-  {
-    "label": "Open codemux terminal",
-    "command": "/Users/theskumar/.cargo/bin/codemux",
-    "use_new_terminal": true,
-    "allow_concurrent_runs": false,
-    "reveal": "always",
-    "reveal_target": "dock",
-    "hide": "never",
-    "shell": "system",
-    "show_summary": false,
-    "show_command": false,
-    "save": "none",
-  },
-  // {
-  //   "label": "Open lazygit",
-  //   "command": "EDITOR=zed lazygit -p $ZED_WORKTREE_ROOT",
-  //   "working_directory": "${ZED_WORKTREE_ROOT}",
-  //   "use_new_terminal": true,
-  //   "allow_concurrent_runs": false,
-  //   "reveal": "always",
-  //   "reveal_target": "center",
-  //   "hide": "on_success",
-  //   "shell": {
-  //     "with_arguments": {
-  //       "program": "sh",
-  //       "args": ["--noediting", "--norc", "--noprofile"]
-  //     }
-  //   }
-  // },
   {
     "label": "make serve",
     "command": "source .venv/bin/activate; make serve",
