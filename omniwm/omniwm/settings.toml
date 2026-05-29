@@ -8,13 +8,13 @@ mode = "dark"
 
 [borders]
 enabled = true
-width = 2.0
+width = 3.0
 
 [borders.color]
-alpha = 0.5
-blue = 0.479300037944676
-green = 0.2
-red = 0.08458520228437894
+alpha = 1.0
+blue = 0.8
+green = 0.5
+red = 0.1
 
 [clipboard]
 historyEnabled = false
@@ -62,7 +62,7 @@ scrollSensitivity = 5.0
 [mouseWarp]
 axis = "horizontal"
 margin = 1
-monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H"]
+monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H",]
 
 [niri]
 alwaysCenterSingleColumn = true
