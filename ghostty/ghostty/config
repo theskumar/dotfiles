@@ -18,7 +18,7 @@ keybind = cmd+z=text:\x01\x7a
 keybind = cmd+s=text:\x01\x53
 # prefix + Space → sesh picker
 keybind = cmd+p=text:\x01\x20
-# prefix + ^J → Claude/Pi Agent popup
+# prefix + ^J → lazygit popup
 keybind = cmd+j=text:\x01\x0a
 # prefix + ^Y → yazi popup
 keybind = cmd+y=text:\x01\x19
@@ -47,6 +47,7 @@ keybind = cmd+digit_8=text:\x01\x38
 keybind = cmd+digit_9=text:\x01\x39
 
 # ─── appearance ────────────────────────────────────────────────────
+font-size = 14
 background-blur-radius = 20
 macos-titlebar-style = hidden
 alpha-blending = linear-corrected
@@ -70,4 +71,3 @@ keybind = cmd+enter=unbind
 
 config-file = ?auto/theme.ghostty
 
-background-opacity = 1.0
