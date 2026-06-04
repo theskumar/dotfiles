@@ -63,18 +63,13 @@
   },
   {
     "label": "Markdown glow",
-    "command": "mdglow \"$ZED_FILE\"",
+    "command": "$HOME/dotfiles/bin/mdglow \"$ZED_FILE\"",
     "reveal_target": "center",
     "show_summary": false,
     "show_command": false,
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
-    "shell": {
-      "with_arguments": {
-        "program": "sh",
-        "args": ["--noediting", "--norc", "--noprofile"],
-      },
-    },
+    "shell": "system",
   },
   {
     "label": "make serve",
