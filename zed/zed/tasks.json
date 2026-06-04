@@ -69,6 +69,7 @@
     "show_command": false,
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
+    "hide": "on_success",
     "shell": "system",
   },
   {
