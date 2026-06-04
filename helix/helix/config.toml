@@ -82,7 +82,7 @@ esc   = ["collapse_selection", "keep_primary_selection"]
 "space"."m"."p" = [":sh mdview '%{buffer_name}'"]
 
 # Markdown glow in new tmux window (requires running helix inside tmux)
-"space"."m"."g" = [":sh tmux new-window -n glow \"mdglow '%{buffer_name}'\""]
+"space"."m"."g" = [":sh tmux new-window -n glow \"$HOME/dotfiles/bin/mdglow '%{buffer_name}'\""]
 
 [keys.insert]
 "C-space" = "completion"
