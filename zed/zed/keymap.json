@@ -114,9 +114,14 @@
       "space e": "workspace::ToggleLeftDock",
       "space s": "outline::Toggle",
       "space shift-s": "project_symbols::Toggle",
+      "space b d": "git::BranchDiff",
       "space m p": [
         "task::Spawn",
         { "task_name": "Markdown Preview", "reveal_target": "center" },
+      ],
+      "space m g": [
+        "task::Spawn",
+        { "task_name": "Markdown glow", "reveal_target": "center" },
       ],
 
       // Zed mode
