@@ -6,6 +6,8 @@ export PNPM_HOME="$HOME/Library/pnpm"
 # Dedupe PATH automatically (zsh ties `path` array to PATH scalar).
 typeset -U path PATH
 path=(
+  "$HOME/bin"
+  "$HOME/dotfiles/bin"
   "$HOME/.local/bin"
   "$PNPM_HOME"
   $path
