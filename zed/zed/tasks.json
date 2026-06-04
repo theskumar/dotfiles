@@ -62,6 +62,21 @@
     },
   },
   {
+    "label": "Markdown glow",
+    "command": "mdglow \"$ZED_FILE\"",
+    "reveal_target": "center",
+    "show_summary": false,
+    "show_command": false,
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "shell": {
+      "with_arguments": {
+        "program": "sh",
+        "args": ["--noediting", "--norc", "--noprofile"],
+      },
+    },
+  },
+  {
     "label": "make serve",
     "command": "source .venv/bin/activate; make serve",
     //"args": [],

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# mdglow - render a markdown file with glow, centered in the terminal.
+# Usage: mdglow <file.md>
+set -euo pipefail
+
+if [ $# -eq 0 ] || [ ! -f "$1" ]; then
+  echo "usage: mdglow <file.md>" >&2
+  exit 1
+fi
+
+cw=80
+w=$(stty size </dev/tty 2>/dev/null | awk '{print $2}')
+w=${w:-${COLUMNS:-100}}
+pad=$(( (w - cw) / 2 ))
+[ "$pad" -lt 0 ] && pad=0
+
+tmpfile=$(mktemp -t mdglow.XXXXXX)
+trap 'rm -f "$tmpfile"' EXIT
+
+# Feed fake terminal query responses so glow doesn't wait 20s on the pty.
+# OSC 11/10 = bg/fg color, CSI 6n = cursor position.
+printf '\e]11;rgb:0000/0000/0000\e\\\e]10;rgb:ffff/ffff/ffff\e\\\e[1;1R\e[1;1R\e[1;1R\e[1;1R' \
+  | script -q /dev/null glow -w "$cw" "$1" 2>/dev/null \
+  | tr -d '\r' \
+  | tail -n +2 \
+  | sed "s/^/$(printf '%*s' "$pad" '')/" \
+  > "$tmpfile"
+
+less -R "$tmpfile"
