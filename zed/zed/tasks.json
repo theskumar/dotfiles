@@ -69,12 +69,7 @@
     "show_command": false,
     "allow_concurrent_runs": true,
     "use_new_terminal": true,
-    "shell": {
-      "with_arguments": {
-        "program": "zsh",
-        "args": ["--no-rcs"],
-      },
-    },
+    "shell": "system",
   },
   {
     "label": "make serve",
