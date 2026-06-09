@@ -1,0 +1,92 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"
+
+[ui]
+mouse_capture = true
+agent_panel_scope = "all"
+confirm_close = true
+prompt_new_tab_name = true
+
+[ui.toast]
+delivery = "herdr"
+
+[session]
+resume_agents_on_restore = true
+
+[advanced]
+scrollback_limit_bytes = 10485760
+
+[experimental]
+pane_history = true
+
+[keys]
+prefix = "ctrl+a"
+
+detach           = "prefix+ctrl+d"       # tmux: ^D
+workspace_picker = "prefix+shift+s"      # tmux: S choose-session
+settings         = "prefix+comma"        # moved off prefix+s (taken by split_horizontal)
+
+new_tab          = "prefix+ctrl+c"       # tmux: ^C new-window
+previous_tab     = "prefix+shift+h"      # tmux: H
+next_tab         = "prefix+shift+l"      # tmux: L
+rename_tab       = "prefix+r"            # tmux: r (displaces default resize_mode)
+close_tab        = "prefix+shift+x"
+
+split_horizontal = "prefix+s"            # tmux: s split-window -v
+split_vertical   = "prefix+v"            # tmux: v split-window -h (herdr default)
+close_pane       = "prefix+c"            # tmux: c kill-pane (herdr default is prefix+x)
+zoom             = "prefix+z"            # herdr default
+
+focus_pane_left  = "prefix+h"            # herdr defaults
+focus_pane_down  = "prefix+j"
+focus_pane_up    = "prefix+k"
+focus_pane_right = "prefix+l"
+
+cycle_pane_next     = "prefix+]"         # tmux: ] select-pane -t :.+
+cycle_pane_previous = "prefix+["         # tmux: [ select-pane -t :.- (displaces default copy_mode key)
+copy_mode           = "prefix+shift+["   # remapped; tmux had no explicit copy-mode binding
+
+resize_mode      = "prefix+alt+r"        # moved off prefix+r (taken by rename_tab)
+toggle_sidebar   = "prefix+b"
+reload_config    = "prefix+shift+r"
+
+navigate_pane_left  = "h"
+navigate_pane_down  = "j"
+navigate_pane_up    = "k"
+navigate_pane_right = "l"
+
+switch_tab = "prefix+1..9"
+
+[[keys.command]]
+key         = "prefix+ctrl+j"
+type        = "pane"
+command     = "lazygit"
+description = "lazygit"
+
+# NOTE: herdr has no 'new tab' type for custom commands; these open as temp panes
+# in the current tab, not new tabs. yazi may have terminal detection issues in a pane
+# (same as tmux popup) — test before relying on it.
+[[keys.command]]
+key         = "prefix+ctrl+y"
+type        = "pane"
+command     = "yazi"
+description = "yazi"
+
+[[keys.command]]
+key         = "prefix+ctrl+p"
+type        = "pane"
+command     = "zsh -i -c 'pi'"
+description = "pi"
+
+# NOTE: ctrl+m = carriage return (Enter) in most terminals; binding may not fire reliably.
+[[keys.command]]
+key         = "prefix+ctrl+m"
+type        = "pane"
+command     = "treemd-pick"
+description = "treemd"
