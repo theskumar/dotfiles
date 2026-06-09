@@ -1,0 +1,133 @@
+#!/usr/bin/env bash
+# mdpdf-web - render markdown to PDF via headless Chromium (md-to-pdf).
+# Uses github-markdown-css for styling, highlight.js (default) for code,
+# and inline mermaid.js for diagrams. Maximum GitHub fidelity (renders
+# in real Chrome with the actual GitHub stylesheet).
+#
+# Usage:
+#   mdpdf-web <file.md> [-o out.pdf] [-O|--open]
+#                       [--theme light|dark] [--paper A4|Letter]
+#                       [--margin 2cm] [--no-mermaid]
+#
+# Requires: node (>= 18) on PATH; `npx` auto-fetches md-to-pdf on first run.
+# Network: required first run (npm cache) and for CDN-hosted CSS/mermaid.
+
+set -euo pipefail
+
+die() { echo "mdpdf-web: $*" >&2; exit 1; }
+
+out=""
+theme="light"
+paper="A4"
+margin="2cm"
+use_mermaid=1
+open_after=0
+src=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -o|--output)   out="$2"; shift 2 ;;
+    -O|--open)     open_after=1; shift ;;
+    --theme)       theme="$2"; shift 2 ;;
+    --paper)       paper="$2"; shift 2 ;;
+    --margin)      margin="$2"; shift 2 ;;
+    --no-mermaid)  use_mermaid=0; shift ;;
+    -h|--help)     sed -n '2,12p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -*)            die "unknown flag: $1" ;;
+    *)             [ -z "$src" ] && src="$1" || die "unexpected arg: $1"; shift ;;
+  esac
+done
+
+[ -n "$src" ] && [ -f "$src" ] || die "usage: mdpdf-web <file.md> [-o out.pdf]"
+command -v node >/dev/null || die "node not found"
+command -v npx  >/dev/null || die "npx not found"
+
+[ -z "$out" ] && out="${src%.*}.pdf"
+
+case "$theme" in
+  light) css_file="github-markdown-light.css" ;;
+  dark)  css_file="github-markdown-dark.css"  ;;
+  *)     die "unknown theme: $theme (light|dark)" ;;
+esac
+
+# Stage source into a work dir so md-to-pdf emits the PDF there (no --dest).
+work="$(mktemp -d -t mdpdf-web.XXXXXX)"
+trap 'rm -rf "$work"' EXIT
+
+src_stem="$(basename "${src%.*}")"
+cp "$src" "$work/$src_stem.md"
+
+# Mermaid script block — included only if enabled. Note JS bool below.
+mermaid_js="false"
+[ "$use_mermaid" -eq 1 ] && mermaid_js="true"
+
+cat > "$work/config.js" <<CONFIG
+const useMermaid = ${mermaid_js};
+
+const baseConfig = {
+  stylesheet: [
+    "https://cdn.jsdelivr.net/npm/github-markdown-css@5/${css_file}",
+  ],
+  body_class: "markdown-body",
+  css: \`
+    .markdown-body {
+      box-sizing: border-box;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0;
+      font-size: 14px;
+    }
+    .mermaid { background: transparent; text-align: center; margin: 1em 0; }
+    pre code.language-mermaid { display: none; }
+  \`,
+  marked_options: { gfm: true, breaks: false },
+  pdf_options: {
+    format: "${paper}",
+    margin: { top: "${margin}", bottom: "${margin}", left: "${margin}", right: "${margin}" },
+    printBackground: true,
+  },
+  launch_options: { args: ["--no-sandbox", "--font-render-hinting=none"] },
+};
+
+if (useMermaid) {
+  baseConfig.script = [
+    { content: \`
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('pre code.language-mermaid, code.language-mermaid').forEach(el => {
+          const div = document.createElement('div');
+          div.className = 'mermaid';
+          div.textContent = el.textContent;
+          const host = el.closest('pre') || el;
+          host.replaceWith(div);
+        });
+      });
+    \` },
+    { url: "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" },
+    { content: \`
+      (async () => {
+        if (window.mermaid) {
+          mermaid.initialize({ startOnLoad: false, theme: 'default' });
+          try { await mermaid.run(); } catch (e) { console.error(e); }
+        }
+      })();
+    \` },
+  ];
+}
+
+module.exports = baseConfig;
+CONFIG
+
+echo "mdpdf-web: rendering (first run may install md-to-pdf)..."
+( cd "$work" && npx -y md-to-pdf --config-file ./config.js "./$src_stem.md" >/dev/null )
+
+generated="$work/$src_stem.pdf"
+[ -f "$generated" ] || die "render failed: $generated not produced"
+mv "$generated" "$out"
+
+echo "mdpdf-web: $src -> $out"
+
+if [ "$open_after" -eq 1 ]; then
+  if   command -v open    >/dev/null; then open "$out"
+  elif command -v xdg-open >/dev/null; then xdg-open "$out" >/dev/null 2>&1 &
+  fi
+fi
