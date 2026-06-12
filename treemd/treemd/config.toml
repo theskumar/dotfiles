@@ -1,2 +1,24 @@
+[ui]
+theme = "OceanDark"
+code_theme = "base16-ocean.dark"
+outline_width = 30
+tree_style = "compact"
+
+[terminal]
+color_mode = "auto"
+warned_terminal_app = true
+
+[theme]
+
+[keybindings]
+
 [editor]
 editor_kind = "Helix"
+
+[images]
+enabled = true
+
+[content]
+hide_frontmatter = true
+hide_latex = true
+latex_aggressive = true
