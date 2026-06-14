@@ -20,6 +20,8 @@ keybind = cmd+s=text:\x01\x53
 keybind = cmd+p=text:\x01\x20
 # prefix + ^J → lazygit popup
 keybind = cmd+j=text:\x01\x0a
+# prefix + ^E → zed at git root
+keybind = cmd+e=text:\x01\x05
 # prefix + ^Y → yazi popup
 keybind = cmd+y=text:\x01\x19
 # prefix + ^M → treemd markdown navigator
@@ -59,8 +61,8 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title,ssh-env,ssh-terminfo
 
 # ─── behavior ─────────────────────────────────────────────
-command = /bin/zsh -lc "tmux attach || tmux new-session -s main"
-confirm-close-surface = false
+# command = /bin/zsh -lc "tmux attach || tmux new-session -s main"
+# confirm-close-surface = false
 
 # ---- Reload -------
 keybind = cmd+shift+r=reload_config
