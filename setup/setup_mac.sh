@@ -154,6 +154,14 @@ brew install sloccount             # source line counter
 brew install multitail             # tail multiple files simultaneously
 brew install bombardier            # HTTP benchmarking
 
+# iPhone integration
+brew tap rjyo/moshi                # Moshi tap (clipboard, notifications sync with iPhone)
+brew trust rjyo/moshi              # trust third-party tap
+brew install moshi-hook            # Moshi host daemon
+# After installing, run once interactively to pair with iPhone:
+#   moshi-hook host setup          → shows QR code, scan in Moshi iOS app
+#   brew services start rjyo/moshi/moshi-hook
+
 # RSS
 brew install newsboat              # terminal RSS/Atom feed reader
 
