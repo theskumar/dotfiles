@@ -1,6 +1,5 @@
 monitorBarOverrides = []
 monitorDwindleOverrides = []
-monitorNiriOverrides = []
 monitorOrientationOverrides = []
 
 [appearance]
@@ -48,21 +47,26 @@ top = 8.0
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
+hyperKeyHoldThresholdMilliseconds = 150
+hyperTrigger = "Left Option"
 ipcEnabled = true
 preventSleepEnabled = false
+spacesTrackingEnabled = true
 updateChecksEnabled = true
 
 [gestures]
 fingerCount = 3
 invertDirection = true
+mouseResizeModifierKey = "option"
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
+trackpadScrollStyle = "snap"
 
 [mouseWarp]
 axis = "horizontal"
 margin = 1
-monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H",]
+monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H"]
 
 [niri]
 alwaysCenterSingleColumn = true
@@ -257,75 +261,75 @@ minHeight = 500.0
 minWidth = 400.0
 
 [[hotkeys]]
-binding = "Option+1"
+binding = "Hyper+1"
 id = "switchWorkspace.0"
 
 [[hotkeys]]
-binding = "Option+Shift+1"
+binding = "Hyper+Shift+1"
 id = "moveToWorkspace.0"
 
 [[hotkeys]]
-binding = "Option+2"
+binding = "Hyper+2"
 id = "switchWorkspace.1"
 
 [[hotkeys]]
-binding = "Option+Shift+2"
+binding = "Hyper+Shift+2"
 id = "moveToWorkspace.1"
 
 [[hotkeys]]
-binding = "Option+3"
+binding = "Hyper+3"
 id = "switchWorkspace.2"
 
 [[hotkeys]]
-binding = "Option+Shift+3"
+binding = "Hyper+Shift+3"
 id = "moveToWorkspace.2"
 
 [[hotkeys]]
-binding = "Option+4"
+binding = "Hyper+4"
 id = "switchWorkspace.3"
 
 [[hotkeys]]
-binding = "Option+Shift+4"
+binding = "Hyper+Shift+4"
 id = "moveToWorkspace.3"
 
 [[hotkeys]]
-binding = "Option+5"
+binding = "Hyper+5"
 id = "switchWorkspace.4"
 
 [[hotkeys]]
-binding = "Option+Shift+5"
+binding = "Hyper+Shift+5"
 id = "moveToWorkspace.4"
 
 [[hotkeys]]
-binding = "Option+6"
+binding = "Hyper+6"
 id = "switchWorkspace.5"
 
 [[hotkeys]]
-binding = "Option+Shift+6"
+binding = "Hyper+Shift+6"
 id = "moveToWorkspace.5"
 
 [[hotkeys]]
-binding = "Option+7"
+binding = "Hyper+7"
 id = "switchWorkspace.6"
 
 [[hotkeys]]
-binding = "Option+Shift+7"
+binding = "Hyper+Shift+7"
 id = "moveToWorkspace.6"
 
 [[hotkeys]]
-binding = "Option+8"
+binding = "Hyper+8"
 id = "switchWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+Shift+8"
+binding = "Hyper+Shift+8"
 id = "moveToWorkspace.7"
 
 [[hotkeys]]
-binding = "Option+9"
+binding = "Hyper+9"
 id = "switchWorkspace.8"
 
 [[hotkeys]]
-binding = "Option+Shift+9"
+binding = "Hyper+Shift+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
@@ -445,7 +449,7 @@ binding = "Unassigned"
 id = "focusMonitorPrevious"
 
 [[hotkeys]]
-binding = "Control+Command+`"
+binding = "Control+Command+Grave"
 id = "focusMonitorLast"
 
 [[hotkeys]]
@@ -513,11 +517,11 @@ binding = "Control+Option+9"
 id = "focusColumn.8"
 
 [[hotkeys]]
-binding = "Option+."
+binding = "Option+Period"
 id = "cycleColumnWidthForward"
 
 [[hotkeys]]
-binding = "Option+,"
+binding = "Option+Comma"
 id = "cycleColumnWidthBackward"
 
 [[hotkeys]]
@@ -629,7 +633,7 @@ binding = "Unassigned"
 id = "toggleHiddenBar"
 
 [[hotkeys]]
-binding = "Option+`"
+binding = "Option+Grave"
 id = "toggleQuakeTerminal"
 
 [[hotkeys]]
@@ -649,11 +653,11 @@ binding = "Unassigned"
 id = "centerVisibleColumns"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+LeftBracket"
 id = "consumeOrExpelWindowLeft"
 
 [[hotkeys]]
-binding = "Unassigned"
+binding = "Option+RightBracket"
 id = "consumeOrExpelWindowRight"
 
 [[hotkeys]]
@@ -789,11 +793,11 @@ binding = "Control+Option+R"
 id = "resetWindowHeight"
 
 [[hotkeys]]
-binding = "Option+-"
+binding = "Option+Minus"
 id = "setColumnWidth.decrease10Percent"
 
 [[hotkeys]]
-binding = "Option+="
+binding = "Option+Equal"
 id = "setColumnWidth.increase10Percent"
 
 [[hotkeys]]
@@ -805,11 +809,11 @@ binding = "Unassigned"
 id = "setWindowWidth.increase10Percent"
 
 [[hotkeys]]
-binding = "Option+Shift+-"
+binding = "Option+Shift+Minus"
 id = "setWindowHeight.decrease10Percent"
 
 [[hotkeys]]
-binding = "Option+Shift+="
+binding = "Option+Shift+Equal"
 id = "setWindowHeight.increase10Percent"
 
 [[hotkeys]]
@@ -831,6 +835,14 @@ id = "cycleWindowHeightBackward"
 [[hotkeys]]
 binding = "Control+Option+F"
 id = "expandColumnToAvailableWidth"
+
+[[monitorNiriOverrides]]
+alwaysCenterSingleColumn = true
+id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
+maxVisibleColumns = 1
+monitorDisplayId = 2
+monitorName = "DELL P2417H"
+singleWindowAspectRatio = "none"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"

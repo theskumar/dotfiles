@@ -89,6 +89,7 @@ singleWindowAspectRatio = "4:3"        # Aspect ratio when a window is alone: "n
 - `centerFocusedColumn = "on-overflow"` is a good middle ground — only scrolls when the focused column is off-screen.
 - `maxVisibleColumns = 3` works well on wide external monitors; `2` is ideal for a 14" MacBook.
 - Set `singleWindowAspectRatio = "none"` to let single windows fill the available space freely.
+- These are **global** defaults. To tune Niri per-monitor (e.g. a portrait display), use `[[monitorNiriOverrides]]` — see [Multi-Monitor Setup](#multi-monitor-setup).
 
 ---
 
@@ -383,8 +384,10 @@ id = "focus.left"
 
 Use `"Unassigned"` to explicitly leave an action without a binding.
 
-**Valid modifier key names:** `Option`, `Shift`, `Control`, `Command`
-**Special keys:** `Left Arrow`, `Right Arrow`, `Up Arrow`, `Down Arrow`, `Return`, `Tab`, `Space`, `Home`, `End`, `Page Up`, `Page Down`, `` ` ``, `-`, `=`, `.`, `,`
+**Valid modifier key names:** `Option`, `Shift`, `Control`, `Command`, `Hyper`
+**Special keys:** `Left Arrow`, `Right Arrow`, `Up Arrow`, `Down Arrow`, `Return`, `Tab`, `Space`, `Home`, `End`, `Page Up`, `Page Down`, `[`, `]`, `` ` ``, `-`, `=`, `.`, `,`
+
+> **OmniWM owns this file and rewrites it.** On any settings change or restart it reserialises `settings.toml` into canonical form: keys get alphabetised, punctuation is spelled out (`,`→`Comma`, `.`→`Period`, `` ` ``→`Grave`, `-`→`Minus`, `=`→`Equal`, `[`→`LeftBracket`, `]`→`RightBracket`), and Left Option may serialise as the `Hyper` modifier (`hyperTrigger = "Left Option"`, v0.4.9+). **Edit while OmniWM is quit**, then relaunch to load — editing live risks OmniWM clobbering the change. Expect large reordered diffs; that's normal.
 
 ---
 
@@ -436,6 +439,8 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 | Toggle column full-width | `Option+Shift+F` |
 | Balance sizes | `Option+Shift+B` |
 | Toggle tabbed column | `Option+T` |
+| Consume / expel window left | `Option+[` |
+| Consume / expel window right | `Option+]` |
 | Focus monitor next | `Ctrl+Cmd+Tab` |
 | Focus monitor last | `Ctrl+Cmd+\`` |
 | Command palette | `Ctrl+Option+Space` |
@@ -457,7 +462,6 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 | `centerVisibleColumns` | Center all visible columns |
 | `moveWindowDown/Up` | Move window within its column |
 | `moveWindowDownOrToWorkspaceDown` | Move window down or to next workspace |
-| `consumeOrExpelWindowLeft/Right` | Pull a window into / push out of the current column |
 | `consumeWindowIntoColumn` | Consume focused window into adjacent column |
 | `expelWindowFromColumn` | Eject focused window from its column |
 | `moveColumnToFirst/Last` | Jump column to start or end of workspace |
@@ -571,11 +575,31 @@ Workspaces 1–5 on `main` (built-in display). Workspaces 6–7 (`secondary`) re
 ### Mode 2 — Three-monitor desk
 | Monitor | Position | Role | Workspaces |
 |---------|----------|------|------------|
-| 4K 27" | Center | **primary / `main`** | 1–5 |
-| 1900px 27" | Left | **`secondary`** | 6 (❤️), 7 (🚀) |
+| DELL U2723QE 4K 27" | Center | **primary / `main`** | 1–5 |
+| DELL P2417H 27" (portrait, rotated 270°) | Left | **`secondary`** | 6 (❤️), 7 (🚀) |
 | MacBook | Left-below external | **tertiary** | — (see below) |
 
 Workspaces 1–5 follow whichever monitor is set as macOS primary — they'll land on the 4K in desk mode and the MacBook in solo mode automatically.
+
+### Per-monitor Niri overrides (portrait secondary)
+
+The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) needs different Niri tuning than the landscape default. Set it with a **per-monitor override** rather than touching the global `[niri]` block:
+
+```toml
+[[monitorNiriOverrides]]
+id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"   # any UUID
+monitorName = "DELL P2417H"                    # match `omniwmctl query displays`
+monitorDisplayId = 2
+maxVisibleColumns = 1                          # 1080px wide — one column fills it
+singleWindowAspectRatio = "none"               # fill the tall space, don't box to 4:3
+alwaysCenterSingleColumn = true
+```
+
+Override keys mirror `[niri]` but apply only to the named monitor; any key you omit falls back to the global `[niri]` value. Sibling arrays exist for the other per-monitor settings: `monitorDwindleOverrides`, `monitorBarOverrides`, `monitorOrientationOverrides`.
+
+> ⚠️ **v0.4.9 caveat:** the per-monitor niri override silently drops `maxWindowsPerColumn` on rewrite — the global `[niri]` value applies instead. On a 1920px-tall screen the global `3` ≈ 640px per stacked window, which is fine.
+
+**Stacking windows on the portrait monitor:** new windows each open in their own column, so with `maxVisibleColumns = 1` only one shows at a time (the rest scroll off-screen). To put two apps stacked *vertically* in one column (each ~half the height — the right use of portrait), focus one and pull its neighbour in with `Option+[` / `Option+]` (consume/expel). `Option+↑/↓` then moves focus between the stacked windows.
 
 ### Adding MacBook-as-tertiary workspaces
 
