@@ -581,25 +581,53 @@ Workspaces 1–5 on `main` (built-in display). Workspaces 6–7 (`secondary`) re
 
 Workspaces 1–5 follow whichever monitor is set as macOS primary — they'll land on the 4K in desk mode and the MacBook in solo mode automatically.
 
-### Per-monitor Niri overrides (portrait secondary)
+### Portrait secondary — Dwindle layout
 
-The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) needs different Niri tuning than the landscape default. Set it with a **per-monitor override** rather than touching the global `[niri]` block:
+The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) uses **Dwindle layout** on workspaces 6–7 instead of Niri. Dwindle with `smartSplit = true` auto-picks the split axis based on available space — on a tall portrait screen two windows split top/bottom (50/50), which is the natural layout.
+
+**Why not Niri?** Niri's scrollable-column model gives each window in a column the full viewport height and scrolls between them. On a portrait monitor you'd only ever see one window at a time — even with `consumeOrExpelWindow` to merge them into one column. There's no way to force Niri to split column height 50/50 between windows.
+
+**Per-workspace layout:** set `layoutType = "dwindle"` on the workspace. This coexists with Niri on other workspaces.
+
+**Per-monitor overrides** are set via array-of-table sections. Each override names its target monitor and only overrides the fields you set — the rest fall back to the global `[dwindle]` or `[niri]` block. Current portrait overrides:
 
 ```toml
+# Niri: single visible column, fill the tall space
 [[monitorNiriOverrides]]
-id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"   # any UUID
-monitorName = "DELL P2417H"                    # match `omniwmctl query displays`
+id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
+monitorName = "DELL P2417H"
 monitorDisplayId = 2
-maxVisibleColumns = 1                          # 1080px wide — one column fills it
-singleWindowAspectRatio = "none"               # fill the tall space, don't box to 4:3
+maxVisibleColumns = 1
+singleWindowAspectRatio = "none"
 alwaysCenterSingleColumn = true
+
+# Dwindle: auto-pick split axis (horizontal on portrait = top/bottom)
+[[monitorDwindleOverrides]]
+id = "6F408D6D-05D6-4777-9907-B2928A4E6860"
+monitorName = "DELL P2417H"
+monitorDisplayId = 2
+smartSplit = true
 ```
 
-Override keys mirror `[niri]` but apply only to the named monitor; any key you omit falls back to the global `[niri]` value. Sibling arrays exist for the other per-monitor settings: `monitorDwindleOverrides`, `monitorBarOverrides`, `monitorOrientationOverrides`.
+Override arrays: `monitorNiriOverrides`, `monitorDwindleOverrides`, `monitorBarOverrides`, `monitorOrientationOverrides`. The `monitorName` must match `omniwmctl query displays` output exactly.
 
-> ⚠️ **v0.4.9 caveat:** the per-monitor niri override silently drops `maxWindowsPerColumn` on rewrite — the global `[niri]` value applies instead. On a 1920px-tall screen the global `3` ≈ 640px per stacked window, which is fine.
+> ⚠️ **v0.4.9 caveat:** the per-monitor niri override silently drops `maxWindowsPerColumn` on rewrite — the global `[niri]` value applies.
 
-**Stacking windows on the portrait monitor:** new windows each open in their own column, so with `maxVisibleColumns = 1` only one shows at a time (the rest scroll off-screen). To put two apps stacked *vertically* in one column (each ~half the height — the right use of portrait), focus one and pull its neighbour in with `Option+[` / `Option+]` (consume/expel). `Option+↑/↓` then moves focus between the stacked windows.
+---
+
+### Gotchas and lessons learned
+
+**Niri vs Dwindle on portrait monitors.** Niri's column model is horizontally scrollable — windows in a column each get the full viewport height and scroll vertically. This means two windows in one Niri column on a portrait monitor = you see one at a time, not both. Use **Dwindle** on portrait workspaces for automatic 50/50 splitting.
+
+**`smartSplit` matters for Dwindle on portrait.** Without it (`smartSplit = false`), Dwindle always splits left-right first regardless of monitor orientation. Set `smartSplit = true` via `[[monitorDwindleOverrides]]` for portrait monitors so it auto-picks top-bottom.
+
+**Per-monitor overrides are TOML array-of-tables.** When adding a new `[[monitorNiriOverrides]]` or `[[monitorDwindleOverrides]]` entry, remove the empty-array placeholder (`monitorXxxOverrides = []`) from the top of the file — TOML can't have both `key = []` and `[[key]]` for the same key.
+
+**OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), may convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. Always **quit OmniWM before editing** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
+
+**`monitorDisplayId` can change across reboots.** The `monitorName` is the durable identifier. OmniWM matches by name when the ID doesn't match.
+
+**Consume/expel (`Option+[` / `Option+]`) is for Niri only.** It merges/splits columns. On Dwindle workspaces use `toggleSplit` / `swapSplit` instead.
 
 ### Adding MacBook-as-tertiary workspaces
 

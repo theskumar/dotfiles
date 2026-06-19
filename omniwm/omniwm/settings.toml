@@ -1,5 +1,4 @@
 monitorBarOverrides = []
-monitorDwindleOverrides = []
 monitorOrientationOverrides = []
 
 [appearance]
@@ -653,11 +652,11 @@ binding = "Unassigned"
 id = "centerVisibleColumns"
 
 [[hotkeys]]
-binding = "Option+LeftBracket"
+binding = "Option+Left Bracket"
 id = "consumeOrExpelWindowLeft"
 
 [[hotkeys]]
-binding = "Option+RightBracket"
+binding = "Option+Right Bracket"
 id = "consumeOrExpelWindowRight"
 
 [[hotkeys]]
@@ -836,6 +835,12 @@ id = "cycleWindowHeightBackward"
 binding = "Control+Option+F"
 id = "expandColumnToAvailableWidth"
 
+[[monitorDwindleOverrides]]
+id = "6F408D6D-05D6-4777-9907-B2928A4E6860"
+monitorDisplayId = 2
+monitorName = "DELL P2417H"
+smartSplit = true
+
 [[monitorNiriOverrides]]
 alwaysCenterSingleColumn = true
 id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
@@ -896,7 +901,7 @@ type = "secondary"
 [[workspaces]]
 displayName = "🚀"
 id = "A7D5E104-6985-4516-8ED5-07F144F2A33D"
-layoutType = "niri"
+layoutType = "dwindle"
 name = "7"
 
 [workspaces.monitorAssignment]
