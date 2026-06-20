@@ -67,7 +67,7 @@ fi
 # atinit on the first plugin runs compinit once, then replays cached completions.
 zinit wait lucid light-mode for \
     atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay; (( \${#__deferred_compdefs} )) && for c in \"\${__deferred_compdefs[@]}\"; do eval \"compdef \$c\"; done; unset __deferred_compdefs" \
-        zdharma-continuum/fast-syntax-highlighting \
+        zsh-users/zsh-syntax-highlighting \
     atload"_zsh_autosuggest_start" \
         zsh-users/zsh-autosuggestions \
     blockf atpull'zinit creinstall -q .' \
@@ -118,3 +118,10 @@ eval "$(starship init zsh)"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# Local LLM control: lcl start / stop / log / status / bench
+lcl() { mise -C "$HOME/code/localLLM" run "$@"; }
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/theskumar/.local/bin:$PATH"
