@@ -63,7 +63,7 @@
 	ss = stash save
 	t = tag -n
 	td = tag -d
-	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+	up = !sh -c 'git pull --rebase --prune $@ && git submodule update --init --recursive'
 
 	# search commit
 	se = !git rev-list --all | xargs git grep -F
@@ -145,11 +145,6 @@
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
 
-[diff]
-	external = difft
-	# tool = vimdiff
-	submodule = log
-	algorithm = histogram
 
 [color "branch"]
 
