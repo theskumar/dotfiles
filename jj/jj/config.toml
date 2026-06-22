@@ -16,3 +16,6 @@ auto-local-bookmark = true
 [aliases]
 # Handy shortcuts
 tug = ["bookmark", "move", "--from", "main@origin", "--to", "main"]
+
+[remotes.origin]
+auto-track-bookmarks = "*"
