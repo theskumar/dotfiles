@@ -59,5 +59,7 @@ bind-key G end
 bind-key g home
 bind-key d pagedown
 bind-key u pageup
+bind-key j down article
+bind-key k up article
 bind-key l open
 bind-key h quit
