@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-export PATH="/opt/homebrew/bin:/Users/theskumar/dotfiles/bin:$PATH"
-f=$(fd -e md | fzf --preview "bat --color=always {}") || exit 0
-[ -z "$f" ] && exit 0
-exec treemd "$f"

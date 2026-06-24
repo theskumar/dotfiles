@@ -24,7 +24,6 @@ keybind = cmd+j=text:\x01\x0a
 keybind = cmd+e=text:\x01\x05
 # prefix + ^Y → yazi popup
 keybind = cmd+y=text:\x01\x19
-# prefix + ^M → treemd markdown navigator
 keybind = cmd+shift+m=text:\x01\x0d
 # prefix + H  → previous window
 keybind = cmd+left=text:\x01\x48
