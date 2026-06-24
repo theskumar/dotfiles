@@ -12,17 +12,10 @@ after-login-command = []
 after-startup-command = [
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    'exec-and-forget sketchybar',
     'exec-and-forget borders',
 ]
 
-# Notify Sketchybar about workspace change
-# Notify Sketchybar about workspace change and update icons
-exec-on-workspace-change = [
-    '/bin/bash',
-    '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE && ~/.config/sketchybar/plugins/update_workspace_icons.sh',
-]
+exec-on-workspace-change = []
 
 
 # Start AeroSpace at login
@@ -179,7 +172,6 @@ alt-enter = 'fullscreen'
 r = [
     'flatten-workspace-tree',
     'mode main',
-    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
 ] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = [
@@ -189,12 +181,10 @@ f = [
 backspace = [
     'close-all-windows-but-current',
     'mode main',
-    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
 ]
 esc = [
     'reload-config',
     'mode main',
-    'exec-and-forget sketchybar --trigger aerospace_service_mode_enabled_changed AEROSPACE_SERVICE_MODE_ENABLED=false',
 ]
 
 # 'join' binding mode declaration
