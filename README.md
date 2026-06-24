@@ -108,7 +108,6 @@ stow -D shell
 |-----------|-----|
 | `bin/` | Scripts added to PATH via .exports, not symlinked |
 | `setup/` | One-shot install scripts, run manually |
-| `karabiner/` | (removed — now stowed to ~/.config like other XDG packages) |
 | `pi/` | AI coding agent settings (~/.pi/agent/settings.json), stow manually if needed |
 | `.private/` | Gitignored secrets |
 
