@@ -16,7 +16,7 @@ case "$OS" in
         XDG+=(borders omniwm)
         ;;
     Linux)
-        OS_PKGS=(linux xmonad)
+        OS_PKGS=(linux)
         ;;
     FreeBSD)
         OS_PKGS=(freebsd)
