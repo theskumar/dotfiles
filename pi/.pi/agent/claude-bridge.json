@@ -1,5 +1,8 @@
 {
+  "askClaude": {
+    "enabled": false
+  },
   "provider": {
-    "systemPromptMode": "replace"
+    "plan": "max"
   }
 }
