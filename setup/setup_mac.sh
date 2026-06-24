@@ -195,7 +195,6 @@ brew install --cask basictex            # minimal TeX distribution
 brew install --cask iterm2              # terminal emulator
 brew install --cask karabiner-elements  # keyboard customizer
 brew install --cask cmux                # AI agent terminal (Ghostty-based)
-brew install --cask hyprspace           # tiling WM (AeroSpace fork)
 brew install --cask kitlangton-hex      # voice-to-text transcription
 brew install --cask thaw                # macOS menu bar manager
 
