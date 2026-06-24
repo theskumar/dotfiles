@@ -121,7 +121,6 @@ brew install hl                    # log viewer
 
 # Dotfiles companions (have stow packages in this repo)
 brew install joshmedeski/sesh/sesh           # smart tmux session manager
-brew install felixkratz/formulae/borders     # macOS window border highlights
 brew install tmuxinator            # tmux session manager
 brew install worktrunk             # git worktree CLI for parallel work
 

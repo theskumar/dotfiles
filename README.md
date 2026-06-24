@@ -88,7 +88,6 @@ stow -D shell
 |---------|--------|----------|
 | `macos` | $HOME | .finicky.js, .osx |
 | `omniwm` | ~/.config | OmniWM tiling WM (niri/dwindle layouts), workspaces, hotkeys, app rules |
-| `borders` | ~/.config | Window border config (borderrc) |
 | `karabiner` | ~/.config | Keyboard customization (karabiner.json — app launchers, vim arrows, caps→ctrl/esc) |
 
 ### Linux specific
