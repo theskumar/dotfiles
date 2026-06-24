@@ -89,7 +89,6 @@ stow -D shell
 | `macos` | $HOME | .aerospace.toml, .finicky.js, .hyprspace.toml, .osx |
 | `omniwm` | ~/.config | OmniWM tiling WM (niri/dwindle layouts), workspaces, hotkeys, app rules |
 | `borders` | ~/.config | Window border config (borderrc) |
-| `sketchybar` | ~/.config | Status bar config, plugins/, items/, themes/, colors.sh |
 | `karabiner` | ~/.config | Keyboard customization (karabiner.json — app launchers, vim arrows, caps→ctrl/esc) |
 
 ### Linux specific
@@ -124,6 +123,7 @@ Guides and references in `docs/`:
 | [TMUX.md](docs/TMUX.md) | Tmux keybindings and workflow |
 | [OMNIWM.md](docs/OMNIWM.md) | OmniWM tiling window manager |
 | [NEWSBOAT.md](docs/NEWSBOAT.md) | Newsboat RSS reader |
+| [MOSH.md](docs/MOSH.md) | Mosh mobile shell setup and usage |
 | [PI-TREE.md](docs/PI-TREE.md) | Pi agent tree, branch, and fork workflows |
 
 ## Notes
