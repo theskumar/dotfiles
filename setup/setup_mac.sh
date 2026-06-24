@@ -194,8 +194,6 @@ brew install --cask omniwm              # tiling window manager
 brew install --cask basictex            # minimal TeX distribution
 brew install --cask iterm2              # terminal emulator
 brew install --cask karabiner-elements  # keyboard customizer
-brew install --cask cmux                # AI agent terminal (Ghostty-based)
-brew install --cask kitlangton-hex      # voice-to-text transcription
 brew install --cask thaw                # macOS menu bar manager
 
 # Quick Look plugins

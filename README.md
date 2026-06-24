@@ -86,7 +86,7 @@ stow -D shell
 
 | Package | Target | Contents |
 |---------|--------|----------|
-| `macos` | $HOME | .aerospace.toml, .finicky.js, .hyprspace.toml, .osx |
+| `macos` | $HOME | .finicky.js, .osx |
 | `omniwm` | ~/.config | OmniWM tiling WM (niri/dwindle layouts), workspaces, hotkeys, app rules |
 | `borders` | ~/.config | Window border config (borderrc) |
 | `karabiner` | ~/.config | Keyboard customization (karabiner.json — app launchers, vim arrows, caps→ctrl/esc) |
@@ -96,7 +96,6 @@ stow -D shell
 | Package | Contents |
 |---------|----------|
 | `linux` | .linux, .xmobarrc, .Xresources, .xsession, .xsessionrc |
-| `xmonad` | .xmonad/xmonad.hs |
 
 ### Other
 
