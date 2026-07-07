@@ -1,5 +1,7 @@
 monitorBarOverrides = []
+monitorGapOverrides = []
 monitorOrientationOverrides = []
+monitorRoutingOverrides = []
 
 [appearance]
 mode = "dark"
@@ -23,14 +25,17 @@ maxTotalBytes = 67108864
 [dwindle]
 defaultSplitRatio = 1.0
 moveToRootStable = true
-singleWindowAspectRatio = "4:3"
+singleWindowAspectRatio = "fill"
 smartSplit = false
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
 
 [focus]
+crossesMonitorAtEdge = false
 followsMouse = false
 followsWindowToMonitor = false
+lockModifier = "off"
+moveCrossesMonitorAtEdge = false
 moveMouseToFocusedWindow = false
 
 [gaps]
@@ -46,11 +51,10 @@ top = 8.0
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
-hyperKeyHoldThresholdMilliseconds = 150
-hyperTrigger = "Left Option"
 ipcEnabled = true
 preventSleepEnabled = false
 spacesTrackingEnabled = true
+systemHyperTrigger = "None"
 updateChecksEnabled = true
 
 [gestures]
@@ -63,9 +67,8 @@ scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
 
 [mouseWarp]
-axis = "horizontal"
+enabled = false
 margin = 1
-monitorOrder = ["Built-in Retina Display", "DELL U2723QE", "DELL P2417H"]
 
 [niri]
 alwaysCenterSingleColumn = true
@@ -74,8 +77,7 @@ columnWidthPresets = [0.3333333333333333, 0.5, 0.66]
 defaultColumnWidth = 0.5
 infiniteLoop = true
 maxVisibleColumns = 2
-maxWindowsPerColumn = 3
-singleWindowAspectRatio = "4:3"
+singleWindowAspectRatio = "fill"
 
 [quakeTerminal]
 animationDuration = 0.2
@@ -85,18 +87,10 @@ heightPercent = 50.0
 monitorMode = "focusedWindow"
 opacity = 0.8
 position = "center"
-useCustomFrame = true
 widthPercent = 50.0
 
-[quakeTerminal.customFrame]
-height = 645.0
-width = 1028.0
-x = 514.0
-y = 323.0
-
-[state]
-commandPaletteLastMode = "windows"
-hiddenBarIsCollapsed = false
+[routing]
+mode = "macOS"
 
 [statusBar]
 showAppNames = false
@@ -110,11 +104,13 @@ enabled = true
 height = 24.0
 hideEmptyWorkspaces = true
 labelFontSize = 12.0
-notchAware = true
+notchActiveZoneWidth = 180.0
+notchMode = "off"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 showFloatingWindows = false
 showLabels = true
+systemStatsButton = false
 windowLevel = "popup"
 xOffset = 0.0
 yOffset = 0.0
@@ -264,15 +260,15 @@ binding = "Hyper+1"
 id = "switchWorkspace.0"
 
 [[hotkeys]]
-binding = "Hyper+Shift+1"
+binding = "Option+Shift+1"
 id = "moveToWorkspace.0"
 
 [[hotkeys]]
-binding = "Hyper+2"
+binding = "Left Control+Left Option+Left Shift+Left Command+2"
 id = "switchWorkspace.1"
 
 [[hotkeys]]
-binding = "Hyper+Shift+2"
+binding = "Left Option+Left Shift+2"
 id = "moveToWorkspace.1"
 
 [[hotkeys]]
@@ -280,7 +276,7 @@ binding = "Hyper+3"
 id = "switchWorkspace.2"
 
 [[hotkeys]]
-binding = "Hyper+Shift+3"
+binding = "Option+Shift+3"
 id = "moveToWorkspace.2"
 
 [[hotkeys]]
@@ -288,7 +284,7 @@ binding = "Hyper+4"
 id = "switchWorkspace.3"
 
 [[hotkeys]]
-binding = "Hyper+Shift+4"
+binding = "Option+Shift+4"
 id = "moveToWorkspace.3"
 
 [[hotkeys]]
@@ -296,7 +292,7 @@ binding = "Hyper+5"
 id = "switchWorkspace.4"
 
 [[hotkeys]]
-binding = "Hyper+Shift+5"
+binding = "Option+Shift+5"
 id = "moveToWorkspace.4"
 
 [[hotkeys]]
@@ -304,7 +300,7 @@ binding = "Hyper+6"
 id = "switchWorkspace.5"
 
 [[hotkeys]]
-binding = "Hyper+Shift+6"
+binding = "Option+Shift+6"
 id = "moveToWorkspace.5"
 
 [[hotkeys]]
@@ -312,7 +308,7 @@ binding = "Hyper+7"
 id = "switchWorkspace.6"
 
 [[hotkeys]]
-binding = "Hyper+Shift+7"
+binding = "Option+Shift+7"
 id = "moveToWorkspace.6"
 
 [[hotkeys]]
@@ -320,7 +316,7 @@ binding = "Hyper+8"
 id = "switchWorkspace.7"
 
 [[hotkeys]]
-binding = "Hyper+Shift+8"
+binding = "Option+Shift+8"
 id = "moveToWorkspace.7"
 
 [[hotkeys]]
@@ -328,7 +324,7 @@ binding = "Hyper+9"
 id = "switchWorkspace.8"
 
 [[hotkeys]]
-binding = "Hyper+Shift+9"
+binding = "Option+Shift+9"
 id = "moveToWorkspace.8"
 
 [[hotkeys]]
@@ -370,6 +366,38 @@ id = "focusDownOrLeft"
 [[hotkeys]]
 binding = "Unassigned"
 id = "focusUpOrRight"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowTop"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowBottom"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowDownOrTop"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowUpOrBottom"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowOrWorkspaceDown"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowOrWorkspaceUp"
+
+[[hotkeys]]
+binding = "Option+C"
+id = "centerColumn"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "centerVisibleColumns"
 
 [[hotkeys]]
 binding = "Control+Option+Shift+Up Arrow"
@@ -440,6 +468,38 @@ binding = "Option+Shift+Right Arrow"
 id = "move.right"
 
 [[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowDown"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowUp"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowDownOrToWorkspaceDown"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowUpOrToWorkspaceUp"
+
+[[hotkeys]]
+binding = "Option+Left Bracket"
+id = "consumeOrExpelWindowLeft"
+
+[[hotkeys]]
+binding = "Option+Right Bracket"
+id = "consumeOrExpelWindowRight"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "consumeWindowIntoColumn"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "expelWindowFromColumn"
+
+[[hotkeys]]
 binding = "Control+Command+Tab"
 id = "focusMonitorNext"
 
@@ -466,6 +526,14 @@ id = "moveColumn.left"
 [[hotkeys]]
 binding = "Control+Option+Shift+Right Arrow"
 id = "moveColumn.right"
+
+[[hotkeys]]
+binding = "Control+Option+Home"
+id = "moveColumnToFirst"
+
+[[hotkeys]]
+binding = "Control+Option+End"
+id = "moveColumnToLast"
 
 [[hotkeys]]
 binding = "Option+T"
@@ -516,6 +584,78 @@ binding = "Control+Option+9"
 id = "focusColumn.8"
 
 [[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "focusWindowInColumn.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveColumnToIndex.9"
+
+[[hotkeys]]
 binding = "Option+Period"
 id = "cycleColumnWidthForward"
 
@@ -524,8 +664,56 @@ binding = "Option+Comma"
 id = "cycleColumnWidthBackward"
 
 [[hotkeys]]
+binding = "Unassigned"
+id = "cycleWindowWidthForward"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "cycleWindowWidthBackward"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "cycleWindowHeightForward"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "cycleWindowHeightBackward"
+
+[[hotkeys]]
 binding = "Option+Shift+F"
 id = "toggleColumnFullWidth"
+
+[[hotkeys]]
+binding = "Control+Option+F"
+id = "expandColumnToAvailableWidth"
+
+[[hotkeys]]
+binding = "Control+Option+R"
+id = "resetWindowHeight"
+
+[[hotkeys]]
+binding = "Option+Minus"
+id = "setColumnWidth.decrease10Percent"
+
+[[hotkeys]]
+binding = "Option+Equal"
+id = "setColumnWidth.increase10Percent"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "setWindowWidth.decrease10Percent"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "setWindowWidth.increase10Percent"
+
+[[hotkeys]]
+binding = "Option+Shift+Minus"
+id = "setWindowHeight.decrease10Percent"
+
+[[hotkeys]]
+binding = "Option+Shift+Equal"
+id = "setWindowHeight.increase10Percent"
 
 [[hotkeys]]
 binding = "Option+Shift+B"
@@ -574,6 +762,14 @@ id = "resizeShrink.up"
 [[hotkeys]]
 binding = "Unassigned"
 id = "resizeShrink.down"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "resizeFocusedWindow.grow"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "resizeFocusedWindow.shrink"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -644,196 +840,8 @@ binding = "Option+Shift+O"
 id = "toggleOverview"
 
 [[hotkeys]]
-binding = "Option+C"
-id = "centerColumn"
-
-[[hotkeys]]
 binding = "Unassigned"
-id = "centerVisibleColumns"
-
-[[hotkeys]]
-binding = "Option+Left Bracket"
-id = "consumeOrExpelWindowLeft"
-
-[[hotkeys]]
-binding = "Option+Right Bracket"
-id = "consumeOrExpelWindowRight"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "consumeWindowIntoColumn"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "expelWindowFromColumn"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowTop"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowBottom"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowDownOrTop"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowUpOrBottom"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowOrWorkspaceDown"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowOrWorkspaceUp"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.1"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.2"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.3"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.4"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.5"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.6"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.7"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.8"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "focusWindowInColumn.9"
-
-[[hotkeys]]
-binding = "Control+Option+Home"
-id = "moveColumnToFirst"
-
-[[hotkeys]]
-binding = "Control+Option+End"
-id = "moveColumnToLast"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.1"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.2"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.3"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.4"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.5"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.6"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.7"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.8"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveColumnToIndex.9"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveWindowDown"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveWindowUp"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveWindowDownOrToWorkspaceDown"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "moveWindowUpOrToWorkspaceUp"
-
-[[hotkeys]]
-binding = "Control+Option+R"
-id = "resetWindowHeight"
-
-[[hotkeys]]
-binding = "Option+Minus"
-id = "setColumnWidth.decrease10Percent"
-
-[[hotkeys]]
-binding = "Option+Equal"
-id = "setColumnWidth.increase10Percent"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "setWindowWidth.decrease10Percent"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "setWindowWidth.increase10Percent"
-
-[[hotkeys]]
-binding = "Option+Shift+Minus"
-id = "setWindowHeight.decrease10Percent"
-
-[[hotkeys]]
-binding = "Option+Shift+Equal"
-id = "setWindowHeight.increase10Percent"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "cycleWindowWidthForward"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "cycleWindowWidthBackward"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "cycleWindowHeightForward"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "cycleWindowHeightBackward"
-
-[[hotkeys]]
-binding = "Control+Option+F"
-id = "expandColumnToAvailableWidth"
+id = "toggleSystemStats"
 
 [[monitorDwindleOverrides]]
 id = "6F408D6D-05D6-4777-9907-B2928A4E6860"
@@ -847,7 +855,7 @@ id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
 maxVisibleColumns = 1
 monitorDisplayId = 2
 monitorName = "DELL P2417H"
-singleWindowAspectRatio = "none"
+singleWindowAspectRatio = "fill"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
@@ -892,7 +900,7 @@ type = "main"
 [[workspaces]]
 displayName = "❤️"
 id = "5953F2BF-A378-4266-91B2-287174C4FA4D"
-layoutType = "niri"
+layoutType = "dwindle"
 name = "6"
 
 [workspaces.monitorAssignment]
