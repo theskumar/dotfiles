@@ -3,7 +3,7 @@
 > **Repo:** [BarutSRB/OmniWM](https://github.com/BarutSRB/OmniWM)
 > **Config:** `omniwm/omniwm/settings.toml` → stowed to `~/.config/omniwm/settings.toml`
 > **Float rules script:** `omniwm/setup-rules.sh` — run once after fresh install
-> **Installed:** v0.4.9 via `brew install barutsrb/tap/omniwm` · check with `omniwmctl version`
+> **Installed:** v0.5.3 via `brew install barutsrb/tap/omniwm` · check with `omniwmctl version`
 
 OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
 
@@ -25,7 +25,6 @@ OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It suppor
   - [[quakeTerminal]](#quaketerminal)
   - [[mouseWarp]](#mousewarp)
   - [[clipboard]](#clipboard)
-  - [[state]](#state)
   - [[statusBar]](#statusbar)
   - [[appRules]](#apprules)
   - [[hotkeys]](#hotkeys)
@@ -64,6 +63,8 @@ defaultLayoutType = "niri"     # Default layout: "niri" | "dwindle"
 hotkeysEnabled = true          # Enable/disable all global hotkeys
 ipcEnabled = true              # Enable omniwmctl IPC automation
 preventSleepEnabled = false    # Keep system awake while OmniWM is running
+spacesTrackingEnabled = true   # Track macOS Spaces alongside OmniWM workspaces
+systemHyperTrigger = "None"    # Modifier serialised as Hyper: "None" | "Left Option" | ...
 updateChecksEnabled = true     # Automatically check for new releases
 ```
 
@@ -78,10 +79,9 @@ Controls the scrolling columns layout.
 alwaysCenterSingleColumn = true        # Center the window when it's alone on the workspace
 centerFocusedColumn = "never"          # Auto-scroll to focused column: "never" | "always" | "on-overflow"
 columnWidthPresets = [0.333, 0.5, 0.66] # Width fractions cycled with Option+. / Option+,
-defaultColumnWidth = 0.5               # Default width for newly created columns (v0.4.9+)
+defaultColumnWidth = 0.5               # Default width for newly created columns
 infiniteLoop = true                    # Wrap-around scroll at workspace edges
 maxVisibleColumns = 2                  # How many columns are visible side-by-side at once
-maxWindowsPerColumn = 3                # Max windows stacked vertically in one column
 singleWindowAspectRatio = "4:3"        # Aspect ratio when a window is alone: "none" | "4:3" | "16:9" etc.
 ```
 
@@ -168,7 +168,7 @@ The floating workspace indicator bar.
 enabled = true
 position = "overlappingMenuBar"   # "overlappingMenuBar" (floats over menu bar) or reserve space
 height = 24.0
-notchAware = true                 # Avoid the MacBook Pro notch ✓
+notchMode = "splitActiveLeft"     # Notch handling: "splitActiveLeft" | "splitActiveRight" | "moveBelowMenuBar" | "off"
 showLabels = true                 # Show workspace names/numbers
 labelFontSize = 12.0
 backgroundOpacity = 0.1           # 0.0 = fully transparent background
@@ -237,19 +237,11 @@ monitorMode = "focusedWindow"  # Which monitor: "focusedWindow" | "primary"
 opacity = 0.8                 # Window opacity (0.0–1.0)
 autoHide = true               # Auto-hide when focus leaves the terminal
 animationDuration = 0.2       # Slide-in animation speed (seconds)
-useCustomFrame = true         # Use OmniWM's custom frameless window chrome
-
-# Saved position/size from last manual resize — managed by OmniWM
-[quakeTerminal.customFrame]
-height = 645.0
-width = 1028.0
-x = 514.0
-y = 323.0
 ```
 
 The terminal app used is whatever your quake terminal app rule is set to (Ghostty by default — `com.mitchellh.ghostty`).
 
-> **Tip:** `useCustomFrame = true` replaces the native Ghostty title bar with OmniWM's own chrome. `autoHide = true` dismisses the terminal when you click away — retoggle with `` Option+` ``.
+> **Tip:** `autoHide = true` dismisses the terminal when you click away — retoggle with `` Option+` ``.
 
 ---
 
@@ -259,16 +251,15 @@ Cursor warping when focus crosses monitor boundaries (multi-monitor only).
 
 ```toml
 [mouseWarp]
-axis = "horizontal"   # "horizontal" | "vertical" | "both"
+enabled = false       # Enable cursor warp on monitor-crossing focus changes
 margin = 1            # Pixels from edge that trigger the warp
-monitorOrder = []     # Custom monitor ordering (empty = auto)
 ```
 
 ---
 
 ### `[clipboard]`
 
-*(v0.4.9+)* Clipboard history accessible from the command palette.
+Clipboard history accessible from the command palette.
 
 ```toml
 [clipboard]
@@ -279,18 +270,6 @@ maxTotalBytes = 67108864    # Max total history size (64 MB)
 ```
 
 Access clipboard history via the command palette (`Ctrl+Option+Space`).
-
----
-
-### `[state]`
-
-Internal UI state — managed by OmniWM, no need to hand-edit.
-
-```toml
-[state]
-commandPaletteLastMode = "windows"
-hiddenBarIsCollapsed = true
-```
 
 ---
 
@@ -387,7 +366,7 @@ Use `"Unassigned"` to explicitly leave an action without a binding.
 **Valid modifier key names:** `Option`, `Shift`, `Control`, `Command`, `Hyper`
 **Special keys:** `Left Arrow`, `Right Arrow`, `Up Arrow`, `Down Arrow`, `Return`, `Tab`, `Space`, `Home`, `End`, `Page Up`, `Page Down`, `[`, `]`, `` ` ``, `-`, `=`, `.`, `,`
 
-> **OmniWM owns this file and rewrites it.** On any settings change or restart it reserialises `settings.toml` into canonical form: keys get alphabetised, punctuation is spelled out (`,`→`Comma`, `.`→`Period`, `` ` ``→`Grave`, `-`→`Minus`, `=`→`Equal`, `[`→`LeftBracket`, `]`→`RightBracket`), and Left Option may serialise as the `Hyper` modifier (`hyperTrigger = "Left Option"`, v0.4.9+). **Edit while OmniWM is quit**, then relaunch to load — editing live risks OmniWM clobbering the change. Expect large reordered diffs; that's normal.
+> **OmniWM owns this file and rewrites it.** On any settings change or restart it reserialises `settings.toml` into canonical form: keys get alphabetised, punctuation is spelled out (`,`→`Comma`, `.`→`Period`, `` ` ``→`Grave`, `-`→`Minus`, `=`→`Equal`, `[`→`LeftBracket`, `]`→`RightBracket`), and Left Option may serialise as the `Hyper` modifier when `systemHyperTrigger` is set. **Edit while OmniWM is quit**, then relaunch to load — editing live risks OmniWM clobbering the change. Expect large reordered diffs; that's normal.
 
 ---
 
@@ -611,7 +590,6 @@ smartSplit = true
 
 Override arrays: `monitorNiriOverrides`, `monitorDwindleOverrides`, `monitorBarOverrides`, `monitorOrientationOverrides`. The `monitorName` must match `omniwmctl query displays` output exactly.
 
-> ⚠️ **v0.4.9 caveat:** the per-monitor niri override silently drops `maxWindowsPerColumn` on rewrite — the global `[niri]` value applies.
 
 ---
 
@@ -623,7 +601,7 @@ Override arrays: `monitorNiriOverrides`, `monitorDwindleOverrides`, `monitorBarO
 
 **Per-monitor overrides are TOML array-of-tables.** When adding a new `[[monitorNiriOverrides]]` or `[[monitorDwindleOverrides]]` entry, remove the empty-array placeholder (`monitorXxxOverrides = []`) from the top of the file — TOML can't have both `key = []` and `[[key]]` for the same key.
 
-**OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), may convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. Always **quit OmniWM before editing** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
+**OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), may convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. If Karabiner already remaps a key to Hyper, set `systemHyperTrigger = "None"` to stop OmniWM from also claiming Option as Hyper. Always **quit OmniWM before editing** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
 
 **`monitorDisplayId` can change across reboots.** The `monitorName` is the durable identifier. OmniWM matches by name when the ID doesn't match.
 
