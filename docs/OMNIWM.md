@@ -234,7 +234,7 @@ heightPercent = 50.0          # Height as % of screen
 widthPercent = 50.0           # Width as % of screen
 position = "center"           # "center" | "top" | "bottom" | "left" | "right"
 monitorMode = "focusedWindow"  # Which monitor: "focusedWindow" | "primary"
-opacity = 0.8                 # Window opacity (0.0–1.0)
+opacity = 1.0                 # Window opacity (0.0–1.0), 1.0 = fully opaque
 autoHide = true               # Auto-hide when focus leaves the terminal
 animationDuration = 0.2       # Slide-in animation speed (seconds)
 ```
