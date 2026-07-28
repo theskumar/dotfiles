@@ -3,7 +3,7 @@
 > **Repo:** [BarutSRB/OmniWM](https://github.com/BarutSRB/OmniWM)
 > **Config:** `omniwm/omniwm/settings.toml` → stowed to `~/.config/omniwm/settings.toml`
 > **Float rules script:** `omniwm/setup-rules.sh` — run once after fresh install
-> **Installed:** v0.5.3 via `brew install barutsrb/tap/omniwm` · check with `omniwmctl version`
+> **Installed:** v0.5.9, protocol 8, via `brew install --cask omniwm` · check with `omniwmctl version`
 
 OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
 
@@ -76,20 +76,21 @@ Controls the scrolling columns layout.
 
 ```toml
 [niri]
-alwaysCenterSingleColumn = true        # Center the window when it's alone on the workspace
-centerFocusedColumn = "never"          # Auto-scroll to focused column: "never" | "always" | "on-overflow"
-columnWidthPresets = [0.333, 0.5, 0.66] # Width fractions cycled with Option+. / Option+,
-defaultColumnWidth = 0.5               # Default width for newly created columns
-infiniteLoop = true                    # Wrap-around scroll at workspace edges
-maxVisibleColumns = 2                  # How many columns are visible side-by-side at once
-singleWindowAspectRatio = "4:3"        # Aspect ratio when a window is alone: "none" | "4:3" | "16:9" etc.
+alwaysCenterSingleColumn = true              # Center the window when it's alone on the workspace
+centerFocusedColumn = "never"                # Auto-scroll to focused column: "never" | "always" | "on-overflow"
+containerPrimarySpanPresets = [0.333, 0.5, 0.66] # Primary-axis span fractions cycled with Option+. / Option+,
+defaultContainerPrimarySpan = 0.5            # Default primary-axis span for newly created columns
+infiniteLoop = true                          # Wrap-around scroll at workspace edges
+singleWindowFit = "4:3"                      # Fit when a window is alone: "none" | "4:3" | "16:9" etc.
+visibleContainerCount = 2                    # How many columns are visible side-by-side at once
 ```
 
 **Tips:**
 - `centerFocusedColumn = "on-overflow"` is a good middle ground — only scrolls when the focused column is off-screen.
-- `maxVisibleColumns = 3` works well on wide external monitors; `2` is ideal for a 14" MacBook.
-- Set `singleWindowAspectRatio = "none"` to let single windows fill the available space freely.
+- `visibleContainerCount = 3` works well on wide external monitors; `2` is ideal for a 14" MacBook.
+- Set `singleWindowFit = "none"` to let single windows fill the available space freely.
 - These are **global** defaults. To tune Niri per-monitor (e.g. a portrait display), use `[[monitorNiriOverrides]]` — see [Multi-Monitor Setup](#multi-monitor-setup).
+- "Primary span" = the axis a column occupies room-wise on the scroll axis (width on a landscape monitor, height once portrait-ready Niri is in use). Renamed from `columnWidthPresets`/`defaultColumnWidth`/`maxVisibleColumns` in v0.5.9 (protocol 8) to reflect this axis-agnostic model.
 
 ---
 
@@ -104,7 +105,7 @@ moveToRootStable = true        # Stabilise window position when moved to root
 smartSplit = false             # Auto-choose split direction based on window shape
 splitWidthMultiplier = 1.0     # Width bias for horizontal splits
 useGlobalGaps = true           # Use the global [gaps] settings
-singleWindowAspectRatio = "4:3"
+singleWindowFit = "4:3"        # Renamed from singleWindowAspectRatio in v0.5.9
 ```
 
 ---
@@ -406,16 +407,16 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 | Move window to workspace ↑/↓ | `Ctrl+Option+Shift+↑/↓` |
 | Center column | `Option+C` |
 | Float / unfloat focused window | `Ctrl+Option+W` |
-| Column width −10% / +10% | `Option+-` / `Option+=` |
-| Window height −10% / +10% | `Option+Shift+-` / `Option+Shift+=` |
-| Expand column to available width | `Ctrl+Option+F` |
-| Reset window height | `Ctrl+Option+R` |
+| Container primary span −10% / +10% | `Option+-` / `Option+=` |
+| Window secondary span −10% / +10% | `Option+Shift+-` / `Option+Shift+=` |
+| Expand container to available primary span | `Ctrl+Option+F` |
+| Reset window secondary span | `Ctrl+Option+R` |
 | Move column to first / last | `Ctrl+Option+Home` / `Ctrl+Option+End` |
 | Move column to workspace ↑/↓ | `Ctrl+Option+Shift+PgUp/PgDn` |
-| Cycle column width forward | `Option+.` |
-| Cycle column width backward | `Option+,` |
+| Cycle size forward | `Option+.` |
+| Cycle size backward | `Option+,` |
 | Toggle fullscreen | `Option+Return` |
-| Toggle column full-width | `Option+Shift+F` |
+| Toggle container full primary span | `Option+Shift+F` |
 | Balance sizes | `Option+Shift+B` |
 | Toggle tabbed column | `Option+T` |
 | Consume / expel window left | `Option+[` |
@@ -445,14 +446,16 @@ type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 | `expelWindowFromColumn` | Eject focused window from its column |
 | `moveColumnToFirst/Last` | Jump column to start or end of workspace |
 | `moveColumnToIndex.1-9` | Move column to specific index |
-| `expandColumnToAvailableWidth` | Expand column to fill available space |
-| `resetWindowHeight` | Reset window height to default |
-| `setColumnWidth.decrease10Percent` | Shrink column width by 10% |
-| `setColumnWidth.increase10Percent` | Grow column width by 10% |
-| `setWindowHeight.decrease10Percent` | Shrink window height by 10% |
-| `setWindowHeight.increase10Percent` | Grow window height by 10% |
-| `cycleWindowWidthForward/Backward` | Cycle individual window width presets |
-| `cycleWindowHeightForward/Backward` | Cycle individual window height presets |
+| `expandContainerToAvailablePrimarySpan` | Expand container to fill available primary-axis space |
+| `resetWindowSecondarySpan` | Reset window secondary-axis span to default |
+| `setContainerPrimarySpan.decrease10Percent` | Shrink container primary span by 10% |
+| `setContainerPrimarySpan.increase10Percent` | Grow container primary span by 10% |
+| `setWindowPrimarySpan.decrease10Percent` | Shrink window primary span by 10% |
+| `setWindowPrimarySpan.increase10Percent` | Grow window primary span by 10% |
+| `setWindowSecondarySpan.decrease10Percent` | Shrink window secondary span by 10% |
+| `setWindowSecondarySpan.increase10Percent` | Grow window secondary span by 10% |
+| `cycleWindowPrimarySpanForward/Backward` | Cycle individual window primary-span presets |
+| `cycleWindowSecondarySpanForward/Backward` | Cycle individual window secondary-span presets |
 | `toggleFocusedWindowFloating` | Float / tile the focused window |
 | `assignFocusedWindowToScratchpad` | Send window to scratchpad |
 | `toggleScratchpadWindow` | Show/hide scratchpad window |
@@ -490,8 +493,8 @@ omniwmctl query focused-window
 omniwmctl query windows --workspace 2 --format table
 
 # Column operations
-omniwmctl command toggle-column-full-width
-omniwmctl command cycle-column-width forward
+omniwmctl command toggle-container-full-primary-span
+omniwmctl command cycle-size forward
 
 # Window rules (add/remove/apply at runtime)
 omniwmctl rule add --bundle-id com.apple.finder --layout float
@@ -566,6 +569,8 @@ The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) uses **Dwindle
 
 **Why not Niri?** Niri's scrollable-column model gives each window in a column the full viewport height and scrolls between them. On a portrait monitor you'd only ever see one window at a time — even with `consumeOrExpelWindow` to merge them into one column. There's no way to force Niri to split column height 50/50 between windows.
 
+> v0.5.9 makes Niri portrait-ready (it now understands primary/secondary axes per monitor orientation), but that's a layout change worth testing on its own — not bundled into the 0.5.9 config migration. Dwindle stays the portrait default for now.
+
 **Per-workspace layout:** set `layoutType = "dwindle"` on the workspace. This coexists with Niri on other workspaces.
 
 **Per-monitor overrides** are set via array-of-table sections. Each override names its target monitor and only overrides the fields you set — the rest fall back to the global `[dwindle]` or `[niri]` block. Current portrait overrides:
@@ -575,16 +580,16 @@ The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) uses **Dwindle
 [[monitorNiriOverrides]]
 id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
 monitorName = "DELL P2417H"
-monitorDisplayId = 2
-maxVisibleColumns = 1
-singleWindowAspectRatio = "none"
+monitorDisplayUUID = "..."    # set by Settings → Monitors → Run Monitor Setup
+visibleContainerCount = 1
+singleWindowFit = "none"
 alwaysCenterSingleColumn = true
 
 # Dwindle: auto-pick split axis (horizontal on portrait = top/bottom)
 [[monitorDwindleOverrides]]
 id = "6F408D6D-05D6-4777-9907-B2928A4E6860"
 monitorName = "DELL P2417H"
-monitorDisplayId = 2
+monitorDisplayUUID = "..."
 smartSplit = true
 ```
 
@@ -603,9 +608,13 @@ Override arrays: `monitorNiriOverrides`, `monitorDwindleOverrides`, `monitorBarO
 
 **OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), may convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. If Karabiner already remaps a key to Hyper, set `systemHyperTrigger = "None"` to stop OmniWM from also claiming Option as Hyper. Always **quit OmniWM before editing** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
 
-**`monitorDisplayId` can change across reboots.** The `monitorName` is the durable identifier. OmniWM matches by name when the ID doesn't match.
+**Monitor identity is UUID-based since v0.5.9 (protocol 8).** The numeric `monitorDisplayId` field is gone from per-monitor overrides — use `monitorDisplayUUID`, assigned via **Settings → Monitors → Run Monitor Setup…** with all target displays connected. Don't hand-write or derive a UUID; re-run monitor setup and re-save each override (Niri, Dwindle, bar/orientation) to pick it up. `monitorName` is still checked as a secondary match, but the UUID is now the durable identifier — old numeric-ID rows left over from a pre-0.5.9 config stay unbound until re-saved through the UI.
 
 **Consume/expel (`Option+[` / `Option+]`) is for Niri only.** It merges/splits columns. On Dwindle workspaces use `toggleSplit` / `swapSplit` instead.
+
+**macOS Reduce Motion no longer disables OmniWM animations (v0.5.9+).** Earlier versions respected the system Reduce Motion accessibility setting; from 0.5.9 on it doesn't, so `[general] animationsEnabled` is the only switch — set it to `false` if you want animations off regardless of the system setting.
+
+**Expect a one-time window-placement reset on first 0.5.9 launch.** Saved runtime/window placement state doesn't carry over across the protocol 7 → 8 jump — windows may reopen in different positions/workspaces after the first launch. Not a regression; things stabilize immediately and workspace/rule config is unaffected.
 
 ### Adding MacBook-as-tertiary workspaces
 
@@ -640,8 +649,8 @@ OmniWM supports pinning workspaces to a specific display by name via `type = "sp
 # Check installed version
 omniwmctl version
 
-# Upgrade via Homebrew
-brew upgrade barutsrb/tap/omniwm
+# Upgrade via Homebrew (cask)
+brew upgrade --cask omniwm
 
 # Check latest release on GitHub
 gh release list --repo BarutSRB/OmniWM --limit 3
