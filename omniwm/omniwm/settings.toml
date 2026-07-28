@@ -1,7 +1,6 @@
 monitorBarOverrides = []
 monitorGapOverrides = []
 monitorOrientationOverrides = []
-monitorRoutingOverrides = []
 
 [appearance]
 mode = "dark"
@@ -25,7 +24,7 @@ maxTotalBytes = 67108864
 [dwindle]
 defaultSplitRatio = 1.0
 moveToRootStable = true
-singleWindowFit = "fill"
+singleWindowFit = "1920x1080"
 smartSplit = true
 splitWidthMultiplier = 1.0
 useGlobalGaps = true
@@ -76,26 +75,25 @@ rehideIntervalSeconds = 5.0
 
 [mouseWarp]
 constrainToArrangement = false
-enabled = false
+enabled = true
 margin = 1
 
 [niri]
 alwaysCenterSingleColumn = true
-centerFocusedColumn = "never"
+centerFocusedColumn = "onOverflow"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.66]
-defaultContainerPrimarySpan = 0.5
 infiniteLoop = true
-singleWindowFit = "fill"
+singleWindowFit = "container_primary_span"
 visibleContainerCount = 2
 
 [overview]
 zoom = 1.0
 
 [overview.backdrop]
-alpha = 1.0
-blue = 0.08
-green = 0.05
-red = 0.05
+alpha = 0.8606404049295775
+blue = 0.07999999821186066
+green = 0.05000000447034836
+red = 0.05000000447034836
 
 [overview.windowBorders]
 
@@ -120,7 +118,7 @@ red = 0.3
 [quakeTerminal]
 animationDuration = 0.2
 autoHide = true
-enabled = true
+enabled = false
 heightPercent = 50.0
 monitorMode = "focusedWindow"
 opacity = 1.0
@@ -128,7 +126,7 @@ position = "center"
 widthPercent = 50.0
 
 [routing]
-mode = "macOS"
+mode = "custom"
 
 [statusBar]
 showAppNames = false
@@ -136,15 +134,15 @@ showWorkspaceName = false
 useWorkspaceId = false
 
 [workspaceBar]
-backgroundOpacity = 0.1
+backgroundOpacity = 0.0
 deduplicateAppIcons = false
 enabled = true
 excludedBundleIDs = []
-height = 24.0
+height = 26.0
 hideEmptyWorkspaces = true
 labelFontSize = 12.0
 notchActiveZoneWidth = 180.0
-notchMode = "off"
+notchMode = "splitActiveRight"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
@@ -161,6 +159,8 @@ alpha = 1.0
 blue = -1.0
 green = -1.0
 red = -1.0
+
+[workspaceBar.iconOverrides]
 
 [workspaceBar.textColor]
 alpha = 1.0
@@ -310,7 +310,7 @@ binding = "Option+2"
 id = "switchWorkspace.1"
 
 [[hotkeys]]
-binding = "Left Option+Left Shift+2"
+binding = "Option+Shift+2"
 id = "moveToWorkspace.1"
 
 [[hotkeys]]
@@ -894,18 +894,29 @@ binding = "Unassigned"
 id = "toggleSystemStats"
 
 [[monitorDwindleOverrides]]
-id = "6F408D6D-05D6-4777-9907-B2928A4E6860"
-monitorDisplayId = 2
+id = "48B56DEC-5735-4F9F-86D7-A5FF9A685F63"
+monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
 monitorName = "DELL P2417H"
-smartSplit = true
+singleWindowFit = "1060x1300"
 
 [[monitorNiriOverrides]]
-alwaysCenterSingleColumn = true
-id = "AF5D483B-487F-44ED-9FCF-7F4B07A3862B"
-monitorDisplayId = 2
+id = "B5D0654E-993A-4B82-9B10-A813F983B4C9"
+monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
 monitorName = "DELL P2417H"
-singleWindowFit = "fill"
+singleWindowFit = "container_primary_span"
 visibleContainerCount = 1
+
+[[monitorRoutingOverrides]]
+gridColumn = 1
+gridRow = 0
+monitorDisplayUUID = "13741E47-B162-48AB-AA82-497860C867C6"
+monitorName = "DELL U2723QE"
+
+[[monitorRoutingOverrides]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
+monitorName = "DELL P2417H"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
