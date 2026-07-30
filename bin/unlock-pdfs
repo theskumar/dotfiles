@@ -1,0 +1,47 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# dependencies = ["pikepdf"]
+# ///
+"""Remove password from PDFs. Usage: unlock-pdfs [-p PASSWORD] [file_or_dir ...]"""
+import argparse
+import getpass
+import pikepdf
+from pathlib import Path
+
+
+def collect_pdfs(paths):
+    if not paths:
+        paths = ["."]
+    pdfs = []
+    for p in paths:
+        path = Path(p)
+        if path.is_dir():
+            pdfs.extend(sorted(path.glob("*.pdf")))
+        elif path.suffix.lower() == ".pdf":
+            pdfs.append(path)
+    return pdfs
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Remove password from PDFs.")
+    parser.add_argument("-p", "--password", help="PDF password (prompted if omitted)")
+    parser.add_argument("paths", nargs="*", help="files or dirs (default: cwd)")
+    args = parser.parse_args()
+
+    password = args.password or getpass.getpass("PDF password: ")
+    pdfs = collect_pdfs(args.paths)
+    if not pdfs:
+        print("no PDFs found")
+        return
+
+    for pdf_path in pdfs:
+        try:
+            with pikepdf.open(pdf_path, password=password, allow_overwriting_input=True) as pdf:
+                pdf.save(pdf_path)
+            print(f"unlocked: {pdf_path}")
+        except pikepdf.PasswordError:
+            print(f"skip (wrong pw): {pdf_path}")
+
+
+if __name__ == "__main__":
+    main()
