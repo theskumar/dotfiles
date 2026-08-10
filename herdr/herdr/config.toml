@@ -1,0 +1,33 @@
+# herdr configuration — stowed to ~/.config/herdr/config.toml
+# Full reference: https://herdr.dev/docs/configuration/
+# Print the shipped defaults with: herdr --default-config
+# Apply edits to a running server with: herdr server reload-config  (or prefix+shift+r)
+
+# ─── Theme ──────────────────────────────────────────────────────────────────────
+# Matches the catppuccin theme used in tmux.conf.
+# Built-ins: catppuccin, terminal, tokyo-night, dracula, nord, gruvbox,
+#            one-dark, solarized, kanagawa, rose-pine, vesper
+
+[theme]
+name = "catppuccin"
+
+# Follow the host terminal's light/dark appearance:
+# auto_switch = true
+# dark_name = "catppuccin"
+# light_name = "catppuccin-latte"
+
+# ─── Keys ─────────────────────────────────────────────────────────────────────
+# Prefix stays at herdr's default ctrl+b. tmux is on ctrl+a, so the two never
+# collide if tmux ever runs nested inside a herdr pane. prefix+? lists all
+# bindings live. Change the prefix here if you want it on ctrl+a instead.
+
+[keys]
+# prefix = "ctrl+b"
+
+# ─── Session ────────────────────────────────────────────────────────────────────
+# Restore supported agent panes into their native sessions after a server
+# restart (needs official integrations that report session refs — pi/claude
+# are installed). Mirrors the persistence habit from tmux-resurrect/continuum.
+
+[session]
+resume_agents_on_restore = true
