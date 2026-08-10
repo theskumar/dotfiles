@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration — stowed to ~/.config/herdr/config.toml
 # Full reference: https://herdr.dev/docs/configuration/
 # Print the shipped defaults with: herdr --default-config
@@ -17,17 +18,58 @@ name = "catppuccin"
 # light_name = "catppuccin-latte"
 
 # ─── Keys ─────────────────────────────────────────────────────────────────────
-# Prefix stays at herdr's default ctrl+b. tmux is on ctrl+a, so the two never
-# collide if tmux ever runs nested inside a herdr pane. prefix+? lists all
-# bindings live. Change the prefix here if you want it on ctrl+a instead.
+# Unified prefix: same key as tmux (ctrl+a). One prefix in muscle memory, and
+# the existing ghostty cmd shortcuts (which send ctrl+a + key) drive herdr too.
+# tmux itself is left completely untouched. prefix+? lists all bindings live.
+# Caveat: don't run tmux nested inside a herdr pane — both would grab ctrl+a.
+# Use one or the other per terminal.
 
 [keys]
-# prefix = "ctrl+b"
+prefix = "ctrl+a"
+
+# cmd+t sends prefix + ctrl+c (the tmux new-window chord) → new tab.
+new_tab = "prefix+ctrl+c"
+
+# cmd+w sends prefix + c (the tmux close chord) → close tab. herdr's native
+# prefix+shift+x is kept as well. (prefix+c is freed from new_tab above, which
+# is covered by cmd+t / prefix+ctrl+c.)
+close_tab = ["prefix+shift+x", "prefix+c"]
+
+# cmd+b sends prefix + b → toggle (hide/show) the sidebar. This is herdr's
+# native sidebar chord; ghostty maps cmd+b onto it.
+toggle_sidebar = "prefix+b"
+
+# Native workspace switcher (existing spaces only).
+workspace_picker = "prefix+w"
+
+# cmd+p sends prefix + space → Herdr Navigator: sesh-style fuzzy find-or-create
+# across workspaces, agents, projects, sessions, and zoxide directories.
+[[keys.command]]
+key = "prefix+space"
+type = "plugin_action"
+command = "herdr-navigator.open"
+description = "navigator: jump to anything"
+
+# Lazygit popup at the repo root. cmd+j sends prefix + ctrl+j (the tmux lazygit
+# chord). type = "pane" opens a temporary pane that closes when lazygit exits —
+# herdr's equivalent of tmux's display-popup.
+[[keys.command]]
+key = "prefix+ctrl+j"
+type = "pane"
+command = "bash -lc 'lazygit -p \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\"'"
+
+# ─── UI ─────────────────────────────────────────────────────────────────────────
+# Create new tabs instantly (cmd+t) instead of prompting for a name, matching
+# tmux new-window behavior.
+
+[ui]
+prompt_new_tab_name = false
 
 # ─── Session ────────────────────────────────────────────────────────────────────
 # Restore supported agent panes into their native sessions after a server
 # restart (needs official integrations that report session refs — pi/claude
 # are installed). Mirrors the persistence habit from tmux-resurrect/continuum.
 
+show_agent_labels_on_pane_borders = true
 [session]
 resume_agents_on_restore = true
