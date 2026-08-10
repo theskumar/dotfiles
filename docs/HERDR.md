@@ -1,0 +1,131 @@
+# Herdr Guide
+
+Prefix key: `Ctrl+A` (same as tmux — referred to as `prefix` below).
+
+Herdr is a terminal workspace manager for AI coding agents (a tmux-like
+multiplexer, but mouse-first and agent-aware). It's a **trial** running
+alongside tmux, not a replacement. A background server owns the panes; clients
+attach/detach. Workspaces = "spaces" (one per project); each holds tabs and
+panes. The sidebar rolls up each agent's state (`working` / `blocked` / `done`).
+
+## The Setup
+
+**Terminal:** Ghostty (same host as tmux; `cmd+*` shortcuts send `prefix + key`).
+**Multiplexer:** herdr in some Ghostty windows, tmux in others — never nested
+(both grab `Ctrl+A`).
+**AI coding:** pi / claude, detected automatically; state shown in the sidebar.
+**Config:** stowed — `~/dotfiles/herdr/herdr/config.toml` → `~/.config/herdr/config.toml`.
+
+### Prerequisites (macOS)
+
+```bash
+curl -fsSL https://herdr.dev/install.sh | sh   # or: brew / mise / nix
+```
+
+Version pinned in use: **0.8.0+** (navigator plugin needs ≥ 0.8.0; the socket
+protocol and `type = "plugin_action"` bindings assume 0.8.0).
+
+## Design: one prefix, shared with tmux
+
+Ghostty translates every `cmd+*` shortcut into `Ctrl+A + <key>` text. Because
+**herdr's prefix is also `Ctrl+A`**, the same Ghostty shortcuts drive *both*
+tmux and herdr — herdr just binds its actions to the chords tmux already uses.
+**tmux config is never touched**; herdr adopts.
+
+| macOS key | Ghostty sends | herdr action | in tmux |
+| --------- | ------------- | ------------ | ------- |
+| `cmd+t`   | `Ctrl+A Ctrl+C` | new tab            | new window        |
+| `cmd+w`   | `Ctrl+A c`      | close tab          | kill pane         |
+| `cmd+b`   | `Ctrl+A b`      | toggle sidebar     | (unbound; herdr-only) |
+| `cmd+p`   | `Ctrl+A Space`  | Navigator (find/create) | sesh picker  |
+| `cmd+j`   | `Ctrl+A Ctrl+J` | lazygit popup      | lazygit popup     |
+| `cmd+s`   | `Ctrl+A Shift+S`| (unbound in herdr) | choose-session    |
+
+`cmd+b` is the only Ghostty change made for herdr (a herdr-only concept). All
+others reuse existing tmux chords. `cmd+s` still does tmux choose-session and is
+intentionally not mapped in herdr.
+
+## Keybindings (effective)
+
+Custom (set in `config.toml`) plus the herdr defaults worth knowing:
+
+| Keys              | Action                                   |
+| ----------------- | ---------------------------------------- |
+| `prefix + Ctrl+C` | New tab (`cmd+t`)                        |
+| `prefix + c`      | Close tab (`cmd+w`); also `prefix+Shift+X` |
+| `prefix + b`      | Toggle sidebar (`cmd+b`)                 |
+| `prefix + Space`  | Navigator: find/create space (`cmd+p`)  |
+| `prefix + Ctrl+J` | Lazygit popup at repo root (`cmd+j`)    |
+| `prefix + w`      | Native workspace switcher (open spaces) |
+| `prefix + v` / `prefix + -` | Split right / down             |
+| `prefix + h/j/k/l`| Focus pane left/down/up/right           |
+| `prefix + z`      | Zoom pane                                |
+| `prefix + n` / `prefix + p` | Next / previous tab            |
+| `prefix + 1..9`   | Jump to tab                              |
+| `prefix + Shift+N`| New workspace                            |
+| `prefix + q`      | Detach (everything keeps running)        |
+| `prefix + ?`      | List all live bindings                   |
+| `prefix + Shift+R`| Reload config                            |
+
+## Navigator plugin (`cmd+p`)
+
+`cmd+p` opens **herdr-navigator** — a sesh-style fuzzy find-or-create picker
+across workspaces, agents, projects, sessions, and zoxide directories. Chosen
+because it runs on 0.7.3+, is actively maintained, and needs no herdr update to
+try. It replaces the tmux `sesh` workflow *inside* herdr (sesh itself only
+manages tmux sessions).
+
+```bash
+herdr plugin install thanhdat77/herdr-navigator --ref v0.3.5 --yes  # Rust; builds via cargo
+herdr plugin list
+herdr plugin action list --plugin herdr-navigator                    # action: herdr-navigator.open
+```
+
+Config dir: `~/.config/herdr/plugins/config/herdr-navigator` (tune project
+roots, zoxide sources, ordering). A `jump-back` action exists (jump to last
+space) — unbound for now.
+
+## Config
+
+- Edit the **dotfiles** source, not the symlink: `~/dotfiles/herdr/herdr/config.toml`.
+- Apply to the running server: `herdr server reload-config` (or `prefix + Shift+R`).
+- `herdr --default-config` prints the full annotated defaults.
+- **Herdr writes to this file itself** (e.g. `onboarding = false`, and UI-toggled
+  keys like `show_agent_labels_on_pane_borders`). Those appear as diffs in
+  dotfiles — commit them, they're real state.
+- Theme is `catppuccin` (matches tmux); `resume_agents_on_restore = true`.
+
+## Integrations
+
+Give herdr authoritative agent state instead of screen-scraping:
+
+```bash
+herdr integration status
+herdr integration install <agent>   # pi / claude / hermes already current
+```
+
+## Gotchas (read before automating)
+
+- **`HERDR_ENV=1`** means you're inside a herdr pane. Never run bare `herdr`
+  nested — launches are blocked by design.
+- **`herdr update` cannot run inside herdr.** Detach / `herdr server stop`
+  first, update in a plain terminal, then reattach:
+  ```bash
+  herdr server stop && herdr update && herdr
+  ```
+- **Don't nest tmux inside a herdr pane** — both use `Ctrl+A`; herdr wins and
+  tmux never sees the prefix. Use one per terminal.
+- Prefer the **CLI over raw keys** for scripting: `herdr workspace|tab|pane|agent
+  <sub>` all speak the socket API. `herdr api schema --json` documents it.
+- Logs: `~/.config/herdr/herdr{,-server,-client}.log`. Runtime: `herdr status`.
+
+## Onboarding a new machine
+
+```bash
+git clone <dotfiles-url> ~/dotfiles
+cd ~/dotfiles && ./install.sh                 # stows herdr (in the XDG set)
+curl -fsSL https://herdr.dev/install.sh | sh  # herdr >= 0.8.0
+herdr plugin install thanhdat77/herdr-navigator --ref v0.3.5 --yes
+herdr integration install pi                  # + claude, hermes as needed
+cd ~/some/project && herdr                     # attach; agent shows in sidebar
+```
