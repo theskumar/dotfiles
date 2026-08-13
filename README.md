@@ -72,6 +72,7 @@ stow -D shell
 | `tmuxinator` | Project layouts |
 | `mise` | Global tool versions config |
 | `helix` | config.toml (editor settings, theme, keybinds), languages.toml (LSPs, formatters) |
+| `herdr` | config.toml (keybindings, theme, plugins) |
 
 ### Git and dev tools (XDG)
 
@@ -122,6 +123,7 @@ Guides and references in `docs/`:
 | [NEWSBOAT.md](docs/NEWSBOAT.md) | Newsboat RSS reader |
 | [MOSH.md](docs/MOSH.md) | Mosh mobile shell setup and usage |
 | [PI-TREE.md](docs/PI-TREE.md) | Pi agent tree, branch, and fork workflows |
+| [HERDR.md](docs/HERDR.md) | Herdr keybindings, plugins, and workflow |
 
 ## Notes
 
