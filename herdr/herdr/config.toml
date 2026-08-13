@@ -58,6 +58,27 @@ key = "prefix+ctrl+j"
 type = "pane"
 command = "bash -lc 'lazygit -p \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\"'"
 
+# prefix+u → Herdr Pluck: hint-label a visible URL and open it (tmux-fzf-url).
+[[keys.command]]
+key = "prefix+u"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.open-url"
+description = "pluck: open a visible URL"
+
+# prefix+t → Herdr Pluck: hint-label a visible token and copy it (tmux-thumbs).
+[[keys.command]]
+key = "prefix+t"
+type = "plugin_action"
+command = "rmarganti.herdr-pluck.pluck"
+description = "pluck: copy a visible token"
+
+# cmd+e sends prefix + ctrl+e → open Zed at the repo root (GUI, detached),
+# matching the tmux binding. type = "shell" runs in the background.
+[[keys.command]]
+key = "prefix+ctrl+e"
+type = "shell"
+command = "bash -lc 'd=\"${HERDR_ACTIVE_PANE_CWD:-$PWD}\"; zed \"$(git -C \"$d\" rev-parse --show-toplevel 2>/dev/null || echo \"$d\")\"'"
+
 # ─── UI ─────────────────────────────────────────────────────────────────────────
 # Create new tabs instantly (cmd+t) instead of prompting for a name, matching
 # tmux new-window behavior.
@@ -73,3 +94,6 @@ prompt_new_tab_name = false
 show_agent_labels_on_pane_borders = true
 [session]
 resume_agents_on_restore = true
+
+[ui.toast]
+delivery = "system"

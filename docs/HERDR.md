@@ -39,6 +39,7 @@ tmux and herdr — herdr just binds its actions to the chords tmux already uses.
 | `cmd+b`   | `Ctrl+A b`      | toggle sidebar     | (unbound; herdr-only) |
 | `cmd+p`   | `Ctrl+A Space`  | Navigator (find/create) | sesh picker  |
 | `cmd+j`   | `Ctrl+A Ctrl+J` | lazygit popup      | lazygit popup     |
+| `cmd+e`   | `Ctrl+A Ctrl+E` | open Zed at repo root | (unbound; herdr-only) |
 | `cmd+s`   | `Ctrl+A Shift+S`| (unbound in herdr) | choose-session    |
 
 `cmd+b` is the only Ghostty change made for herdr (a herdr-only concept). All
@@ -56,6 +57,9 @@ Custom (set in `config.toml`) plus the herdr defaults worth knowing:
 | `prefix + b`      | Toggle sidebar (`cmd+b`)                 |
 | `prefix + Space`  | Navigator: find/create space (`cmd+p`)  |
 | `prefix + Ctrl+J` | Lazygit popup at repo root (`cmd+j`)    |
+| `prefix + Ctrl+E` | Open Zed at repo root, detached GUI (`cmd+e`) |
+| `prefix + u`      | Herdr Pluck: hint-label a visible URL and open it |
+| `prefix + t`      | Herdr Pluck: hint-label a visible token and copy it |
 | `prefix + w`      | Native workspace switcher (open spaces) |
 | `prefix + v` / `prefix + -` | Split right / down             |
 | `prefix + h/j/k/l`| Focus pane left/down/up/right           |
@@ -85,6 +89,20 @@ Config dir: `~/.config/herdr/plugins/config/herdr-navigator` (tune project
 roots, zoxide sources, ordering). A `jump-back` action exists (jump to last
 space) — unbound for now.
 
+## Pluck plugin (`prefix+u` / `prefix+t`)
+
+**herdr-pluck** hint-labels visible text in the pane (like `tmux-fzf-url` /
+`tmux-thumbs`) so you can jump to it with a couple of keystrokes instead of
+selecting with the mouse.
+
+```bash
+herdr plugin install rmarganti/herdr-pluck --yes
+herdr plugin action list --plugin herdr-pluck
+```
+
+- `prefix+u` → `rmarganti.herdr-pluck.open-url`: label every visible URL, open the chosen one.
+- `prefix+t` → `rmarganti.herdr-pluck.pluck`: label visible tokens (paths, hashes, IPs, etc.), copy the chosen one.
+
 ## Config
 
 - Edit the **dotfiles** source, not the symlink: `~/dotfiles/herdr/herdr/config.toml`.
@@ -94,6 +112,8 @@ space) — unbound for now.
   keys like `show_agent_labels_on_pane_borders`). Those appear as diffs in
   dotfiles — commit them, they're real state.
 - Theme is `catppuccin` (matches tmux); `resume_agents_on_restore = true`.
+- `[ui.toast] delivery = "system"` routes herdr toasts (e.g. agent state
+  changes) through native macOS notifications instead of in-app-only toasts.
 
 ## Integrations
 
@@ -126,6 +146,7 @@ git clone <dotfiles-url> ~/dotfiles
 cd ~/dotfiles && ./install.sh                 # stows herdr (in the XDG set)
 curl -fsSL https://herdr.dev/install.sh | sh  # herdr >= 0.8.0
 herdr plugin install thanhdat77/herdr-navigator --ref v0.3.5 --yes
+herdr plugin install rmarganti/herdr-pluck --yes
 herdr integration install pi                  # + claude, hermes as needed
 cd ~/some/project && herdr                     # attach; agent shows in sidebar
 ```
