@@ -30,10 +30,15 @@ prefix = "ctrl+a"
 # cmd+t sends prefix + ctrl+c (the tmux new-window chord) → new tab.
 new_tab = "prefix+ctrl+c"
 
-# cmd+w sends prefix + c (the tmux close chord) → close tab. herdr's native
-# prefix+shift+x is kept as well. (prefix+c is freed from new_tab above, which
-# is covered by cmd+t / prefix+ctrl+c.)
-close_tab = ["prefix+shift+x", "prefix+c"]
+# cmd+w sends prefix + c (the tmux "kill pane" chord) → close the focused
+# pane, not the whole tab. close_tab would nuke every pane in the tab (and
+# cascade into closing the space entirely, since each space here is usually
+# one tab) — close_pane only cascades that far when it's truly the last pane
+# left, so splits survive cmd+w. herdr's native prefix+x is kept as well.
+# (prefix+c is freed from new_tab above, which is covered by cmd+t /
+# prefix+ctrl+c.)
+close_pane = ["prefix+x", "prefix+c"]
+close_tab = "prefix+shift+x"
 
 # cmd+b sends prefix + b → toggle (hide/show) the sidebar. This is herdr's
 # native sidebar chord; ghostty maps cmd+b onto it.

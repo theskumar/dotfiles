@@ -53,7 +53,7 @@ Custom (set in `config.toml`) plus the herdr defaults worth knowing:
 | Keys              | Action                                   |
 | ----------------- | ---------------------------------------- |
 | `prefix + Ctrl+C` | New tab (`cmd+t`)                        |
-| `prefix + c`      | Close tab (`cmd+w`); also `prefix+Shift+X` |
+| `prefix + c`      | Close focused pane (`cmd+w`); also `prefix+x` |
 | `prefix + b`      | Toggle sidebar (`cmd+b`)                 |
 | `prefix + Space`  | Navigator: find/create space (`cmd+p`)  |
 | `prefix + Ctrl+J` | Lazygit popup at repo root (`cmd+j`)    |
@@ -145,14 +145,16 @@ herdr integration install <agent>   # pi / claude / hermes already current
   (check `herdr-server.log` for `config diagnostic ... kept keys.settings,
   disabled ...`). Use `split_horizontal`'s actual default, `prefix+minus`,
   instead — that's what ghostty's `cmd+shift+d` sends.
-- **Closing your only tab closes the whole space.** `close_tab` cascades to
-  `close_workspace` whenever the workspace has one tab left (`app/actions.rs`)
-  — exact tmux parity (last window closes the session). Since each space here
-  is typically one tab, `cmd+w` / `prefix+c` will take the space with it.
-  `confirm_close` does **not** guard this path (it only guards closing a
-  linked worktree group), so there's no config-level way to get a
-  confirmation prompt here — open a second tab in a space if you want `cmd+w`
-  to stay non-destructive.
+- **Closing the last pane/tab in a space closes the space.** Both `close_pane`
+  and `close_tab` cascade to `close_workspace` once nothing is left behind
+  (`app/actions.rs`) — exact tmux parity (last window closes the session).
+  `cmd+w` is bound to `close_pane` (not `close_tab`) specifically so splits
+  survive it: it only cascades to closing the space when it's truly the last
+  pane in the last tab, which for a typical one-tab-one-pane space is still
+  every time. `confirm_close` does **not** guard this path (it only guards
+  closing a linked worktree group), so there's no config-level way to get a
+  confirmation prompt here — open a second pane/tab in a space if you want
+  `cmd+w` to stay non-destructive.
 
 ## Onboarding a new machine
 
