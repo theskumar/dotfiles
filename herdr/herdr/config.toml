@@ -56,12 +56,15 @@ command = "herdr-navigator.open"
 description = "navigator: jump to anything"
 
 # Lazygit popup at the repo root. cmd+j sends prefix + ctrl+j (the tmux lazygit
-# chord). type = "pane" opens a temporary pane that closes when lazygit exits —
-# herdr's equivalent of tmux's display-popup.
+# chord). type = "popup" opens a session-modal floating terminal (herdr's real
+# equivalent of tmux's display-popup) that closes when lazygit exits, instead
+# of consuming a spot in the tab layout like type = "pane" would.
 [[keys.command]]
 key = "prefix+ctrl+j"
-type = "pane"
+type = "popup"
 command = "bash -lc 'lazygit -p \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)\"'"
+width = "90%"
+height = "90%"
 
 # prefix+u → Herdr Pluck: hint-label a visible URL and open it (tmux-fzf-url).
 [[keys.command]]
