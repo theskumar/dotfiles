@@ -40,6 +40,7 @@ tmux and herdr — herdr just binds its actions to the chords tmux already uses.
 | `cmd+p`   | `Ctrl+A Space`  | Navigator (find/create) | sesh picker  |
 | `cmd+j`   | `Ctrl+A Ctrl+J` | lazygit popup      | lazygit popup     |
 | `cmd+e`   | `Ctrl+A Ctrl+E` | open Zed at repo root | (unbound; herdr-only) |
+| `cmd+x`   | `Ctrl+A Ctrl+H` | hx in a new side pane at repo root | hx in a new side pane at repo root |
 | `cmd+s`   | `Ctrl+A Shift+S`| (unbound in herdr) | choose-session    |
 
 `cmd+b` is the only Ghostty change made for herdr (a herdr-only concept). All
@@ -58,6 +59,7 @@ Custom (set in `config.toml`) plus the herdr defaults worth knowing:
 | `prefix + Space`  | Navigator: find/create space (`cmd+p`)  |
 | `prefix + Ctrl+J` | Lazygit popup at repo root (`cmd+j`)    |
 | `prefix + Ctrl+E` | Open Zed at repo root, detached GUI (`cmd+e`) |
+| `prefix + Ctrl+H` | Open hx (helix) in a new side pane at repo root (`cmd+x`) |
 | `prefix + u`      | Herdr Pluck: hint-label a visible URL and open it |
 | `prefix + t`      | Herdr Pluck: hint-label a visible token and copy it |
 | `prefix + w`      | Native workspace switcher (open spaces) |
@@ -88,6 +90,26 @@ herdr plugin action list --plugin herdr-navigator                    # action: h
 Config dir: `~/.config/herdr/plugins/config/herdr-navigator` (tune project
 roots, zoxide sources, ordering). A `jump-back` action exists (jump to last
 space) — unbound for now.
+
+## hx side pane (`prefix+ctrl+h`)
+
+`cmd+x` opens **hx** (helix) in a new side-by-side pane at the repo root,
+without zooming over or otherwise disturbing the pane you were already in
+(e.g. a running agent). `tmux` gets this natively via a plain `split-window`
+bind. herdr can't: its `[[keys.command]] type = "pane"` (what the lazygit
+binding uses) always zooms the new pane fullscreen and tears it down as a
+temporary overlay when the command exits -- there's no config flag to turn
+that off. So the herdr side calls `bin/hx-split`, which drives the socket
+API directly:
+
+1. `herdr pane split --direction right --cwd <repo root> --focus` -- a real,
+   non-zoomed split.
+2. `herdr pane run <pane id> "hx . ; exit"` -- types the command in; the
+   trailing `; exit` makes the pane's shell close itself the moment `hx`
+   quits, so nothing lingers.
+
+Verified end-to-end with the socket API directly (`herdr pane get` on the
+pane id returns `pane_not_found` right after quitting `hx`).
 
 ## Pluck plugin (`prefix+u` / `prefix+t`)
 

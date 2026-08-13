@@ -26,6 +26,8 @@ keybind = cmd+p=text:\x01\x20
 keybind = cmd+j=text:\x01\x0a
 # prefix + ^E → zed at git root
 keybind = cmd+e=text:\x01\x05
+# prefix + ^H → hx (helix) in a new side pane at git root
+keybind = cmd+x=text:\x01\x08
 # prefix + ^Y → yazi popup
 keybind = cmd+y=text:\x01\x19
 keybind = cmd+shift+m=text:\x01\x0d

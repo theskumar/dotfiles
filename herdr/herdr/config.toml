@@ -87,6 +87,16 @@ key = "prefix+ctrl+e"
 type = "shell"
 command = "bash -lc 'd=\"${HERDR_ACTIVE_PANE_CWD:-$PWD}\"; zed \"$(git -C \"$d\" rev-parse --show-toplevel 2>/dev/null || echo \"$d\")\"'"
 
+# cmd+x sends prefix + ctrl+h → open hx (helix) in a new side pane at the
+# repo root, matching the tmux binding. type = "pane" isn't used here because
+# it always zooms fullscreen over whatever's focused; bin/hx-split drives the
+# socket API for a real, non-zoomed split instead, and makes the pane close
+# itself when hx quits. See bin/hx-split for the full rationale.
+[[keys.command]]
+key = "prefix+ctrl+h"
+type = "shell"
+command = "hx-split"
+
 # ─── UI ─────────────────────────────────────────────────────────────────────────
 # Create new tabs instantly (cmd+t) instead of prompting for a name, matching
 # tmux new-window behavior.

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# hx-split - open hx (helix) in a new side pane at the current project's git
+# root, without disturbing or zooming over the pane you're already in.
+#
+# Built for herdr's prefix+ctrl+h (cmd+x). herdr's [[keys.command]]
+# type = "pane" (what lazygit uses) always zooms the new pane fullscreen and
+# tears it down as a temporary overlay -- fine for a popup tool, wrong for an
+# editor you want to keep open beside a running agent. So this drives the
+# socket API directly instead:
+#   1. split a genuine side-by-side pane: herdr pane split --direction right
+#   2. type the hx command into it and press enter: herdr pane run
+# "; exit" on the typed command makes the new pane's shell close itself the
+# moment hx quits, so the pane disappears on its own -- same as tmux killing
+# a pane when its foreground process exits.
+#
+# tmux gets the equivalent behavior directly via a plain `split-window` bind
+# (see tmux.conf); this script is herdr-only.
+set -euo pipefail
+
+die() { echo "hx-split: $*" >&2; exit 1; }
+
+command -v herdr >/dev/null 2>&1 || die "herdr not found on PATH"
+[ -n "${HERDR_ENV:-}" ] || die "not running inside a herdr pane"
+command -v jq >/dev/null 2>&1 || die "jq is required"
+
+cwd="${HERDR_ACTIVE_PANE_CWD:-$PWD}"
+root="$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null || echo "$cwd")"
+
+pane_id="$(herdr pane split --direction right --cwd "$root" --focus | jq -r '.result.pane.pane_id')"
+[ -n "$pane_id" ] && [ "$pane_id" != "null" ] || die "failed to create split pane"
+
+# Give the new pane's login shell a moment to finish starting before typing
+# into it.
+sleep 0.3
+
+herdr pane run "$pane_id" "hx . ; exit"
