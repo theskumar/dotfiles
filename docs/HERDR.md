@@ -138,6 +138,21 @@ herdr integration install <agent>   # pi / claude / hermes already current
 - Prefer the **CLI over raw keys** for scripting: `herdr workspace|tab|pane|agent
   <sub>` all speak the socket API. `herdr api schema --json` documents it.
 - Logs: `~/.config/herdr/herdr{,-server,-client}.log`. Runtime: `herdr status`.
+- **`prefix+s` always belongs to the built-in `settings` action** — herdr
+  resolves key conflicts in struct-declaration order, and `settings` is
+  declared long before `split_horizontal`, so any attempt to bind
+  `split_horizontal` (or anything else) to `prefix+s` is silently disabled
+  (check `herdr-server.log` for `config diagnostic ... kept keys.settings,
+  disabled ...`). Use `split_horizontal`'s actual default, `prefix+minus`,
+  instead — that's what ghostty's `cmd+shift+d` sends.
+- **Closing your only tab closes the whole space.** `close_tab` cascades to
+  `close_workspace` whenever the workspace has one tab left (`app/actions.rs`)
+  — exact tmux parity (last window closes the session). Since each space here
+  is typically one tab, `cmd+w` / `prefix+c` will take the space with it.
+  `confirm_close` does **not** guard this path (it only guards closing a
+  linked worktree group), so there's no config-level way to get a
+  confirmation prompt here — open a second tab in a space if you want `cmd+w`
+  to stay non-destructive.
 
 ## Onboarding a new machine
 

@@ -10,8 +10,10 @@ keybind = cmd+w=text:\x01\x63
 keybind = cmd+shift+w=text:\x01\x26
 # prefix + v  → vsplit
 keybind = cmd+d=text:\x01\x76
-# prefix + s  → hsplit
-keybind = cmd+shift+d=text:\x01\x73
+# prefix + -  → split down (herdr split_horizontal default; prefix+s is
+# claimed by herdr's settings action and always wins that key, so don't
+# reuse it here — see docs/HERDR.md)
+keybind = cmd+shift+d=text:\x01\x2d
 # prefix + z  → zoom
 keybind = cmd+z=text:\x01\x7a
 # prefix + S  → choose-session
