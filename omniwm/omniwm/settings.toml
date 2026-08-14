@@ -11,9 +11,9 @@ width = 3.0
 
 [borders.color]
 alpha = 1.0
-blue = 0.8
-green = 0.5
-red = 0.1
+blue = 0.31309694051742554
+green = 0.765788733959198
+red = 0.7831819653511047
 
 [clipboard]
 historyEnabled = false
@@ -382,7 +382,7 @@ binding = "Unassigned"
 id = "switchWorkspace.previous"
 
 [[hotkeys]]
-binding = "Option+Left Arrow"
+binding = "Option+Left Bracket"
 id = "focus.left"
 
 [[hotkeys]]
@@ -394,7 +394,7 @@ binding = "Option+Up Arrow"
 id = "focus.up"
 
 [[hotkeys]]
-binding = "Option+Right Arrow"
+binding = "Option+Right Bracket"
 id = "focus.right"
 
 [[hotkeys]]
@@ -526,11 +526,11 @@ binding = "Unassigned"
 id = "moveWindowUpOrToWorkspaceUp"
 
 [[hotkeys]]
-binding = "Option+Left Bracket"
+binding = "Option+Shift+Left Bracket"
 id = "consumeOrExpelWindowLeft"
 
 [[hotkeys]]
-binding = "Option+Right Bracket"
+binding = "Option+Shift+Right Bracket"
 id = "consumeOrExpelWindowRight"
 
 [[hotkeys]]
@@ -905,6 +905,13 @@ monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
 monitorName = "DELL P2417H"
 singleWindowFit = "container_primary_span"
 visibleContainerCount = 1
+
+[[monitorNiriOverrides]]
+centerFocusedColumn = "onOverflow"
+id = "346BD9F1-6E63-4F90-8EA6-CE1A66A3F0D9"
+monitorDisplayUUID = "13741E47-B162-48AB-AA82-497860C867C6"
+monitorName = "DELL U2723QE"
+singleWindowFit = "container_primary_span"
 
 [[monitorRoutingOverrides]]
 gridColumn = 1
