@@ -3,7 +3,7 @@
 > **Repo:** [BarutSRB/OmniWM](https://github.com/BarutSRB/OmniWM)
 > **Config:** `omniwm/omniwm/settings.toml` → stowed to `~/.config/omniwm/settings.toml`
 > **Float rules script:** `omniwm/setup-rules.sh` — run once after fresh install
-> **Installed:** v0.5.9, protocol 8, via `brew install --cask omniwm` · check with `omniwmctl version`
+> **Installed:** v0.6.1, protocol 10, via `brew install --cask omniwm` · check with `omniwmctl version`
 
 OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
 
