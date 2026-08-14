@@ -29,6 +29,6 @@ stow -nv --target="$HOME" <package>
 
 ## Conventions
 
-- Use `git mv` when moving files to preserve history
+- Use `git mv` to move files and keep history
 - Never commit secrets (API keys, tokens, credentials)
-- Stow ignores `.gitignore` files by default. Global gitignore is handled via copy in install.sh.
+- Stow ignores `.gitignore` files by default. `install.sh` copies the global gitignore.

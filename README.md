@@ -3,7 +3,7 @@ dotfiles
 
 My dotfiles, managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
-A `.stowrc` at the repo root sets `--target=~` by default, so most `stow` commands work without an explicit `--target` flag.
+A `.stowrc` at the repo root sets `--target=~` by default. Most `stow` commands then work without an explicit `--target` flag.
 
 ## Setup
 
@@ -127,4 +127,4 @@ Guides and references in `docs/`:
 
 ## Notes
 
-`~/.gitignore` is copied (not symlinked) by `install.sh` because Stow skips `.gitignore` files by default.
+`install.sh` copies `~/.gitignore`; it does not symlink it. Stow skips `.gitignore` files by default.

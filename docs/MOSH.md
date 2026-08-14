@@ -1,11 +1,11 @@
 # mosh
 
 Mobile shell. Survives Wi-Fi roaming, suspend/resume, and high-latency links.
-Local echo prediction makes typing feel instant.
+Local echo prediction shows your keystrokes instantly.
 
 ## Install
 
-Already covered by `setup/setup_mac.sh` (`brew install mosh`) on macOS. On
+`setup/setup_mac.sh` covers this on macOS (`brew install mosh`). On
 Linux servers:
 
 ```bash
@@ -13,11 +13,11 @@ sudo apt install mosh        # Debian/Ubuntu
 sudo dnf install mosh        # Fedora/RHEL
 ```
 
-Mosh must be installed on **both** client and server.
+Install Mosh on **both** the client and the server.
 
 ## Shell setup
 
-Wired into `shell/.exports` and `shell/.aliases` (stowed to `$HOME`):
+These settings live in `shell/.exports` and `shell/.aliases` (stowed to `$HOME`):
 
 - `MOSH_TITLE_NOPREFIX=1` — keep terminal title clean
 - `MOSH_PREDICTION_DISPLAY=adaptive` — local echo on slow links only
@@ -46,7 +46,7 @@ sudo ufw allow 60000:61000/udp
 sudo firewall-cmd --permanent --add-port=60000-61000/udp && sudo firewall-cmd --reload
 ```
 
-On macOS the firewall is per-app; if hosting `mosh-server`, allow it under
+On macOS the firewall is per-app. If you host `mosh-server`, allow it under
 System Settings → Network → Firewall.
 
 ## Reattaching / tmux

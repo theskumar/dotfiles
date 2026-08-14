@@ -1,6 +1,6 @@
 # Tmux Guide
 
-Prefix key: `Ctrl+A` (referred to as `prefix` below).
+Prefix key: `Ctrl+A` (this guide calls it `prefix`).
 
 ## The Setup
 
@@ -19,13 +19,13 @@ brew install tmuxinator
 
 ## The Daily Flow
 
-**Morning.** Open Ghostty. `tmux a` or let it auto-attach. Hit `prefix + Space`, fuzzy-find your first client project, you're in. `prefix + 2` to check the dev server. `prefix + 3` to see what Claude finished overnight.
+**Morning.** Open Ghostty. `tmux a` or let it auto-attach. Hit `prefix + Space`, fuzzy-find your first client project, you are in. `prefix + 2` to check the dev server. `prefix + 3` to see what Claude finished overnight.
 
-**Switching projects.** Client B pings you. `prefix + Space`, type a few letters, enter. You're in that session. Window 1 is shell, window 2 is dev server, window 3 is Claude. Open Zed pointed at the repo. Work.
+**Switch projects.** Client B pings you. `prefix + Space`, type a few letters, enter. You are in that session. Window 1 is shell, window 2 is dev server, window 3 is Claude. Open Zed pointed at the repo. Work.
 
 **Quick question about another project.** `prefix + Space` to switch sessions, jump to its Claude window, ask, switch back.
 
-**End of day.** Don't close anything. Quit Ghostty if you want, tmux server keeps running. Tomorrow morning, `tmux a` and you're exactly where you left off. Mac restart overnight: tmux-continuum restores sessions, dev servers are dead but window layouts, working directories, and Claude conversations are back. `up-arrow + enter` in the server windows to restart them.
+**End of day.** Do not close anything. Quit Ghostty if you want; the tmux server stays up. Tomorrow morning, `tmux a` and you are exactly where you left off. Mac restart overnight: tmux-continuum restores sessions. Dev servers are dead, but window layouts, working directories, and Claude conversations are back. `up-arrow + enter` in the server windows to restart them.
 
 ## Session Management
 
@@ -49,7 +49,7 @@ tmux ls
 | `prefix + Ctrl+D`  | Detach from current session       |
 | `prefix + Ctrl+X`  | Lock server                       |
 
-Closing the last window in a session switches to another session instead of detaching.
+When you close the last window in a session, tmux switches to another session; it does not detach.
 
 ### Per-project templates (tmuxinator)
 
@@ -73,7 +73,7 @@ windows:
 
 ## Windows
 
-Windows are numbered starting from 1.
+Window numbers start at 1.
 
 | Keys              | Action                          |
 | ----------------- | ------------------------------- |
@@ -108,7 +108,7 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 | `prefix + *` | Synchronize input to all panes    |
 | `prefix + P` | Toggle pane border status         |
 
-> **Note:** `prefix + l` is bound twice in the config. The last binding wins (`select-pane -R`), so it moves to the right pane. `prefix + Ctrl+L` is the unambiguous refresh.
+> **Note:** The config binds `prefix + l` twice. The last binding wins (`select-pane -R`), so it moves to the right pane. `prefix + Ctrl+L` is the unambiguous refresh.
 
 ### Resizing (repeatable)
 
@@ -121,7 +121,7 @@ Locally, prefer Ghostty for splits. These bindings are mainly useful over SSH.
 
 ## Copy Mode
 
-The default `prefix + [` is rebound to previous-pane. Enter copy mode via mouse scroll-up (mouse is on), or `prefix + :` then `copy-mode`. Vi keys for navigation.
+The config rebinds the default `prefix + [` to previous-pane. Enter copy mode via mouse scroll-up (mouse is on), or `prefix + :` then `copy-mode`. Vi keys for navigation.
 
 | Keys       | Action                                   |
 | ---------- | ---------------------------------------- |
@@ -146,7 +146,7 @@ No dedicated binding. Convention: use a `claude` window per session (typically w
 
 ## Plugins
 
-Managed by TPM at `~/.config/tmux/plugins/`.
+TPM manages plugins at `~/.config/tmux/plugins/`.
 
 | Keys             | Action                |
 | ---------------- | --------------------- |
@@ -205,4 +205,4 @@ tmux new -s work
 
 ## Status Bar
 
-Catppuccin theme (omerxx fork). Session name on the left. Current directory basename and time (`HH:MM`) on the right. Current window is highlighted. Zoomed windows show `()` indicator.
+Catppuccin theme (omerxx fork). Session name on the left. Current directory basename and time (`HH:MM`) on the right. tmux highlights the current window. Zoomed windows show `()` indicator.

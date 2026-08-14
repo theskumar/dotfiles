@@ -6,7 +6,7 @@ Pi sessions are trees, not flat logs. Every message has an `id` and `parentId`. 
 
 ## Mental Model: Lab Notebook
 
-Think of a pi session as a lab notebook. You have a hypothesis, you run an experiment (branch), and write up results. If the experiment doesn't pan out, you go back to the hypothesis and try a different experiment. The experiments never merge into one experiment. But your write-ups (branch summaries) carry forward, so the next experiment benefits from what you already learned.
+Think of a pi session as a lab notebook. You have a hypothesis, you run an experiment (branch), and write up results. If the experiment does not pan out, you go back to the hypothesis and try a different experiment. The experiments never merge into one experiment. But your write-ups (branch summaries) carry forward, so the next experiment benefits from what you already learned.
 
 - **Branch** = run an experiment
 - **Summary** = write-up of results (not the raw data)
@@ -14,7 +14,7 @@ Think of a pi session as a lab notebook. You have a hypothesis, you run an exper
 - **Label** = bookmark a promising checkpoint
 - **Fork** = results were so interesting they became a separate research project
 
-The notebook tracks your thinking. The actual specimens (files on disk) are managed separately (by git).
+The notebook tracks your thoughts. Git manages the actual specimens (files on disk) separately.
 
 ### Session tree structure
 
@@ -59,11 +59,11 @@ graph TD
     style G fill:#845ef7,color:#fff
 ```
 
-The yellow node is the key: when you leave a branch, pi compresses it into a summary and injects it into your new path. You carry the insight, not the 20 messages of dead-end exploration.
+The yellow node is the key. When you leave a branch, pi compresses it into a summary. Pi injects that summary into your new path. You carry the insight, not the 20 messages of dead-end exploration.
 
 ## How It Maps to Git (and Where It Breaks)
 
-If you know git branching, this maps partially:
+If you know git branches, this maps partially:
 
 | Git | Pi Tree |
 |-----|---------|
@@ -74,15 +74,15 @@ If you know git branching, this maps partially:
 | `merge` | Does not exist |
 | `rebase` | Does not exist |
 
-**There is no merge.** Branches produce knowledge (summaries) that carries forward, but conversation paths stay separate forever. You never get a unified thread containing both branches' full content.
+**There is no merge.** Branches produce knowledge (summaries) that carries forward, but conversation paths stay separate forever. You never get a unified thread with both branches' full content.
 
-Think of it less like git branches and more like a wiki with a "back" button. You visit pages (branches), take notes (summaries), carry the notes when you leave. The pages don't combine.
+Think of it less like git branches and more like a wiki with a "back" button. You visit pages (branches), take notes (summaries), carry the notes when you leave. The pages do not combine.
 
 ### What "going back" actually does
 
 When you leave branch A and navigate to branch B, pi:
 
-1. Summarizes branch A (what was discussed, what files changed)
+1. Summarizes branch A (the discussion and the changed files)
 2. Injects that summary into branch B's context
 3. Moves the leaf pointer to branch B
 
@@ -90,7 +90,7 @@ Branch A still exists in the session file, untouched. You can `/tree` and go bac
 
 ### File changes are git's job
 
-Pi only manages conversation state. If both branches produced file changes you want to keep, use git. Commit before switching branches.
+Pi only manages conversation state. If both branches produced file changes you want to keep, use git. Commit before you switch branches.
 
 ## Commands
 
@@ -105,18 +105,18 @@ Pi only manages conversation state. If both branches produced file changes you w
 ## When to Use What
 
 **Use `/tree` when:**
-- Exploring and want to try a different direction
+- You explore and want a different direction
 - Agent went down a wrong path
-- Testing multiple hypotheses from the same starting point
-- Cleaning up context by isolating noisy exploration
+- You test multiple hypotheses from the same start point
+- You clean up context and isolate noisy exploration
 
 **Use `/fork` when:**
 - Exploration phase is done, implementation phase starts
 - A branch becomes its own project or deliverable
-- Session is getting heavy and you want a fresh start with history
-- Switching to a different working directory with inherited context
+- The session gets heavy and you want a fresh start with history
+- You switch to a different working directory with inherited context
 
-**Rule of thumb:** `/tree` = fast branch hopping in one workstream. `/fork` = separate mission.
+**Rule of thumb:** `/tree` = fast branch switches in one workstream. `/fork` = separate mission.
 
 ## Tree Viewer Keybindings
 
@@ -133,9 +133,9 @@ Pi only manages conversation state. If both branches produced file changes you w
 
 ## Branch Summarization
 
-When you leave a branch, pi can summarize it automatically. The summary is injected into the new branch as a `branch_summary` entry. You carry the insight without the token cost.
+When you leave a branch, pi can summarize it automatically. Pi injects the summary into the new branch as a `branch_summary` entry. You carry the insight without the token cost.
 
-This happens by default when navigating with `/tree`. The summary includes file operations performed and key findings.
+This happens by default when you navigate with `/tree`. The summary includes the file operations and the key findings.
 
 ## Workflow Patterns
 
@@ -147,7 +147,7 @@ Ask pi to investigate a problem. When you spot the right direction, label that n
 
 Bug with multiple possible causes:
 
-1. Start investigating cause A. Reach a conclusion.
+1. Investigate cause A. Reach a conclusion.
 2. Open `/tree`, navigate back to before the investigation.
 3. Branch, investigate cause B. Reach a conclusion.
 4. Repeat for cause C.
@@ -165,12 +165,12 @@ Exploration done, ready to implement? `/fork` the session. New session inherits 
 
 ### 5. Extension/Tool Debugging
 
-Something breaks mid-session? Branch into a fresh context, debug, fix, then navigate back. Pi summarizes the debugging detour so you don't lose your place.
+Something breaks mid-session? Branch into a fresh context, debug, fix, then navigate back. Pi summarizes the debug detour so you do not lose your place.
 
 ## Important Safety Notes
 
 - **`/tree` does not manage files.** It only manages conversation state. Always use git for code rollback.
-- **Commit before branching** if the agent has made file changes you want to keep.
+- **Commit before you branch** if the agent made file changes you want to keep.
 - **Label checkpoints** before risky operations so you have named points to return to.
 
 ## Advanced: Side Agents

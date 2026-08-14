@@ -5,7 +5,7 @@
 > **Float rules script:** `omniwm/setup-rules.sh` — run once after fresh install
 > **Installed:** v0.6.1, protocol 10, via `brew install --cask omniwm` · check with `omniwmctl version`
 
-OmniWM is a macOS tiling window manager inspired by Niri and Hyprland. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
+OmniWM is a macOS tiling window manager. Niri and Hyprland inspired it. It supports scrolling columns (Niri layout), BSP splitting (Dwindle layout), a quake drop-down terminal, clipboard history, command palette, and full IPC/CLI automation via `omniwmctl`.
 
 ---
 
@@ -43,7 +43,7 @@ OmniWM supports two layout engines, switchable per workspace or globally:
 
 | Layout | Description | Toggle |
 |--------|-------------|--------|
-| **Niri** | Scrolling columns — windows arranged in horizontal columns, pan left/right to reveal more | `Option+Shift+L` |
+| **Niri** | Scrolling columns — windows sit in horizontal columns, pan left/right to reveal more | `Option+Shift+L` |
 | **Dwindle** | BSP binary splitting — recursive halving like i3/bspwm | `Option+Shift+L` |
 
 `defaultLayoutType` in `[general]` sets which layout new workspaces start with.
@@ -90,7 +90,7 @@ visibleContainerCount = 2                    # How many columns are visible side
 - `visibleContainerCount = 3` works well on wide external monitors; `2` is ideal for a 14" MacBook.
 - Set `singleWindowFit = "none"` to let single windows fill the available space freely.
 - These are **global** defaults. To tune Niri per-monitor (e.g. a portrait display), use `[[monitorNiriOverrides]]` — see [Multi-Monitor Setup](#multi-monitor-setup).
-- "Primary span" = the axis a column occupies room-wise on the scroll axis (width on a landscape monitor, height once portrait-ready Niri is in use). Renamed from `columnWidthPresets`/`defaultColumnWidth`/`maxVisibleColumns` in v0.5.9 (protocol 8) to reflect this axis-agnostic model.
+- "Primary span" = the axis a column occupies on the scroll axis (width on a landscape monitor, height once portrait-ready Niri is in use). v0.5.9 (protocol 8) renamed it from `columnWidthPresets`/`defaultColumnWidth`/`maxVisibleColumns` to reflect this axis-agnostic model.
 
 ---
 
@@ -240,7 +240,7 @@ autoHide = true               # Auto-hide when focus leaves the terminal
 animationDuration = 0.2       # Slide-in animation speed (seconds)
 ```
 
-The terminal app used is whatever your quake terminal app rule is set to (Ghostty by default — `com.mitchellh.ghostty`).
+The quake terminal uses whatever app your quake terminal app rule names (Ghostty by default — `com.mitchellh.ghostty`).
 
 > **Tip:** `autoHide = true` dismisses the terminal when you click away — retoggle with `` Option+` ``.
 
@@ -289,7 +289,7 @@ useWorkspaceId = false     # Use workspace ID instead of name
 
 ### `[[appRules]]`
 
-Per-app minimum size constraints and layout overrides. OmniWM uses these to prevent windows from being tiled smaller than they can handle.
+Per-app minimum size constraints and layout overrides. OmniWM uses these to stop windows from tiling smaller than they can handle.
 
 ```toml
 [[appRules]]
@@ -312,9 +312,9 @@ minHeight = 500.0
 minWidth = 400.0
 ```
 
-> **Float rules note:** `layout = "float"` entries in `settings.toml` are synced back from OmniWM's IPC layer after running `omniwm/setup-rules.sh`. Do not add float rules manually to TOML — always use the script so they round-trip correctly.
+> **Float rules note:** `layout = "float"` entries in `settings.toml` sync back from OmniWM's IPC layer after you run `omniwm/setup-rules.sh`. Do not add float rules manually to TOML — always use the script so they round-trip correctly.
 
-**Common bundle IDs** (for adding new rules):
+**Common bundle IDs** (to add new rules):
 
 | App | Bundle ID |
 |-----|-----------|
@@ -367,7 +367,7 @@ Use `"Unassigned"` to explicitly leave an action without a binding.
 **Valid modifier key names:** `Option`, `Shift`, `Control`, `Command`, `Hyper`
 **Special keys:** `Left Arrow`, `Right Arrow`, `Up Arrow`, `Down Arrow`, `Return`, `Tab`, `Space`, `Home`, `End`, `Page Up`, `Page Down`, `[`, `]`, `` ` ``, `-`, `=`, `.`, `,`
 
-> **OmniWM owns this file and rewrites it.** On any settings change or restart it reserialises `settings.toml` into canonical form: keys get alphabetised, punctuation is spelled out (`,`→`Comma`, `.`→`Period`, `` ` ``→`Grave`, `-`→`Minus`, `=`→`Equal`, `[`→`LeftBracket`, `]`→`RightBracket`), and Left Option may serialise as the `Hyper` modifier when `systemHyperTrigger` is set. **Edit while OmniWM is quit**, then relaunch to load — editing live risks OmniWM clobbering the change. Expect large reordered diffs; that's normal.
+> **OmniWM owns this file and rewrites it.** On any settings change or restart it reserialises `settings.toml` into canonical form: it alphabetises keys and spells out punctuation (`,`→`Comma`, `.`→`Period`, `` ` ``→`Grave`, `-`→`Minus`, `=`→`Equal`, `[`→`LeftBracket`, `]`→`RightBracket`). Left Option can serialise as the `Hyper` modifier when you set `systemHyperTrigger`. **Edit while OmniWM is quit**, then relaunch to load. Live edits risk a clobber from OmniWM. Expect large reordered diffs; that is normal.
 
 ---
 
@@ -384,7 +384,7 @@ layoutType = "niri"                           # Per-workspace layout override
 type = "main"       # "main" = primary/built-in | "secondary" = external monitor
 ```
 
-> ⚠️ Workspaces assigned to `"secondary"` won't appear until an external monitor is connected.
+> ⚠️ Workspaces set to `"secondary"` do not appear until you connect an external monitor.
 
 ---
 
@@ -523,13 +523,13 @@ omniwmctl query capabilities                   # Full protocol feature list
 
 ## Float Rules Setup
 
-Float rules (always-floating apps) **cannot live in `settings.toml`** — they are persisted by OmniWM's IPC layer separately. Run the setup script once after a fresh install or OmniWM state reset:
+Float rules (always-floating apps) **cannot live in `settings.toml`**. OmniWM's IPC layer persists them separately. Run the setup script once after a fresh install or OmniWM state reset:
 
 ```bash
 bash ~/dotfiles/omniwm/setup-rules.sh
 ```
 
-The script is idempotent — it skips rules already set to `float`, and upgrades `auto` rules in-place preserving min-size constraints.
+The script is idempotent. It skips rules already set to `float`, and it upgrades `auto` rules in place and keeps min-size constraints.
 
 **Currently configured float apps:**
 
@@ -549,7 +549,7 @@ omniwmctl query rules --format table
 
 ## Multi-Monitor Setup
 
-Two working modes are configured:
+This setup has two modes:
 
 ### Mode 1 — MacBook only
 Workspaces 1–5 on `main` (built-in display). Workspaces 6–7 (`secondary`) remain inactive.
@@ -561,19 +561,19 @@ Workspaces 1–5 on `main` (built-in display). Workspaces 6–7 (`secondary`) re
 | DELL P2417H 27" (portrait, rotated 270°) | Left | **`secondary`** | 6 (❤️), 7 (🚀) |
 | MacBook | Left-below external | **tertiary** | — (see below) |
 
-Workspaces 1–5 follow whichever monitor is set as macOS primary — they'll land on the 4K in desk mode and the MacBook in solo mode automatically.
+Workspaces 1–5 follow whichever monitor you set as macOS primary. They land on the 4K in desk mode and the MacBook in solo mode automatically.
 
 ### Portrait secondary — Dwindle layout
 
-The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) uses **Dwindle layout** on workspaces 6–7 instead of Niri. Dwindle with `smartSplit = true` auto-picks the split axis based on available space — on a tall portrait screen two windows split top/bottom (50/50), which is the natural layout.
+The `secondary` monitor (DELL P2417H, `1080×1920` rotated 270°) uses **Dwindle layout** on workspaces 6–7 instead of Niri. Dwindle with `smartSplit = true` auto-picks the split axis from the available space. On a tall portrait screen two windows split top/bottom (50/50), the natural layout.
 
-**Why not Niri?** Niri's scrollable-column model gives each window in a column the full viewport height and scrolls between them. On a portrait monitor you'd only ever see one window at a time — even with `consumeOrExpelWindow` to merge them into one column. There's no way to force Niri to split column height 50/50 between windows.
+**Why not Niri?** Niri's scrollable-column model gives each window in a column the full viewport height and scrolls between them. On a portrait monitor you see only one window at a time, even with `consumeOrExpelWindow` to merge them into one column. There is no way to force Niri to split column height 50/50 between windows.
 
-> v0.5.9 makes Niri portrait-ready (it now understands primary/secondary axes per monitor orientation), but that's a layout change worth testing on its own — not bundled into the 0.5.9 config migration. Dwindle stays the portrait default for now.
+> v0.5.9 makes Niri portrait-ready (it now understands primary/secondary axes per monitor orientation). That is a layout change worth a separate test, not part of the 0.5.9 config migration. Dwindle stays the portrait default for now.
 
 **Per-workspace layout:** set `layoutType = "dwindle"` on the workspace. This coexists with Niri on other workspaces.
 
-**Per-monitor overrides** are set via array-of-table sections. Each override names its target monitor and only overrides the fields you set — the rest fall back to the global `[dwindle]` or `[niri]` block. Current portrait overrides:
+**Per-monitor overrides** use array-of-table sections. Each override names its target monitor and overrides only the fields you set. The rest fall back to the global `[dwindle]` or `[niri]` block. Current portrait overrides:
 
 ```toml
 # Niri: single visible column, fill the tall space
@@ -600,25 +600,25 @@ Override arrays: `monitorNiriOverrides`, `monitorDwindleOverrides`, `monitorBarO
 
 ### Gotchas and lessons learned
 
-**Niri vs Dwindle on portrait monitors.** Niri's column model is horizontally scrollable — windows in a column each get the full viewport height and scroll vertically. This means two windows in one Niri column on a portrait monitor = you see one at a time, not both. Use **Dwindle** on portrait workspaces for automatic 50/50 splitting.
+**Niri vs Dwindle on portrait monitors.** Niri's column model is horizontally scrollable — windows in a column each get the full viewport height and scroll vertically. This means two windows in one Niri column on a portrait monitor = you see one at a time, not both. Use **Dwindle** on portrait workspaces for automatic 50/50 splits.
 
 **`smartSplit` matters for Dwindle on portrait.** Without it (`smartSplit = false`), Dwindle always splits left-right first regardless of monitor orientation. Set `smartSplit = true` via `[[monitorDwindleOverrides]]` for portrait monitors so it auto-picks top-bottom.
 
-**Per-monitor overrides are TOML array-of-tables.** When adding a new `[[monitorNiriOverrides]]` or `[[monitorDwindleOverrides]]` entry, remove the empty-array placeholder (`monitorXxxOverrides = []`) from the top of the file — TOML can't have both `key = []` and `[[key]]` for the same key.
+**Per-monitor overrides are TOML array-of-tables.** When you add a new `[[monitorNiriOverrides]]` or `[[monitorDwindleOverrides]]` entry, remove the empty-array placeholder (`monitorXxxOverrides = []`) from the top of the file. TOML cannot have both `key = []` and `[[key]]` for the same key.
 
-**OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), may convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. If Karabiner already remaps a key to Hyper, set `systemHyperTrigger = "None"` to stop OmniWM from also claiming Option as Hyper. Always **quit OmniWM before editing** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
+**OmniWM rewrites `settings.toml` on every change.** It alphabetises keys, spells out punctuation (`[` → `LeftBracket`, `,` → `Comma`), can convert `Option` → `Hyper` for workspace-switch bindings, and silently drops unsupported per-monitor override fields. If Karabiner already remaps a key to Hyper, set `systemHyperTrigger = "None"` to stop OmniWM from also claiming Option as Hyper. Always **quit OmniWM before you edit** the file, then relaunch. After relaunch, re-read the file to confirm your changes survived the rewrite.
 
-**Monitor identity is UUID-based since v0.5.9 (protocol 8).** The numeric `monitorDisplayId` field is gone from per-monitor overrides — use `monitorDisplayUUID`, assigned via **Settings → Monitors → Run Monitor Setup…** with all target displays connected. Don't hand-write or derive a UUID; re-run monitor setup and re-save each override (Niri, Dwindle, bar/orientation) to pick it up. `monitorName` is still checked as a secondary match, but the UUID is now the durable identifier — old numeric-ID rows left over from a pre-0.5.9 config stay unbound until re-saved through the UI.
+**Monitor identity is UUID-based since v0.5.9 (protocol 8).** The numeric `monitorDisplayId` field is gone from per-monitor overrides. Use `monitorDisplayUUID`. **Settings → Monitors → Run Monitor Setup…** assigns it with all target displays connected. Do not hand-write or derive a UUID. Re-run monitor setup and re-save each override (Niri, Dwindle, bar/orientation) to pick it up. OmniWM still checks `monitorName` as a secondary match, but the UUID is now the durable identifier. Old numeric-ID rows from a pre-0.5.9 config stay unbound until you re-save them through the UI.
 
 **Consume/expel (`Option+[` / `Option+]`) is for Niri only.** It merges/splits columns. On Dwindle workspaces use `toggleSplit` / `swapSplit` instead.
 
-**macOS Reduce Motion no longer disables OmniWM animations (v0.5.9+).** Earlier versions respected the system Reduce Motion accessibility setting; from 0.5.9 on it doesn't, so `[general] animationsEnabled` is the only switch — set it to `false` if you want animations off regardless of the system setting.
+**macOS Reduce Motion no longer disables OmniWM animations (v0.5.9+).** Earlier versions respected the system Reduce Motion accessibility setting. From 0.5.9 on it does not, so `[general] animationsEnabled` is the only switch. Set it to `false` if you want animations off regardless of the system setting.
 
-**Expect a one-time window-placement reset on first 0.5.9 launch.** Saved runtime/window placement state doesn't carry over across the protocol 7 → 8 jump — windows may reopen in different positions/workspaces after the first launch. Not a regression; things stabilize immediately and workspace/rule config is unaffected.
+**Expect a one-time window-placement reset on first 0.5.9 launch.** Saved runtime/window placement state does not carry over across the protocol 7 → 8 jump. Windows can reopen in different positions/workspaces after the first launch. Not a regression; things stabilize immediately and workspace/rule config stays unaffected.
 
 ### Adding MacBook-as-tertiary workspaces
 
-OmniWM supports pinning workspaces to a specific display by name via `type = "specificDisplay"`. To set this up:
+OmniWM can pin workspaces to a specific display by name via `type = "specificDisplay"`. To set this up:
 
 1. Connect all monitors and launch OmniWM
 2. Get your MacBook display name:
@@ -639,7 +639,7 @@ OmniWM supports pinning workspaces to a specific display by name via `type = "sp
    ```
    Replace the `name` value from step 2. Generate a UUID with `python3 -c "import uuid; print(uuid.uuid4())"` .
 
-> **Note:** `displayId` can change across reboots; OmniWM falls back to name-matching when the ID doesn't match, so the display name is what matters.
+> **Note:** `displayId` can change across reboots. OmniWM falls back to name matching when the ID does not match, so the display name is what matters.
 
 ---
 
@@ -656,7 +656,7 @@ brew upgrade --cask omniwm
 gh release list --repo BarutSRB/OmniWM --limit 3
 ```
 
-After updating, compare your `settings.toml` against the upstream canonical to pick up new config keys:
+After you update, compare your `settings.toml` against the upstream canonical to pick up new config keys:
 ```
 ~/.cache/checkouts/github.com/BarutSRB/OmniWM/Tests/OmniWMTests/Fixtures/canonical-settings.toml
 ```

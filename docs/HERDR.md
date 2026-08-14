@@ -1,9 +1,9 @@
 # Herdr Guide
 
-Prefix key: `Ctrl+A` (same as tmux — referred to as `prefix` below).
+Prefix key: `Ctrl+A` (same as tmux; this guide calls it `prefix`).
 
 Herdr is a terminal workspace manager for AI coding agents (a tmux-like
-multiplexer, but mouse-first and agent-aware). It's a **trial** running
+multiplexer, but mouse-first and agent-aware). It is a **trial** that runs
 alongside tmux, not a replacement. A background server owns the panes; clients
 attach/detach. Workspaces = "spaces" (one per project); each holds tabs and
 panes. The sidebar rolls up each agent's state (`working` / `blocked` / `done`).
@@ -13,7 +13,7 @@ panes. The sidebar rolls up each agent's state (`working` / `blocked` / `done`).
 **Terminal:** Ghostty (same host as tmux; `cmd+*` shortcuts send `prefix + key`).
 **Multiplexer:** herdr in some Ghostty windows, tmux in others — never nested
 (both grab `Ctrl+A`).
-**AI coding:** pi / claude, detected automatically; state shown in the sidebar.
+**AI coding:** pi / claude; herdr detects them automatically and shows state in the sidebar.
 **Config:** stowed — `~/dotfiles/herdr/herdr/config.toml` → `~/.config/herdr/config.toml`.
 
 ### Prerequisites (macOS)
@@ -29,8 +29,8 @@ protocol and `type = "plugin_action"` bindings assume 0.8.0).
 
 Ghostty translates every `cmd+*` shortcut into `Ctrl+A + <key>` text. Because
 **herdr's prefix is also `Ctrl+A`**, the same Ghostty shortcuts drive *both*
-tmux and herdr — herdr just binds its actions to the chords tmux already uses.
-**tmux config is never touched**; herdr adopts.
+tmux and herdr. herdr binds its actions to the chords tmux already uses.
+**herdr never touches the tmux config**; it adopts.
 
 | macOS key | Ghostty sends | herdr action | in tmux |
 | --------- | ------------- | ------------ | ------- |
@@ -43,9 +43,9 @@ tmux and herdr — herdr just binds its actions to the chords tmux already uses.
 | `cmd+x`   | `Ctrl+A Ctrl+H` | hx in a new side pane at repo root | hx in a new side pane at repo root |
 | `cmd+s`   | `Ctrl+A Shift+S`| (unbound in herdr) | choose-session    |
 
-`cmd+b` is the only Ghostty change made for herdr (a herdr-only concept). All
-others reuse existing tmux chords. `cmd+s` still does tmux choose-session and is
-intentionally not mapped in herdr.
+`cmd+b` is the only Ghostty change for herdr (a herdr-only concept). All
+others reuse existing tmux chords. `cmd+s` still runs tmux choose-session;
+herdr does not map it on purpose.
 
 ## Keybindings (effective)
 
@@ -75,10 +75,10 @@ Custom (set in `config.toml`) plus the herdr defaults worth knowing:
 
 ## Navigator plugin (`cmd+p`)
 
-`cmd+p` opens **herdr-navigator** — a sesh-style fuzzy find-or-create picker
-across workspaces, agents, projects, sessions, and zoxide directories. Chosen
-because it runs on 0.7.3+, is actively maintained, and needs no herdr update to
-try. It replaces the tmux `sesh` workflow *inside* herdr (sesh itself only
+`cmd+p` opens **herdr-navigator**. It is a sesh-style fuzzy find-or-create
+picker across workspaces, agents, projects, sessions, and zoxide directories.
+I chose it because it runs on 0.7.3+, has active maintenance, and needs no
+herdr update to try. It replaces the tmux `sesh` workflow *inside* herdr (sesh itself only
 manages tmux sessions).
 
 ```bash
@@ -93,29 +93,29 @@ space) — unbound for now.
 
 ## hx side pane (`prefix+ctrl+h`)
 
-`cmd+x` opens **hx** (helix) in a new side-by-side pane at the repo root,
-without zooming over or otherwise disturbing the pane you were already in
+`cmd+x` opens **hx** (helix) in a new side-by-side pane at the repo root.
+It does not zoom over or disturb the pane you were already in
 (e.g. a running agent). `tmux` gets this natively via a plain `split-window`
-bind. herdr can't: its `[[keys.command]] type = "pane"` (what the lazygit
-binding uses) always zooms the new pane fullscreen and tears it down as a
-temporary overlay when the command exits -- there's no config flag to turn
-that off. So the herdr side calls `bin/hx-split`, which drives the socket
+bind. herdr cannot. Its `[[keys.command]] type = "pane"` (what the lazygit
+binding uses) always zooms the new pane fullscreen. It also tears the pane
+down as a temporary overlay when the command exits. There is no config flag
+to turn that off. So the herdr side calls `bin/hx-split`, which drives the socket
 API directly:
 
 1. `herdr pane split --direction right --cwd <repo root> --focus` -- a real,
    non-zoomed split.
-2. `herdr pane run <pane id> "hx . ; exit"` -- types the command in; the
-   trailing `; exit` makes the pane's shell close itself the moment `hx`
-   quits, so nothing lingers.
+2. `herdr pane run <pane id> "hx . ; exit"` -- types the command in. The
+   trailing `; exit` makes the pane's shell close the moment `hx` quits, so
+   nothing lingers.
 
-Verified end-to-end with the socket API directly (`herdr pane get` on the
-pane id returns `pane_not_found` right after quitting `hx`).
+I verified this end-to-end with the socket API (`herdr pane get` on the
+pane id returns `pane_not_found` right after you quit `hx`).
 
 ## Pluck plugin (`prefix+u` / `prefix+t`)
 
 **herdr-pluck** hint-labels visible text in the pane (like `tmux-fzf-url` /
-`tmux-thumbs`) so you can jump to it with a couple of keystrokes instead of
-selecting with the mouse.
+`tmux-thumbs`). You jump to it with a couple of keystrokes instead of the
+mouse.
 
 ```bash
 herdr plugin install rmarganti/herdr-pluck --yes
@@ -128,18 +128,18 @@ herdr plugin action list --plugin herdr-pluck
 ## Config
 
 - Edit the **dotfiles** source, not the symlink: `~/dotfiles/herdr/herdr/config.toml`.
-- Apply to the running server: `herdr server reload-config` (or `prefix + Shift+R`).
+- Apply to the live server: `herdr server reload-config` (or `prefix + Shift+R`).
 - `herdr --default-config` prints the full annotated defaults.
 - **Herdr writes to this file itself** (e.g. `onboarding = false`, and UI-toggled
   keys like `show_agent_labels_on_pane_borders`). Those appear as diffs in
-  dotfiles — commit them, they're real state.
+  dotfiles — commit them; they are real state.
 - Theme is `catppuccin` (matches tmux); `resume_agents_on_restore = true`.
 - `[ui.toast] delivery = "system"` routes herdr toasts (e.g. agent state
   changes) through native macOS notifications instead of in-app-only toasts.
 
 ## Integrations
 
-Give herdr authoritative agent state instead of screen-scraping:
+Give herdr authoritative agent state instead of a screen scrape:
 
 ```bash
 herdr integration status
@@ -148,34 +148,34 @@ herdr integration install <agent>   # pi / claude / hermes already current
 
 ## Gotchas (read before automating)
 
-- **`HERDR_ENV=1`** means you're inside a herdr pane. Never run bare `herdr`
-  nested — launches are blocked by design.
+- **`HERDR_ENV=1`** means you are inside a herdr pane. Never run bare `herdr`
+  nested; herdr blocks the launch by design.
 - **`herdr update` cannot run inside herdr.** Detach / `herdr server stop`
   first, update in a plain terminal, then reattach:
   ```bash
   herdr server stop && herdr update && herdr
   ```
-- **Don't nest tmux inside a herdr pane** — both use `Ctrl+A`; herdr wins and
+- **Do not nest tmux inside a herdr pane** — both use `Ctrl+A`; herdr wins and
   tmux never sees the prefix. Use one per terminal.
-- Prefer the **CLI over raw keys** for scripting: `herdr workspace|tab|pane|agent
+- Prefer the **CLI over raw keys** for scripts: `herdr workspace|tab|pane|agent
   <sub>` all speak the socket API. `herdr api schema --json` documents it.
 - Logs: `~/.config/herdr/herdr{,-server,-client}.log`. Runtime: `herdr status`.
-- **`prefix+s` always belongs to the built-in `settings` action** — herdr
-  resolves key conflicts in struct-declaration order, and `settings` is
-  declared long before `split_horizontal`, so any attempt to bind
-  `split_horizontal` (or anything else) to `prefix+s` is silently disabled
-  (check `herdr-server.log` for `config diagnostic ... kept keys.settings,
-  disabled ...`). Use `split_horizontal`'s actual default, `prefix+minus`,
-  instead — that's what ghostty's `cmd+shift+d` sends.
-- **Closing the last pane/tab in a space closes the space.** Both `close_pane`
-  and `close_tab` cascade to `close_workspace` once nothing is left behind
-  (`app/actions.rs`) — exact tmux parity (last window closes the session).
-  `cmd+w` is bound to `close_pane` (not `close_tab`) specifically so splits
-  survive it: it only cascades to closing the space when it's truly the last
-  pane in the last tab, which for a typical one-tab-one-pane space is still
-  every time. `confirm_close` does **not** guard this path (it only guards
-  closing a linked worktree group), so there's no config-level way to get a
-  confirmation prompt here — open a second pane/tab in a space if you want
+- **`prefix+s` always belongs to the built-in `settings` action.** herdr
+  resolves key conflicts in struct-declaration order. herdr declares
+  `settings` long before `split_horizontal`. So herdr silently disables any
+  bind of `split_horizontal` (or anything else) to `prefix+s` (check
+  `herdr-server.log` for `config diagnostic ... kept keys.settings, disabled
+  ...`). Use `split_horizontal`'s actual default, `prefix+minus`, instead.
+  That is what ghostty's `cmd+shift+d` sends.
+- **The last pane/tab in a space closes the space.** Both `close_pane`
+  and `close_tab` cascade to `close_workspace` once nothing remains
+  (`app/actions.rs`) — exact tmux parity (the last window closes the session).
+  The config binds `cmd+w` to `close_pane` (not `close_tab`) so splits
+  survive it. `cmd+w` cascades to close the space only when it is truly the
+  last pane in the last tab. For a typical one-tab-one-pane space, that is
+  still every time. `confirm_close` does **not** guard this path (it only
+  guards a linked worktree group). So there is no config-level way to get a
+  confirmation prompt here. Open a second pane/tab in a space if you want
   `cmd+w` to stay non-destructive.
 
 ## Onboarding a new machine

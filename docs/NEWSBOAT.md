@@ -4,7 +4,7 @@
 > **Installed:** `brew install newsboat` via `setup/setup_mac.sh`
 > **Version:** 2.43+ (Homebrew)
 
-Newsboat is a terminal RSS/Atom feed reader. This setup is local-only (no sync), macOS-focused, with a cowork-kb bookmark integration and clean in-terminal reading via Mozilla Readability.
+Newsboat is a terminal RSS/Atom feed reader. This setup is local-only (no sync) and macOS-focused. It adds a cowork-kb bookmark integration and clean in-terminal display via Mozilla Readability.
 
 ---
 
@@ -62,7 +62,7 @@ Runtime files (not tracked in dotfiles):
 
 ## Macros
 
-Macros are triggered with `,` followed by the key. In the article list or article view:
+Trigger macros with `,` then the key. This works in the article list or the article view:
 
 | Keys | Action |
 |---|---|
@@ -71,7 +71,7 @@ Macros are triggered with `,` followed by the key. In the article list or articl
 | `,y` | Play video/audio in `mpv` (YouTube, podcasts) |
 | `,b` | Save article silently to `cowork-kb/raw/clips/` |
 
-> **Default article view** (`Enter` / `l`): feed HTML → markdown via `pandoc` → rendered by `glow`. The `,r` macro is for truncated feeds where you want the full text fetched from the source URL.
+> **Default article view** (`Enter` / `l`): `pandoc` converts feed HTML to markdown, then `glow` renders it. Use the `,r` macro for truncated feeds when you want the full text from the source URL.
 
 ---
 
@@ -91,8 +91,8 @@ The `nb-add` function:
 3. One feed found → uses it directly
 4. None found → treats the URL itself as a feed (for direct feed URLs)
 5. Prompts for optional tags (pre-filled from CLI args, Enter to skip)
-6. Checks for duplicates before appending
-7. Reloads newsboat automatically if it’s already running
+6. Checks for duplicates before it appends the feed
+7. Reloads newsboat automatically if it already runs
 
 ### Manual edit
 
@@ -109,7 +109,7 @@ https://example.com/feed    tech "~Custom Name"
 https://example.com/feed    tech !
 ```
 
-After editing, reload in newsboat with `R` (reload all) or `r` (reload current).
+After you edit, reload in newsboat with `R` (reload all) or `r` (reload current).
 
 ### GitHub Release Feeds
 
@@ -136,7 +136,7 @@ Claude can then ingest it from `raw/clips/` the same way it handles Obsidian Web
 
 ## Substack Feeds
 
-The `fltr-substack.sh` script strips the subscription nag injected into Substack article content. Wrap any Substack feed in `urls`:
+The `fltr-substack.sh` script strips the subscription nag that Substack injects into article content. Wrap any Substack feed in `urls`:
 
 ```
 filter:~/.config/newsboat/scripts/fltr-substack.sh:https://example.substack.com/feed   newsletters
@@ -152,13 +152,13 @@ YouTube exposes RSS feeds per channel. Find the channel ID from the channel URL,
 https://www.youtube.com/feeds/videos.xml?channel_id=<CHANNEL_ID>   youtube
 ```
 
-Open with `,y` to stream directly in `mpv` without opening a browser.
+Open with `,y` to stream directly in `mpv` with no browser.
 
 ---
 
 ## Color Scheme
 
-Uses **nord** from the official newsboat contrib, loaded via:
+Uses **nord** from the official newsboat contrib. Load it via:
 ```ini
 include "~/.config/newsboat/colorschemes/nord"
 ```
@@ -182,7 +182,7 @@ Defined in `shell/.aliases`:
 
 ## Pruning Dead Feeds
 
-Run `nb-idle` to list feeds that haven't published in 6+ months:
+Run `nb-idle` to list feeds with no posts in 6+ months:
 
 ```bash
 nb-idle               # default: 6 months
@@ -195,7 +195,7 @@ Then remove the dead URLs from `~/.config/newsboat/urls`.
 
 ## Key Bindings
 
-Vim-style bindings configured in `config`:
+`config` sets these Vim-style bindings:
 
 | Key | Action |
 |---|---|
@@ -214,11 +214,11 @@ Vim-style bindings configured in `config`:
 
 ## Auto-reload
 
-Configured to reload all feeds every **60 minutes** with **50 parallel threads**:
+Newsboat reloads all feeds every **60 minutes** with **50 parallel threads**:
 ```ini
 auto-reload yes
 reload-time 60
 reload-threads 50
 ```
 
-No cron job needed — newsboat handles this internally while running.
+No cron job needed. Newsboat handles this internally while it runs.
