@@ -21,6 +21,21 @@ sudo apt install stow
 
 OS related setup scripts are in the `setup/` folder.
 
+### Homebrew packages
+
+The package list lives in a `Brewfile` owned by the [`brew-manage`](https://github.com/theskumar/brew-manage) submodule (`brew-manage/Brewfile`). `setup/setup_mac.sh` installs it via `brew bundle`.
+
+```shell
+git submodule update --init brew-manage        # ensure submodule is present
+brew bundle --file=brew-manage/Brewfile        # install taps, formulae, casks
+brew bundle check --file=brew-manage/Brewfile --verbose  # what is missing
+brew bundle cleanup --file=brew-manage/Brewfile          # remove strays (review!)
+```
+
+The submodule also puts two analysis tools on PATH: `brew-info` (JSON package
+report) and `brew-deps-graph` (dependency tree). Non-brew installs (bun, `npm -g`,
+`gh` extensions) stay in `setup/setup_mac.sh`.
+
 ### Install
 
 ```shell
@@ -108,6 +123,7 @@ stow -D shell
 | Directory | Why |
 |-----------|-----|
 | `bin/` | Scripts added to PATH via .exports, not symlinked |
+| `brew-manage/` | Git submodule: Brewfile + brew analysis tools (`brew-info`, `brew-deps-graph` on PATH) |
 | `setup/` | One-shot install scripts, run manually |
 | `pi/` | AI coding agent settings (~/.pi/agent/settings.json), stow manually if needed |
 | `.private/` | Gitignored secrets |

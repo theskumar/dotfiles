@@ -1,3 +1,6 @@
 [submodule ".zsh/plugins/gpg-crypt"]
 	path = zsh/.zsh/plugins/gpg-crypt
 	url = https://github.com/Czocher/gpg-crypt.git
+[submodule "brew-manage"]
+	path = brew-manage
+	url = git@github.com:theskumar/brew-manage.git
