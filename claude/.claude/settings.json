@@ -1,0 +1,74 @@
+{
+  "attribution": {
+    "commit": ""
+  },
+  "permissions": {
+    "deny": [
+      "EnterPlanMode",
+      "ExitPlanMode",
+      "DesignSync",
+      "NotebookEdit",
+      "SendMessage",
+      "PushNotification",
+      "RemoteTrigger",
+      "ReportFindings",
+      "ScheduleWakeup",
+      "AskUserQuestion",
+      "CronCreate",
+      "CronDelete",
+      "CronList"
+    ]
+  },
+  "model": "opus[1m]",
+  "disableClaudeAiConnectors": false,
+  "disableBundledSkills": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/Users/theskumar/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "disableRemoteControl": true,
+  "disableWorkflows": true,
+  "disableArtifact": true,
+  "enableWorkflows": false,
+  "workflowKeywordTriggerEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "node /Users/theskumar/.claude/bin/statusline-git.cjs",
+    "padding": 2
+  },
+  "enabledPlugins": {
+    "cc-hud@cc-hud": true
+  },
+  "extraKnownMarketplaces": {
+    "cc-hud": {
+      "source": {
+        "source": "github",
+        "repo": "WaterTian/cc-hud"
+      }
+    }
+  },
+  "outputStyle": "simple-english",
+  "effortLevel": "medium",
+  "promptSuggestionEnabled": false,
+  "awaySummaryEnabled": false,
+  "autoMemoryEnabled": false,
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "verbose": false,
+  "preferredNotifChannel": "notifications_disabled",
+  "autoCompactEnabled": false,
+  "terminalProgressBarEnabled": false
+}

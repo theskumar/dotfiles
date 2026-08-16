@@ -6,7 +6,7 @@ cd "$DOTFILES"
 
 OS="$(uname -s)"
 
-COMMON=(shell zsh git vim tools ssh fonts)
+COMMON=(shell zsh git vim tools ssh fonts claude)
 
 XDG=(starship tmux herdr ghostty gh gh-dash lazygit jj mise sesh zed tmuxinator worktrunk helix karabiner newsboat yazi)
 
@@ -27,6 +27,16 @@ case "$OS" in
 esac
 
 mkdir -p "$HOME/.config"
+
+# Claude Code rewrites ~/.claude/settings.json when you change the model, theme,
+# output style, or effort level. If it replaces the symlink with a real file,
+# stow aborts. Absorb the file back into the repo first, then let stow relink it.
+CLAUDE_SETTINGS="$HOME/.claude/settings.json"
+if [ -f "$CLAUDE_SETTINGS" ] && [ ! -L "$CLAUDE_SETTINGS" ]; then
+    echo "==> Absorbing unlinked ~/.claude/settings.json into the claude package"
+    cp "$CLAUDE_SETTINGS" "$DOTFILES/claude/.claude/settings.json"
+    rm "$CLAUDE_SETTINGS"
+fi
 
 echo "==> Stowing common packages to \$HOME"
 stow --target="$HOME" --restow "${COMMON[@]}"

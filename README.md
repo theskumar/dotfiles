@@ -73,6 +73,7 @@ stow -D shell
 | `tools` | .ackrc, .actrc, .carbon-now.json, .cookiecutterrc, .curlrc, .nuxtrc, .pythonrc.py, .wgetrc |
 | `ssh` | .ssh/config.sample |
 | `fonts` | .fonts/ (Hermit, Source Code Pro) |
+| `claude` | .claude/settings.json, .claude/bin/statusline-git.cjs (statusline wrapper) |
 
 ### Editor and terminal (XDG, stowed to ~/.config)
 
