@@ -79,6 +79,10 @@ alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
 
+# Color grep matches in interactive use only (GREP_OPTIONS is deprecated
+# and leaks color codes into piped/scripted output)
+alias grep='grep --color=auto'
+
 # ------------------------------------------------------------------------------
 # | Git Commands                                                               |
 # ------------------------------------------------------------------------------
