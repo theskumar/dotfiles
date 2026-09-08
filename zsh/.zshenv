@@ -15,3 +15,7 @@ path=(
 
 # Rust/Cargo env (sets PATH for ~/.cargo/bin if installed)
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# pi inline images: herdr advertises TERM=screen, which disables image output.
+# Force kitty protocol (Ghostty outer terminal + herdr [experimental].kitty_graphics).
+export PI_IMAGE_PROTOCOL=kitty

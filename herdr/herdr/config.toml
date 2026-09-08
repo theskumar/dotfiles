@@ -115,3 +115,9 @@ resume_agents_on_restore = true
 
 [ui.toast]
 delivery = "system"
+
+[experimental]
+# Local Kitty graphics passthrough for attached clients (needs a Kitty
+# graphics-capable outer terminal, e.g. Ghostty). Pairs with PI_IMAGE_PROTOCOL=kitty
+# in pi, since herdr advertises TERM=screen which otherwise disables images.
+kitty_graphics = true
