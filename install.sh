@@ -6,7 +6,7 @@ cd "$DOTFILES"
 
 OS="$(uname -s)"
 
-COMMON=(shell zsh git vim tools ssh fonts claude)
+COMMON=(shell zsh git vim tools ssh fonts claude pi)
 
 XDG=(starship tmux herdr ghostty gh gh-dash lazygit jj mise sesh zed tmuxinator worktrunk helix karabiner newsboat yazi)
 

@@ -168,7 +168,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias starwars="telnet towel.blinkenlights.nl"
 
 # pi agent commit with haiku
-alias pi-commit='pi --print --model claude-haiku-4 --skill /Users/theskumar/code/agent-stuff/skills/commit/SKILL.md "commit"'
+alias pi-commit='pi --print --model claude-haiku-4-5 --skill "$HOME/code/agent-stuff/skills/commit/SKILL.md" "commit"'
 
 # Newsboat
 alias nb='newsboat'                                                     # launch newsboat

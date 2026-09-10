@@ -7,8 +7,16 @@
 # Simulate pbcopy and pbpaste for copying to and from the pasteboard/clipboard
 #
 #   from: http://whereswalden.com/2009/10/23/pbcopy-and-pbpaste-for-linux/
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
+#
+# xsel needs X11. On a headless box reached over ssh/mosh there is no display,
+# so fall back to OSC 52 — the escape sequence travels up the terminal and the
+# client (Ghostty, Moshi, iTerm...) puts it on the local clipboard instead.
+if [ -n "$DISPLAY" ] && command -v xsel >/dev/null 2>&1; then
+	alias pbcopy='xsel --clipboard --input'
+	alias pbpaste='xsel --clipboard --output'
+else
+	pbcopy() { printf '\033]52;c;%s\007' "$(base64 | tr -d '\n')"; }
+fi
 
 
 # apt-get helpers.
