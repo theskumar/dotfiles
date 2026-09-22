@@ -331,7 +331,6 @@ minWidth = 400.0
 | Linear | `com.linear` |
 | Figma | `com.figma.Desktop` |
 | Todoist | `com.todoist.mac.Todoist` |
-| Raycast | `com.raycast.macos` |
 | Telegram | `ru.keepcoder.Telegram` |
 | Signal | `org.whispersystems.signal-desktop` |
 | OrbStack | `dev.kdrag0n.MacVirt` |
