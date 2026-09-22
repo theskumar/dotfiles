@@ -171,6 +171,12 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 # (e.g. enable Tab in modal dialogs)
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
+# Bind Apple Intelligence Writing Tools to global shortcuts
+# ^$p = ctrl-shift-P (Proofread), ^$r = ctrl-shift-R (Rewrite)
+# Works in apps with a standard Edit menu; Electron apps use the context menu instead.
+defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Proofread" '^$p'
+defaults write NSGlobalDomain NSUserKeyEquivalents -dict-add "Rewrite" '^$r'
+
 # Use scroll gesture with the Ctrl (^) modifier key to zoom
 defaults write com.apple.universalaccess closeViewScrollWheelToggle -bool true
 defaults write com.apple.universalaccess HIDScrollZoomModifierMask -int 262144
