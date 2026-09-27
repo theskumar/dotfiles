@@ -124,4 +124,4 @@ lcl() { mise -C "$HOME/code/localLLM" run "$@"; }
 
 
 # Added by Antigravity CLI installer
-export PATH="/Users/theskumar/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

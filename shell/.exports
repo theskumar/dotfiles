@@ -8,7 +8,7 @@ export ANSIBLE_NOCOWS=1
 export EDITOR="hx"
 export VISUAL="hx"
 
-export PAGER=/opt/homebrew/bin/moor
+command -v moor >/dev/null 2>&1 && export PAGER=moor
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768

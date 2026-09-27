@@ -16,4 +16,4 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    source ~/.osx
 fi
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"

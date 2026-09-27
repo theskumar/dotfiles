@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash '/Users/theskumar/.claude/hooks/herdr-agent-state.sh' session",
+            "command": "bash \"$HOME/.claude/hooks/herdr-agent-state.sh\" session",
             "timeout": 10
           }
         ]
@@ -46,7 +46,7 @@
   "workflowKeywordTriggerEnabled": false,
   "statusLine": {
     "type": "command",
-    "command": "node /Users/theskumar/.claude/bin/statusline-git.cjs",
+    "command": "node \"$HOME/.claude/bin/statusline-git.cjs\"",
     "padding": 2
   },
   "enabledPlugins": {
