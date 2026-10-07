@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.theskumar.pi-web</string>
+  <key>ProgramArguments</key>
+  <array><string>/Users/theskumar/.config/pi-web/run.sh</string></array>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>10</integer>
+  <key>ProcessType</key><string>Interactive</string>
+  <key>StandardOutPath</key><string>/Users/theskumar/Library/Logs/pi-web/out.log</string>
+  <key>StandardErrorPath</key><string>/Users/theskumar/Library/Logs/pi-web/err.log</string>
+</dict>
+</plist>

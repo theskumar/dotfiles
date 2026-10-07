@@ -29,3 +29,6 @@ venv/
 *.glue
 .vim/.netrwhist
 \n# OmniWM runtime data\nomniwm/omniwm/clipboard-history.json
+
+# pi-web secrets (see pi-web/pi-web/env.example)
+pi-web/pi-web/env
