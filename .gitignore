@@ -31,6 +31,7 @@ venv/
 
 # OmniWM runtime data
 omniwm/omniwm/clipboard-history.json
+omniwm/omniwm/settings.toml.pre-v*
 
 # pi-web secrets (see pi-web/pi-web/env.example)
 pi-web/pi-web/env

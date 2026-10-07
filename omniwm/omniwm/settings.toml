@@ -1,9 +1,11 @@
 monitorBarOverrides = []
 monitorGapOverrides = []
 monitorOrientationOverrides = []
+schemaVersion = 4
 
 [appearance]
 mode = "dark"
+tabRailAppIcons = false
 
 [borders]
 enabled = true
@@ -11,12 +13,13 @@ width = 3.0
 
 [borders.color]
 alpha = 1.0
-blue = 0.31309694051742554
-green = 0.765788733959198
-red = 0.7831819653511047
+blue = 0.8099679350852966
+green = 0.29294246435165405
+red = 0.14376935362815857
 
 [clipboard]
 historyEnabled = false
+ignoredTypes = []
 maxItemBytes = 8388608
 maxItems = 200
 maxTotalBytes = 67108864
@@ -36,8 +39,10 @@ followsWindowToMonitor = false
 lockModifier = "off"
 moveCrossesMonitorAtEdge = false
 moveMouseToFocusedWindow = false
+raiseOnMouseFocus = true
 
 [gaps]
+fullscreenUsesOuterGaps = false
 size = 4.0
 
 [gaps.outer]
@@ -47,9 +52,11 @@ right = 8.0
 top = 8.0
 
 [general]
+animationSpeed = 1.0
 animationsEnabled = true
 defaultLayoutType = "niri"
 hotkeysEnabled = true
+hyperKeyModifiers = "Control+Option+Shift+Command"
 ipcEnabled = true
 preventSleepEnabled = false
 spacesTrackingEnabled = true
@@ -57,13 +64,21 @@ systemHyperTrigger = "None"
 updateChecksEnabled = true
 
 [gestures]
-fingerCount = 3
+fingerCount = 4
 invertDirection = true
+mouseMoveModifierKey = "option"
 mouseResizeModifierKey = "option"
+overviewGestureEnabled = false
+overviewGestureFingerCount = 4
 scrollEnabled = true
 scrollModifierKey = "optionShift"
 scrollSensitivity = 5.0
 trackpadScrollStyle = "snap"
+windowGestureSensitivity = 1.0
+windowMoveEnabled = false
+windowMoveFingerCount = 4
+windowResizeEnabled = false
+windowResizeFingerCount = 3
 workspaceSwipeAxis = "vertical"
 workspaceSwipeEnabled = true
 workspaceSwipeFingerCount = 3
@@ -82,11 +97,16 @@ margin = 1
 alwaysCenterSingleColumn = true
 centerFocusedColumn = "onOverflow"
 containerPrimarySpanPresets = [0.3333333333333333, 0.5, 0.66]
+edgeGaps = true
 infiniteLoop = true
 singleWindowFit = "container_primary_span"
 visibleContainerCount = 2
 
 [overview]
+enabled = true
+invertScrollDirection = false
+matchFocusBorder = true
+mouseScrollSpeed = 1.0
 zoom = 1.0
 
 [overview.backdrop]
@@ -118,6 +138,8 @@ red = 0.3
 [quakeTerminal]
 animationDuration = 0.2
 autoHide = true
+backgroundBlurRadius = 0
+backgroundEffect = "standardBlur"
 enabled = false
 heightPercent = 50.0
 monitorMode = "focusedWindow"
@@ -127,6 +149,25 @@ widthPercent = 50.0
 
 [routing]
 mode = "custom"
+
+[[routing.arrangements]]
+id = "8A963285-190D-4134-8ABA-2F3AD16B0C0A"
+
+[[routing.arrangements.monitors]]
+gridColumn = 1
+gridRow = 0
+monitorDisplayUUID = "13741E47-B162-48AB-AA82-497860C867C6"
+monitorName = "DELL U2723QE"
+
+[[routing.arrangements.monitors]]
+gridColumn = 0
+gridRow = 0
+monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
+monitorName = "DELL P2417H"
+
+[scratchpads]
+
+[scratchpads.labels]
 
 [statusBar]
 showAppNames = false
@@ -140,16 +181,24 @@ enabled = true
 excludedBundleIDs = []
 height = 26.0
 hideEmptyWorkspaces = true
+hideInNativeFullscreen = false
+hoverPreviewsEnabled = true
 labelFontSize = 12.0
 notchActiveZoneWidth = 180.0
 notchMode = "splitActiveRight"
+notificationBadgeRefreshIntervalSeconds = 5.0
+notificationBadges = "off"
 position = "overlappingMenuBar"
 reserveLayoutSpace = false
 revealHoldMilliseconds = 200.0
 revealModifier = "off"
+showAccentHighlights = true
 showFloatingWindows = false
+showItemBackgrounds = true
 showLabels = true
+solidBlackBackground = false
 systemStatsButton = false
+transparentBackground = false
 windowLevel = "popup"
 xOffset = 0.0
 yOffset = 0.0
@@ -298,6 +347,86 @@ minHeight = 500.0
 minWidth = 400.0
 
 [[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "toggleScratchpad.10"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "assignFocusedWindowToScratchpad.10"
+
+[[hotkeys]]
 binding = "Option+1"
 id = "switchWorkspace.0"
 
@@ -368,6 +497,78 @@ id = "switchWorkspace.8"
 [[hotkeys]]
 binding = "Option+Shift+9"
 id = "moveToWorkspace.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.1"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.2"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.3"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.4"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.5"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.6"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.7"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.8"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "switchWorkspaceSlot.9"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveToWorkspaceSlot.9"
 
 [[hotkeys]]
 binding = "Control+Option+Tab"
@@ -526,14 +727,6 @@ binding = "Unassigned"
 id = "moveWindowUpOrToWorkspaceUp"
 
 [[hotkeys]]
-binding = "Option+Shift+Left Bracket"
-id = "consumeOrExpelWindowLeft"
-
-[[hotkeys]]
-binding = "Option+Shift+Right Bracket"
-id = "consumeOrExpelWindowRight"
-
-[[hotkeys]]
 binding = "Unassigned"
 id = "consumeWindowIntoColumn"
 
@@ -552,6 +745,38 @@ id = "focusMonitorPrevious"
 [[hotkeys]]
 binding = "Control+Command+Grave"
 id = "focusMonitorLast"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWorkspaceToMonitor.left"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWorkspaceToMonitor.right"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWorkspaceToMonitor.up"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWorkspaceToMonitor.down"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowToMonitor.left"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowToMonitor.right"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowToMonitor.up"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "moveWindowToMonitor.down"
 
 [[hotkeys]]
 binding = "Option+Return"
@@ -843,15 +1068,19 @@ id = "toggleFocusedWindowFloating"
 
 [[hotkeys]]
 binding = "Unassigned"
-id = "assignFocusedWindowToScratchpad"
-
-[[hotkeys]]
-binding = "Unassigned"
-id = "toggleScratchpadWindow"
+id = "closeFocusedWindow"
 
 [[hotkeys]]
 binding = "Control+Option+M"
 id = "openMenuAnywhere"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "setWindowMark"
+
+[[hotkeys]]
+binding = "Unassigned"
+id = "removeWindowMark"
 
 [[hotkeys]]
 binding = "Unassigned"
@@ -896,18 +1125,6 @@ id = "346BD9F1-6E63-4F90-8EA6-CE1A66A3F0D9"
 monitorDisplayUUID = "13741E47-B162-48AB-AA82-497860C867C6"
 monitorName = "DELL U2723QE"
 singleWindowFit = "container_primary_span"
-
-[[monitorRoutingOverrides]]
-gridColumn = 1
-gridRow = 0
-monitorDisplayUUID = "13741E47-B162-48AB-AA82-497860C867C6"
-monitorName = "DELL U2723QE"
-
-[[monitorRoutingOverrides]]
-gridColumn = 0
-gridRow = 0
-monitorDisplayUUID = "4B15D4F9-9C76-4850-9E79-94365164FF7A"
-monitorName = "DELL P2417H"
 
 [[workspaces]]
 id = "AD36F001-C57E-41A5-AC1D-DF5249D007F0"
