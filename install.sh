@@ -13,7 +13,7 @@ XDG=(starship tmux herdr ghostty gh gh-dash lazygit jj mise sesh zed tmuxinator 
 case "$OS" in
     Darwin)
         OS_PKGS=(macos)
-        XDG+=(omniwm pi-web)
+        XDG+=(omniwm pi-web agents-in-the-cloud)
         ;;
     Linux)
         OS_PKGS=(linux)
