@@ -1,2 +1,4 @@
 [tools]
-node = "24"
+bun = "latest"
+"github:ggml-org/llama.cpp" = "latest"
+node = "26"
