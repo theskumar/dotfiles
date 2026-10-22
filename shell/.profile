@@ -17,3 +17,6 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
 fi
 
 . "$HOME/.cargo/env"
+
+# Ensure ~/.local/bin is on PATH
+export PATH="$HOME/.local/bin:$PATH"

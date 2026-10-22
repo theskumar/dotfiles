@@ -69,3 +69,11 @@ export LLM_MODEL="gemini-flash-latest"
 export MOSH_TITLE_NOPREFIX=1                # don't prepend "[mosh]" to terminal title
 export MOSH_PREDICTION_DISPLAY=adaptive     # local echo prediction: adaptive|always|never
 export MOSH_SERVER_NETWORK_TMOUT=604800     # detach idle server after 7 days (seconds)
+
+# CA bundle for OpenSSL-based tools (uv-managed Python, httpx, requests, Ruby).
+# macOS /etc/ssl/cert.pem is stale and still trusts the compromised eMudhra root
+# (CVE-2026-111943). Homebrew's ca-certificates bundle is kept current by `brew upgrade`.
+if [ -f /opt/homebrew/etc/ca-certificates/cert.pem ]; then
+    export SSL_CERT_FILE=/opt/homebrew/etc/ca-certificates/cert.pem
+    export REQUESTS_CA_BUNDLE="$SSL_CERT_FILE"
+fi
