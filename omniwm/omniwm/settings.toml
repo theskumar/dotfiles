@@ -635,7 +635,7 @@ binding = "Unassigned"
 id = "focusWindowOrWorkspaceUp"
 
 [[hotkeys]]
-binding = "Option+C"
+binding = "Unassigned"
 id = "centerColumn"
 
 [[hotkeys]]
