@@ -555,12 +555,11 @@ defaults write com.apple.spotlight orderedItems -array \
     '{"enabled" = 0;"name" = "MENU_EXPRESSION";}' \
     '{"enabled" = 0;"name" = "MENU_WEBSEARCH";}' \
     '{"enabled" = 0;"name" = "MENU_SPOTLIGHT_SUGGESTIONS";}'
-# Load new settings before rebuilding the index
+# Load new settings
 killall mds > /dev/null 2>&1
-# Make sure indexing is enabled for the main volume
-sudo mdutil -i on / > /dev/null
-# Rebuild the index from scratch
-sudo mdutil -E / > /dev/null
+# Disable indexing on all volumes (TinyCast replaces Spotlight).
+# Re-enable with `sudo mdutil -a -i on`.
+sudo mdutil -a -i off > /dev/null
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
