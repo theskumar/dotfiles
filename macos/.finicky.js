@@ -93,28 +93,36 @@ const slackRewriter = {
   },
 };
 
+const PERSONAL_BROWSER = "Safari";
+const WORK_BROWSER = "Zen Browser";
+
+// Finicky v4: matcher functions get (url: URL, options), not ({ url }).
 export default {
-  defaultBrowser: "Zen Browser",
+  defaultBrowser: WORK_BROWSER,
   rewrite: [slackRewriter],
   handlers: [
     {
-      match: ({ url }) => {
-        // Check for both 'slack:' and 'slack' since the property might not include the colon
-        return url.protocol === "slack:" || url.protocol === "slack";
-      },
+      // Personal: Zerodha Kite (incl. the Kite MCP login flow: mcp.kite.trade -> kite.zerodha.com)
+      match: (url) =>
+        url.hostname === "kite.zerodha.com" ||
+        url.hostname === "kite.trade" ||
+        url.hostname.endsWith(".kite.trade"),
+      browser: PERSONAL_BROWSER,
+    },
+    {
+      // Check for both 'slack:' and 'slack' since the property might not include the colon
+      match: (url) => url.protocol === "slack:" || url.protocol === "slack",
       browser: "Slack",
     },
     {
-      // Optional. If these work url cannot be converted, open them is work browser
-      // Login in work workspace unfortunately lands on the personal browser, just copy the link to the work browser
-      match: ({ url }) => {
+      // Work Slack URLs the rewriter could not turn into a deep link
+      match: (url) => {
         const workDomains = Object.keys(workSlackTeamMapping).map(
           (subdomain) => subdomain + ".slack.com",
         );
         return workDomains.includes(url.host);
       },
-      browser: "Arc", // your work browser
+      browser: WORK_BROWSER,
     },
-
   ],
 };
