@@ -110,6 +110,12 @@ export default {
       browser: PERSONAL_BROWSER,
     },
     {
+      // Personal: IGL (Indraprastha Gas)
+      match: (url) =>
+        url.hostname === "igl.co.in" || url.hostname.endsWith(".igl.co.in"),
+      browser: PERSONAL_BROWSER,
+    },
+    {
       // Check for both 'slack:' and 'slack' since the property might not include the colon
       match: (url) => url.protocol === "slack:" || url.protocol === "slack",
       browser: "Slack",
