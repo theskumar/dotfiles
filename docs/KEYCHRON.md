@@ -12,7 +12,7 @@ Both keyboards use the same key positions. Karabiner does most of the work, so t
 | Hyper (Cmd+Ctrl+Opt+Shift) | Left Ctrl | Left Control |
 | Wispr hands-free on or off | Tap the Siri key | Tap Globe |
 | Wispr push to talk | Hold the Siri key | Hold Globe |
-| WriteText macro | Screenshot key, or Hyper+R | Hyper+R |
+| WriteText: rewrite all text | Screenshot key, or Hyper+R | Hyper+R |
 | OmniWM command palette | Insert | Ctrl+Opt+Space |
 | OmniWM overview | Fn+Insert | Opt+Shift+O |
 | Screenshot | Fn+Screenshot key | Cmd+Shift+4 |
@@ -35,7 +35,7 @@ Hold Left Ctrl, then press the key. Hyper keys work the same on both keyboards.
 | G | Ghostty, then Cmd+J | lazygit popup |
 | T | Ghostty, then `C-a C-p` | New tmux window that runs `pi` |
 | P | Cmd+A, then Ctrl+Shift+P | Writing Tools Proofread |
-| R | Cmd+A, Cmd+C, Ctrl+Shift+Z, then Cmd+Enter | WriteText |
+| R | Cmd+A, then Ctrl+Opt+Cmd+E | WriteText: rewrite all text in place |
 | B | Open Zen Browser | App launcher |
 | S | Open Slack | App launcher |
 | N | Open Notion | App launcher |
@@ -54,8 +54,6 @@ Do not bind Hyper+Period. macOS uses it to start a system diagnostic.
 2. Back up the current layout with **Save**.
 3. Load `docs/keychron-k8-pro.layout.json`.
 
-If the editor rejects the macro delays such as `{50}`, update the firmware in Keychron Launcher.
-
 Keep the Mac/Win switch on Mac. Layer 0 is the Mac base layer. Layer 1 is the Fn layer. Layers 2 and 3 are the stock Windows layers and stay unchanged.
 
 ## Firmware changes
@@ -64,19 +62,15 @@ Keep the Mac/Win switch on Mac. Layer 0 is the Mac base layer. Layer 1 is the Fn
 |---|---|---|---|---|
 | 0 | Siri key | Siri | `KC_F18` | Wispr key. Karabiner handles tap and hold. |
 | 0 | Insert | Insert | `LCA(KC_SPC)` | OmniWM command palette (Ctrl+Opt+Space) |
-| 0 | Screenshot key | Cmd+Shift+4 | `MACRO(4)` | Select all, copy, open WriteText, then press Cmd+Enter |
+| 0 | Screenshot key | Cmd+Shift+4 | `HYPR(KC_R)` | Hyper+R: WriteText rewrite, run by Karabiner |
 | 1 | Insert | Transparent | `LSA(KC_O)` | OmniWM overview |
 | 1 | Screenshot key | Transparent | `CUSTOM(8)` | Stock screenshot |
 
 Left Ctrl stays a plain Ctrl key in the firmware. Karabiner turns it into Hyper.
 
-Macro 4:
+The firmware has no macros. Karabiner runs every macro, so the Keychron and the MacBook stay in sync.
 
-```
-{KC_LGUI,KC_A}{50}{KC_LGUI,KC_C}{100}{KC_LCTL,KC_LSFT,KC_Z}{400}{KC_LGUI,KC_ENT}
-```
-
-WriteText opens with its global hotkey Ctrl+Shift+Z. If you change that hotkey in WriteText, update macro 4 and the Hyper+R rule.
+Hyper+R selects all text, then presses the WriteText **Rewrite in place** shortcut, Ctrl+Opt+Cmd+E. WriteText replaces the selection with the improved text. Rewrite in place needs Accessibility permission for WriteText. If you change the shortcut in WriteText, update the Hyper+R rule.
 
 Do not press Left Ctrl with Insert or the Screenshot key. Left Ctrl+Insert sends Hyper+Space and toggles Wispr hands-free.
 
