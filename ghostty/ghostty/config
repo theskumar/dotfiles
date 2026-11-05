@@ -39,6 +39,12 @@ keybind = cmd+right=text:\x01\x4c
 keybind = cmd+[=text:\x01\x5b
 # prefix + ]  → next pane
 keybind = cmd+]=text:\x01\x5d
+# prefix + p  → previous window (tmux default; herdr's previous_tab default too)
+# overrides ghostty's built-in cmd+shift+[ (previous_tab, ghostty-native tabs)
+keybind = cmd+shift+[=text:\x01\x70
+# prefix + n  → next window (tmux default; herdr's next_tab default too)
+# overrides ghostty's built-in cmd+shift+] (next_tab, ghostty-native tabs)
+keybind = cmd+shift+]=text:\x01\x6e
 # prefix + R  → reload tmux config
 keybind = cmd+r=text:\x01\x52
 
@@ -56,7 +62,6 @@ keybind = cmd+digit_9=text:\x01\x39
 # ─── appearance ────────────────────────────────────────────────────
 font-size = 14
 background-blur-radius = 20
-macos-titlebar-style = hidden
 alpha-blending = linear-corrected
 
 # ─── shell integration ─────────────────────────────────────────────
