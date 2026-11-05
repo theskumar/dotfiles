@@ -89,6 +89,7 @@ stow -D shell
 | `mise` | Global tool versions config |
 | `helix` | config.toml (editor settings, theme, keybinds), languages.toml (LSPs, formatters) |
 | `herdr` | config.toml (keybindings, theme, plugins) |
+| `rex` | init.lua (keybindings, custom actions such as the Cmd+J lazygit popup) |
 
 ### Git and dev tools (XDG)
 

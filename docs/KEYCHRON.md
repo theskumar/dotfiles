@@ -39,7 +39,7 @@ Hold Left Ctrl, then press the key. Hyper keys work the same on both keyboards.
 | B | Open Zen Browser | App launcher |
 | S | Open Slack | App launcher |
 | N | Open Notion | App launcher |
-| I | Open Ghostty | App launcher |
+| I | Open Rex | App launcher |
 | E | Open Zed | App launcher |
 
 Other Hyper+key combinations pass through unchanged. Use them for new shortcuts in any app.

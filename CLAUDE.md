@@ -5,7 +5,7 @@ Dotfiles managed with GNU Stow. Each top-level directory is a stow package.
 ## Structure
 
 - Packages targeting `$HOME`: shell, zsh, git, vim, tools, ssh, fonts, macos, linux, freebsd, xmonad
-- Packages targeting `$HOME/.config`: ghostty, gh, gh-dash, lazygit, mise, sesh, zed, omniwm, starship, tmux, tmuxinator, worktrunk
+- Packages targeting `$HOME/.config`: ghostty, rex, gh, gh-dash, lazygit, mise, sesh, zed, omniwm, starship, tmux, tmuxinator, worktrunk
 - `karabiner/` targets `$HOME/.config` (plain JSON, no build step)
 - `bin/` is not stowed (added to PATH via .exports)
 - `brew-manage/` is a git submodule: `Brewfile` (declarative Homebrew package source) + analysis tools symlinked into `bin/` (`brew-info`, `brew-deps-graph`)

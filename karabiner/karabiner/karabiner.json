@@ -678,7 +678,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Ghostty\" to activate'"
+                                        "shell_command": "osascript -e 'tell application id \"com.superlogical.rex\" to activate'"
                                     }
                                 ]
                             },
