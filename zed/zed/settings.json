@@ -1,6 +1,6 @@
 {
   "ui_font_size": 18.0,
-  "disable_ai": true,
+  "disable_ai": false,
   "diff_view_style": "split",
   "agent_buffer_font_size": 16.0,
   "agent_ui_font_size": 16.0,
@@ -22,7 +22,7 @@
   },
   "git_panel": {
     "dock": "right",
-    "tree_view": true,
+    "tree_view": false,
   },
   "document_symbols": "on",
   "tab_bar": {
@@ -90,9 +90,9 @@
       },
     },
     "default_model": {
-      "effort": "medium",
-      "provider": "google",
-      "model": "gemini-3.5-flash",
+      "effort": "high",
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4-6",
       "enable_thinking": true,
     },
     "favorite_models": [],
