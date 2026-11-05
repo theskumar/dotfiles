@@ -571,40 +571,14 @@
                                         ]
                                     },
                                     {
-                                        "key_code": "c",
-                                        "modifiers": [
-                                            "left_command"
-                                        ]
-                                    },
-                                    {
-                                        "key_code": "z",
+                                        "key_code": "e",
                                         "modifiers": [
                                             "left_control",
-                                            "left_shift"
+                                            "left_option",
+                                            "left_command"
                                         ]
                                     }
-                                ],
-                                "to_delayed_action": {
-                                    "to_if_invoked": [
-                                        {
-                                            "key_code": "return_or_enter",
-                                            "modifiers": [
-                                                "left_command"
-                                            ]
-                                        }
-                                    ],
-                                    "to_if_canceled": [
-                                        {
-                                            "key_code": "return_or_enter",
-                                            "modifiers": [
-                                                "left_command"
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "parameters": {
-                                    "basic.to_delayed_action_delay_milliseconds": 500
-                                }
+                                ]
                             },
                             {
                                 "type": "basic",
