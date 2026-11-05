@@ -10,7 +10,7 @@ onboarding = false
 #            one-dark, solarized, kanagawa, rose-pine, vesper
 
 [theme]
-name = "catppuccin"
+name = "tokyo-night"
 
 # Follow the host terminal's light/dark appearance:
 # auto_switch = true
@@ -24,8 +24,16 @@ name = "catppuccin"
 # Caveat: don't run tmux nested inside a herdr pane — both would grab ctrl+a.
 # Use one or the other per terminal.
 
+auto_switch = false
 [keys]
 prefix = "ctrl+a"
+
+# cmd+[ / cmd+] send prefix+[ / prefix+] (tmux's pane-cycle chord, set in
+# tmux.reset.conf: bind [ select-pane -t :.- / bind ] select-pane -t :.+).
+# herdr's own default for this is prefix+tab / prefix+shift+tab, so without
+# this override cmd+[ / cmd+] would do nothing in herdr.
+cycle_pane_previous = "prefix+["
+cycle_pane_next = "prefix+]"
 
 # cmd+t sends prefix + ctrl+c (the tmux new-window chord) → new tab.
 new_tab = "prefix+ctrl+c"
@@ -103,6 +111,8 @@ command = "hx-split"
 
 [ui]
 prompt_new_tab_name = false
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
 
 # ─── Session ────────────────────────────────────────────────────────────────────
 # Restore supported agent panes into their native sessions after a server
@@ -110,6 +120,7 @@ prompt_new_tab_name = false
 # are installed). Mirrors the persistence habit from tmux-resurrect/continuum.
 
 show_agent_labels_on_pane_borders = true
+agent_panel_sort = "priority"
 [session]
 resume_agents_on_restore = true
 
