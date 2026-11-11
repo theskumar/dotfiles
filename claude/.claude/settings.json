@@ -16,7 +16,11 @@
       "AskUserQuestion",
       "CronCreate",
       "CronDelete",
-      "CronList"
+      "CronList",
+      "ShareOnboardingGuide",
+      "ListAgents",
+      "PublishPlugin",
+      "EndConversation"
     ]
   },
   "model": "opus[1m]",
@@ -59,7 +63,10 @@
     "padding": 2
   },
   "enabledPlugins": {
-    "cc-hud@cc-hud": true
+    "cc-hud@cc-hud": true,
+    "rosey-studio-pm-kit@synced": false,
+    "cowork-plugin-management@synced": false,
+    "rosey-studio-reporting-activation@synced": false
   },
   "extraKnownMarketplaces": {
     "cc-hud": {
@@ -86,5 +93,6 @@
   "preferredNotifChannel": "notifications_disabled",
   "autoCompactEnabled": false,
   "terminalProgressBarEnabled": false,
-  "feedbackDrafts": "off"
+  "feedbackDrafts": "off",
+  "syncClaudeAiSkills": false
 }
