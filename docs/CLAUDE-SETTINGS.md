@@ -13,8 +13,7 @@ questions, offering connectors).
 The rule I follow: if I don't use it, take it out of the prompt. After each
 change, restart Claude Code and run `/context` to check the effect.
 
-One walkthrough brought a fresh session from about 68k tokens down to about
-20k. With the settings below, a fresh session here starts at **7.9k**
+With the settings below, a fresh session here starts at **7.9k**
 (system prompt 1.9k, tools 4.9k, skills 0.6k), measured with `/context` on
 2026-11-11. Your numbers depend on which plugins, connectors and MCP servers
 you have.
@@ -23,7 +22,7 @@ you have.
 
 | Setting | What it removes | Why |
 |---|---|---|
-| `disableClaudeAiConnectors: true` | Every claude.ai connector (Slack, Notion, Malcolm, Google, …) and its instructions | The biggest single saving (~20k tokens). I reach Slack and Malcolm through skills instead (see below). |
+| `disableClaudeAiConnectors: true` | Every claude.ai connector (Slack, Notion, Malcolm, Google, …) and its instructions | I reach Slack and Malcolm through skills instead (see below). |
 | `disableWorkflows: true` (+ `enableWorkflows: false`, `workflowKeywordTriggerEnabled: false`) | Workflow orchestration instructions | I don't use workflows. |
 | `disableBundledSkills: true` | Built-in skills (deep research, data viz, etc.) | Not used. My own skills still load. |
 | `disableArtifact: true` | Artifact tool and its instructions | Not used in the terminal. |
