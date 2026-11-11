@@ -20,7 +20,7 @@
     ]
   },
   "model": "opus[1m]",
-  "disableClaudeAiConnectors": false,
+  "disableClaudeAiConnectors": true,
   "disableBundledSkills": true,
   "hooks": {
     "SessionStart": [
@@ -85,5 +85,6 @@
   "verbose": false,
   "preferredNotifChannel": "notifications_disabled",
   "autoCompactEnabled": false,
-  "terminalProgressBarEnabled": false
+  "terminalProgressBarEnabled": false,
+  "feedbackDrafts": "off"
 }
